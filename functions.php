@@ -21,3 +21,5 @@ function armodafinil_australia_setup() {
     add_theme_support( 'woocommerce' );
 }
 add_action( 'after_setup_theme', 'armodafinil_australia_setup' );
+require get_template_directory() . '/inc/acf-fields.php';  
+ 
