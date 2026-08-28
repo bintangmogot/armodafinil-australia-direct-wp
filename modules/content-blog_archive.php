@@ -1,24 +1,25 @@
 <?php
 /**
- * The main template file for blog archives
+ * Blog Archive Module Template
  */
 
-get_header(); ?>
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+$args = array(
+    'post_type'      => 'post',
+    'post_status'    => 'publish',
+    'posts_per_page' => 10, // 1 featured + 9 regular
+    'paged'          => $paged
+);
 
-<main id="primary" class="site-main">
-    <div class="section-wash">
-        <div class="max-w-4xl mx-auto px-4 py-14 md:py-20 text-center">
-            <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5">Journal</span>
-            <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900">From the blog</h1>
-            <p class="mt-3 text-ink-700 max-w-2xl mx-auto">Practical productivity notes, dosing explainers, and honest research summaries.</p>
-        </div>
-    </div>
+$query = new WP_Query( $args );
+?>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <?php if ( have_posts() ) : 
-            
-            // First post is featured
-            the_post();
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <?php if ( $query->have_posts() ) : 
+        
+        // First post is featured (only on page 1)
+        if ( $paged == 1 ) {
+            $query->the_post();
             $feat_id = get_the_ID();
             $feat_title = get_the_title();
             $feat_excerpt = get_the_excerpt();
@@ -28,7 +29,7 @@ get_header(); ?>
             $feat_image = get_the_post_thumbnail_url($feat_id, 'large') ?: 'https://placehold.co/1200x800/e0f2fe/0369a1?text=Blog+Hero';
             $categories = get_the_category();
             $feat_cat = !empty($categories) ? $categories[0]->name : 'Article';
-        ?>
+            ?>
             <a href="<?php echo esc_url($feat_url); ?>" class="grid lg:grid-cols-2 gap-8 items-center group mb-14">
                 <div class="aspect-[16/10] rounded-2xl bg-brand-50 overflow-hidden">
                     <img src="<?php echo esc_url($feat_image); ?>" alt="<?php echo esc_attr($feat_title); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
@@ -52,45 +53,44 @@ get_header(); ?>
                     </span>
                 </div>
             </a>
+            <?php
+        }
+        
+        if ( $query->have_posts() ) : ?>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <?php while ( $query->have_posts() ) : $query->the_post(); 
+                    $p_id = get_the_ID();
+                    $categories = get_the_category();
+                    $p_cat = !empty($categories) ? $categories[0]->name : 'Article';
+                    $p_image = get_the_post_thumbnail_url($p_id, 'medium_large') ?: 'https://placehold.co/600x400/e0f2fe/0369a1?text=Blog';
+                ?>
+                    <a href="<?php the_permalink(); ?>" class="group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift block shadow-sm">
+                        <div class="aspect-[16/9] bg-brand-50 overflow-hidden">
+                            <img src="<?php echo esc_url($p_image); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </div>
+                        <div class="p-5">
+                            <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold"><?php echo esc_html($p_cat); ?></div>
+                            <h3 class="mt-1 font-serif text-lg font-semibold text-ink-900 line-clamp-2"><?php the_title(); ?></h3>
+                            <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo get_the_excerpt(); ?></p>
+                        </div>
+                    </a>
+                <?php endwhile; ?>
+            </div>
             
-            <?php if ( have_posts() ) : ?>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <?php while ( have_posts() ) : the_post(); 
-                        $p_id = get_the_ID();
-                        $categories = get_the_category();
-                        $p_cat = !empty($categories) ? $categories[0]->name : 'Article';
-                        $p_image = get_the_post_thumbnail_url($p_id, 'medium_large') ?: 'https://placehold.co/600x400/e0f2fe/0369a1?text=Blog';
-                    ?>
-                        <a href="<?php the_permalink(); ?>" class="group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift block shadow-sm">
-                            <div class="aspect-[16/9] bg-brand-50 overflow-hidden">
-                                <img src="<?php echo esc_url($p_image); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-                            </div>
-                            <div class="p-5">
-                                <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold"><?php echo esc_html($p_cat); ?></div>
-                                <h3 class="mt-1 font-serif text-lg font-semibold text-ink-900 line-clamp-2"><?php the_title(); ?></h3>
-                                <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo get_the_excerpt(); ?></p>
-                            </div>
-                        </a>
-                    <?php endwhile; ?>
-                </div>
-                
-                <div class="mt-12 flex justify-center">
-                    <?php 
-                    the_posts_pagination( array(
-                        'prev_text' => '&larr; Prev',
-                        'next_text' => 'Next &rarr;',
-                        'class' => 'pagination-links flex gap-2'
-                    ) ); 
-                    ?>
-                </div>
-            <?php endif; ?>
-
-        <?php else : ?>
-            <p class="text-center text-ink-500">No articles found.</p>
+            <div class="mt-12 flex justify-center">
+                <?php 
+                echo paginate_links( array(
+                    'total' => $query->max_num_pages,
+                    'current' => $paged,
+                    'prev_text' => '&larr; Prev',
+                    'next_text' => 'Next &rarr;',
+                    'class' => 'pagination-links flex gap-2'
+                ) ); 
+                ?>
+            </div>
         <?php endif; ?>
-    </div>
-
-    <?php get_template_part('template-parts/order-cta'); ?>
-</main>
-
-<?php get_footer(); ?>
+        <?php wp_reset_postdata(); ?>
+    <?php else : ?>
+        <p class="text-center text-ink-500">No articles found.</p>
+    <?php endif; ?>
+</div>

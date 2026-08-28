@@ -417,6 +417,46 @@ acf_add_local_field_group(array(
 				array('key' => 'field_news_shortcode', 'label' => 'Form Shortcode', 'name' => 'shortcode', 'type' => 'text', 'instructions' => 'e.g. [contact-form-7 id="123"]'),
 			),
 		),
+		'layout_simple_hero' => array(
+			'key' => 'layout_simple_hero',
+			'name' => 'simple_hero',
+			'label' => 'Simple Hero',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_sh_tag', 'label' => 'Tag', 'name' => 'tag', 'type' => 'text'),
+				array('key' => 'field_sh_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_sh_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
+			),
+		),
+		'layout_blog_archive' => array(
+			'key' => 'layout_blog_archive',
+			'name' => 'blog_archive',
+			'label' => 'Blog Archive Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ba_info', 'label' => 'Info', 'name' => 'info', 'type' => 'message', 'message' => 'This module automatically displays paginated blog posts with a featured post at the top.'),
+			),
+		),
+		'layout_conditions_archive' => array(
+			'key' => 'layout_conditions_archive',
+			'name' => 'conditions_archive',
+			'label' => 'Conditions Archive Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ca_info', 'label' => 'Info', 'name' => 'info', 'type' => 'message', 'message' => 'This module automatically displays paginated condition guides.'),
+			),
+		),
+		'layout_order_cta' => array(
+			'key' => 'layout_order_cta',
+			'name' => 'order_cta',
+			'label' => 'Order CTA',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_octa_tag', 'label' => 'Tag', 'name' => 'tag', 'type' => 'text', 'default_value' => 'Get started'),
+				array('key' => 'field_octa_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text', 'default_value' => 'Ready to order with confidence?'),
+				array('key' => 'field_octa_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Pick your pack size, complete a secure checkout in minutes, and track your discreet parcel anywhere in Australia.'),
+			),
+		),
 	),
 	'button_label' => 'Add Module',
 		),
