@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./*.php", "./template-parts/**/*.php", "./inc/**/*.php", "./woocommerce/**/*.php"],
+  content: ["./*.php", "./template-parts/**/*.php", "./inc/**/*.php", "./woocommerce/**/*.php", "./modules/**/*.php"],
   theme: {
     extend: {
       fontFamily: {
