@@ -60,6 +60,30 @@ acf_add_local_field_group(array(
 						),
 					),
 				),
+				'layout_trust_strip' => array(
+					'key' => 'layout_trust_strip',
+					'name' => 'trust_strip',
+					'label' => 'Trust Strip',
+					'display' => 'block',
+					'sub_fields' => array(
+						array(
+							'key' => 'field_trust_items',
+							'label' => 'Trust Items',
+							'name' => 'items',
+							'type' => 'repeater',
+							'layout' => 'table',
+							'button_label' => 'Add Item',
+							'sub_fields' => array(
+								array(
+									'key' => 'field_trust_item_text',
+									'label' => 'Text',
+									'name' => 'text',
+									'type' => 'text',
+								),
+							),
+						),
+					),
+				),
 			),
 			'button_label' => 'Add Module',
 		),
