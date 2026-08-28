@@ -37,7 +37,7 @@ function armd_register_cpts() {
         'publicly_queryable'    => true,
         'capability_type'       => 'page',
         'show_in_rest'          => true,
-        'rewrite'               => array('slug' => 'conditions'),
+        'rewrite'               => array('slug' => 'condition-guides'),
     );
     register_post_type( 'condition', $args );
 }
