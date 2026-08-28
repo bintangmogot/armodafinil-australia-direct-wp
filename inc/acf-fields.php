@@ -84,6 +84,51 @@ acf_add_local_field_group(array(
 						),
 					),
 				),
+				'layout_popular_products' => array(
+					'key' => 'layout_popular_products',
+					'name' => 'popular_products',
+					'label' => 'Popular Products',
+					'display' => 'block',
+					'sub_fields' => array(
+						array(
+							'key' => 'field_popular_title',
+							'label' => 'Title',
+							'name' => 'title',
+							'type' => 'text',
+						),
+						array(
+							'key' => 'field_popular_subtitle',
+							'label' => 'Subtitle',
+							'name' => 'subtitle',
+							'type' => 'text',
+						),
+						array(
+							'key' => 'field_popular_link_text',
+							'label' => 'View All Link Text',
+							'name' => 'view_all_text',
+							'type' => 'text',
+						),
+						array(
+							'key' => 'field_popular_link_url',
+							'label' => 'View All Link URL',
+							'name' => 'view_all_url',
+							'type' => 'url',
+						),
+						array(
+							'key' => 'field_popular_products_list',
+							'label' => 'Products',
+							'name' => 'products',
+							'type' => 'relationship',
+							'post_type' => array(
+								0 => 'product',
+							),
+							'filters' => array(
+								0 => 'search',
+							),
+							'return_format' => 'object',
+						),
+					),
+				),
 			),
 			'button_label' => 'Add Module',
 		),
