@@ -23,3 +23,5 @@ function armodafinil_australia_setup() {
 add_action( 'after_setup_theme', 'armodafinil_australia_setup' );
 require get_template_directory() . '/inc/acf-fields.php';  
  
+require_once get_template_directory() . '/inc/cpt.php';
+
