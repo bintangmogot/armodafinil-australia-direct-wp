@@ -6,9 +6,9 @@ acf_add_local_field_group(array(
 	'title' => 'Page Modules',
 	'fields' => array(
 		array(
-			'key' => 'field_modules',
-			'label' => 'Modules',
-			'name' => 'modules',
+			'key' => 'field_page_modules',
+			'label' => 'Page Modules',
+			'name' => 'page_modules',
 			'type' => 'flexible_content',
 			'layouts' => array(
 				'layout_hero_section' => array(

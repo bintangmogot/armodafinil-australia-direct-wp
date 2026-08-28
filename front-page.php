@@ -17,8 +17,8 @@ get_header(); ?>
             the_content();
             
             // Loop through flexible content modules
-            if ( have_rows('modules') ) :
-                while ( have_rows('modules') ) : the_row();
+            if ( have_rows('page_modules') ) :
+                while ( have_rows('page_modules') ) : the_row();
                     // Include the specific module template
                     $layout = get_row_layout();
                     get_template_part('modules/content', $layout);
