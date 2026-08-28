@@ -10,7 +10,7 @@
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<div class="font-serif text-2xl font-semibold text-white">
-					<?php bloginfo( 'name' ); ?> <span class="text-brand-300"><?php bloginfo( 'description' ); ?></span>
+					Armodafinil <span class="text-brand-300">Australia Direct</span>
 				</div>
 				<p class="mt-3 text-sm text-ink-100/70 max-w-sm">Steady focus, cleaner clarity, and dependable dispatch — built for Australian customers who take their day seriously.</p>
 				<div class="mt-5 flex items-center gap-3 text-brand-300">
@@ -66,13 +66,19 @@
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="16" height="8" x="2" y="10" rx="2"/><path d="M2 14h16"/><path d="M22 14v-4l-4-4H6"/><path d="M6 6v4"/></svg> AU-wide dispatch</span>
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> Encrypted checkout</span>
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Sydney, AU</span>
-					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> support@armodafinilaustralia.com.au</span>
+					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> support@armodafinildirect.example</span>
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +61 4 8999 5839</span>
 				</div>
-				<div>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. Information only — not medical advice.</div>
+				<div>&copy; <?php echo date('Y'); ?> Armodafinil. Information only — not medical advice.</div>
 			</div>
 		</div>
 	</footer>
+
+	<!-- WhatsApp FAB -->
+	<a href="https://wa.me/61489995839?text=Hi%2C%20I%20need%20help%20from%20Armodafinil%20Australia%20Direct" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-5 right-5 z-50 w-14 h-14 grid place-items-center rounded-full bg-brand-600 text-white shadow-card hover:bg-brand-700 transition-colors">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+		<span class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-500 border-2 border-white"></span>
+	</a>
 
 </div><!-- #page -->
 

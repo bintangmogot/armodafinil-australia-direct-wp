@@ -41,8 +41,8 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
 				</span>
 				<span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
-					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate"><?php bloginfo( 'name' ); ?></span>
-					<span class="block text-[10px] uppercase tracking-[0.18em] text-brand-700 mt-0.5 truncate"><?php bloginfo( 'description' ); ?></span>
+					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate">Armodafinil</span>
+					<span class="block text-[10px] uppercase tracking-[0.18em] text-brand-700 mt-0.5 truncate">Australia Direct</span>
 				</span>
 			</a>
 
@@ -59,7 +59,9 @@
 				?>
                 <!-- Hardcoded fallback if no menu assigned -->
                 <a href="/shop" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Products</a>
-                <a href="/about" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">About</a>
+                <a href="/categories" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Categories</a>
+                <a href="/conditions" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Conditions</a>
+                <a href="/blog" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Blog</a>
                 <a href="/faq" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">FAQ</a>
 			</nav>
 
@@ -85,6 +87,11 @@
 			<!-- Account -->
 			<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" class="w-10 h-10 grid place-items-center rounded-full hover:bg-ink-100" aria-label="Account">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user text-ink-700"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+			</a>
+
+			<!-- Shop Button -->
+			<a href="/shop" class="hidden md:inline-flex items-center h-10 px-4 rounded-full bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700 transition-colors">
+				Shop
 			</a>
 
 			<!-- Mobile Menu Button -->
