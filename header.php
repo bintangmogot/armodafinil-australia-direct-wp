@@ -20,8 +20,8 @@
 <div id="page" class="site">
 
 	<!-- TopBar -->
-	<div class="w-full bg-ink-900 text-white text-xs">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-center sm:justify-between gap-4">
+	<div class="w-full bg-ink-900 text-white text-[10px] sm:text-xs">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[2.25rem] py-1.5 flex flex-wrap items-center justify-center sm:justify-between gap-x-4 gap-y-1">
 			<p class="opacity-90 text-center sm:text-left">Premium cognitive support &middot; Australia-wide dispatch</p>
 			<p class="opacity-90 hidden md:block">6–12 business days &middot; discreet packaging</p>
 			<a href="/contact" class="hidden sm:inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
@@ -34,15 +34,15 @@
 
 	<!-- Navbar -->
 	<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-ink-200">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2 shrink-0">
-				<span class="w-9 h-9 rounded-xl bg-brand-600 grid place-items-center text-white shadow-soft">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-2 sm:gap-4">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2 shrink-0 min-w-0">
+				<span class="w-9 h-9 shrink-0 rounded-xl bg-brand-600 grid place-items-center text-white shadow-soft">
 					<!-- Sparkles Icon -->
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
 				</span>
-				<span class="leading-tight">
-					<span class="block font-serif text-lg font-semibold text-ink-900 leading-none"><?php bloginfo( 'name' ); ?></span>
-					<span class="block text-[10px] uppercase tracking-[0.18em] text-brand-700 mt-0.5"><?php bloginfo( 'description' ); ?></span>
+				<span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
+					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate"><?php bloginfo( 'name' ); ?></span>
+					<span class="block text-[10px] uppercase tracking-[0.18em] text-brand-700 mt-0.5 truncate"><?php bloginfo( 'description' ); ?></span>
 				</span>
 			</a>
 
