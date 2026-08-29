@@ -12,21 +12,34 @@ get_header( 'shop' );
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="text-center">
             <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5">Full catalogue</span>
-            <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900"><?php woocommerce_page_title(); ?></h1>
+            <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900">
+                <?php 
+                if ( is_search() ) {
+                    $sq = get_search_query();
+                    if ( empty($sq) ) {
+                        echo 'Products';
+                    } else {
+                        echo 'Search results: &ldquo;' . esc_html($sq) . '&rdquo;';
+                    }
+                } else {
+                    woocommerce_page_title(); 
+                }
+                ?>
+            </h1>
             <p class="mt-3 text-ink-700 max-w-2xl mx-auto">Compare prescription and OTC medicines by category, check ratings and prices in AUD, and add to cart in a few taps — shipped discreetly across Australia.</p>
         </div>
 
-        <div class="mt-10 flex flex-col md:flex-row md:items-center gap-4 justify-between">
-            <div class="hidden md:flex flex-wrap gap-2">
+        <div class="mt-10 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
+            <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar" style="scrollbar-width: none;">
                 <!-- Categories filter -->
-                <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="text-sm font-medium px-4 h-9 rounded-full border transition-colors <?php echo !is_product_category() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
+                <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="shrink-0 text-sm font-medium px-4 h-9 rounded-full border transition-colors flex items-center <?php echo !is_product_category() && !is_search() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
                 <?php
                 $product_categories = get_terms( 'product_cat', array('hide_empty' => true) );
                 if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
                     foreach ( $product_categories as $cat ) {
                         $is_current = is_product_category($cat->term_id);
                         $class = $is_current ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600';
-                        echo '<a href="' . esc_url( get_term_link( $cat ) ) . '" class="text-sm font-medium px-4 h-9 flex items-center rounded-full border transition-colors ' . $class . '">' . esc_html( $cat->name ) . '</a>';
+                        echo '<a href="' . esc_url( get_term_link( $cat ) ) . '" class="shrink-0 text-sm font-medium px-4 h-9 flex items-center rounded-full border transition-colors ' . $class . '">' . esc_html( $cat->name ) . '</a>';
                     }
                 }
                 ?>
