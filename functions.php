@@ -229,3 +229,5 @@ add_action('manage_review_posts_custom_column', function($column, $post_id) {
         }
     }
 }, 10, 2);
+
+require_once get_template_directory() . '/inc/ajax-reviews.php';
