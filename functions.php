@@ -113,47 +113,6 @@ add_action('wp_footer', function() {
     </script>
     <?php
 });
-add_action('acf/init', function() {
-    if( function_exists('acf_add_local_field_group') ):
-        acf_add_local_field_group(array(
-            'key' => 'group_product_notices',
-            'title' => 'Product Page Notices',
-            'fields' => array(
-                array(
-                    'key' => 'field_important_usage_note',
-                    'label' => 'Important Usage Note',
-                    'name' => 'important_usage_note',
-                    'type' => 'textarea',
-                    'instructions' => 'Use {product_name} to insert the current product name dynamically.',
-                    'default_value' => '{product_name} is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor\'s advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href="https://www.tga.gov.au/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Therapeutic Goods Administration (TGA)</a>.',
-                ),
-                array(
-                    'key' => 'field_medical_disclaimer_text',
-                    'label' => 'Medical Disclaimer',
-                    'name' => 'medical_disclaimer_text',
-                    'type' => 'textarea',
-                    'default_value' => 'This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer" class="font-semibold text-brand-800 hover:underline">Read our full medical disclaimer.</a>',
-                ),
-                array(
-                    'key' => 'field_medically_reviewed_by',
-                    'label' => 'Medically Reviewed By',
-                    'name' => 'medically_reviewed_by',
-                    'type' => 'text',
-                    'default_value' => 'Dr. Ginni Mansberg',
-                ),
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'theme-general-settings',
-                    ),
-                ),
-            ),
-        ));
-    endif;
-});
 // Register Review CPT
 add_action('init', function() {
     register_post_type('review', array(
