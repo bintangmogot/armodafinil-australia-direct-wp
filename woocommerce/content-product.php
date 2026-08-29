@@ -35,11 +35,16 @@ $rating = $product->get_average_rating();
         </span>
     </div>
     
-    <div class="p-5 border-t border-ink-100">
+    <div class="p-5 border-t border-ink-100 flex flex-col flex-1">
         <h3 class="font-serif text-lg font-semibold text-ink-900 group-hover:text-brand-700 transition-colors"><?php echo esc_html($product->get_name()); ?></h3>
-        <p class="mt-1 text-sm text-ink-500 line-clamp-2"><?php echo esc_html(wp_strip_all_tags($product->get_short_description())); ?></p>
+        <p class="mt-1 text-sm text-ink-500 line-clamp-2">
+            <?php 
+            $shop_text = get_field('shop_page_text', $product->get_id());
+            echo $shop_text ? esc_html(wp_strip_all_tags($shop_text)) : esc_html(wp_strip_all_tags($product->get_short_description())); 
+            ?>
+        </p>
         
-        <div class="mt-4 flex items-center justify-between">
+        <div class="mt-auto pt-4 flex items-center justify-between">
             <div class="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star text-amber-500"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <span class="text-sm font-medium text-ink-700"><?php echo number_format($rating, 1); ?></span>

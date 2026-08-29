@@ -83,10 +83,20 @@ foreach ( $attributes as $attribute ) {
             <div class="mt-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
                 <!-- Gallery -->
-                <div class="bg-white rounded-2xl border border-ink-200 overflow-hidden shadow-sm lg:sticky lg:top-24">
-                    <div class="aspect-square bg-brand-50">
-                        <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>" class="w-full h-full object-cover" />
+                <div class="lg:sticky lg:top-24">
+                    <div class="bg-white rounded-2xl border border-ink-200 overflow-hidden shadow-sm">
+                        <div class="aspect-square bg-brand-50">
+                            <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>" class="w-full h-full object-cover" />
+                        </div>
                     </div>
+                    <?php 
+                    $text_under_img = get_field('text_under_product_image', $product_id);
+                    if($text_under_img): 
+                    ?>
+                        <div class="mt-4 p-4 bg-white rounded-xl border border-ink-200 text-sm prose prose-ink prose-p:last:mb-0">
+                            <?php echo $text_under_img; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Info -->
@@ -110,7 +120,14 @@ foreach ( $attributes as $attribute ) {
 
                     <div class="mt-5 flex items-baseline gap-3 flex-wrap">
                         <span class="text-4xl font-semibold text-ink-900" id="dynamic-price"><?php echo $currency . number_format($variations[0]['price'], 2); ?></span>
-                        <span class="text-sm text-ink-500" id="dynamic-per-pill"></span>
+                        <span class="text-sm text-ink-500" id="dynamic-per-pill">
+                            <?php 
+                            $ppu = get_field('price_per_unit', $product_id);
+                            if ( ! $is_variable && $ppu ) {
+                                echo esc_html($ppu);
+                            }
+                            ?>
+                        </span>
                     </div>
 
                     <!-- Promo strip -->
@@ -220,9 +237,35 @@ foreach ( $attributes as $attribute ) {
     </div>
 
     <!-- Tabs and Description -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
-            <?php echo $full_description; ?>
+    <?php
+    $extra_tabs = get_field('extra_tabs', $product_id);
+    $has_tabs = !empty($extra_tabs);
+    ?>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-tabs-section">
+        <div class="mt-8 sm:mt-12">
+            <div class="border-b border-ink-200">
+                <nav class="-mb-px flex space-x-8 overflow-x-auto tab-navs" aria-label="Tabs">
+                    <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700" data-target="tab-description">
+                        Description
+                    </button>
+                    <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300 transition-colors" data-target="tab-extra-<?php echo $i; ?>">
+                        <?php echo esc_html($tab['tab_title']); ?>
+                    </button>
+                    <?php endforeach; endif; ?>
+                </nav>
+            </div>
+
+            <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
+                <div id="tab-description" class="tab-content block">
+                    <?php echo $full_description; ?>
+                </div>
+                <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
+                <div id="tab-extra-<?php echo $i; ?>" class="tab-content hidden">
+                    <?php echo $tab['tab_content']; ?>
+                </div>
+                <?php endforeach; endif; ?>
+            </div>
         </div>
     </div>
 
@@ -295,5 +338,32 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => updateUI(btn));
         });
     }
+
+    // Tabs Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active classes
+            tabBtns.forEach(b => {
+                b.classList.remove('border-brand-600', 'text-brand-700', 'active');
+                b.classList.add('border-transparent', 'text-ink-500');
+            });
+            tabContents.forEach(c => {
+                c.classList.remove('block');
+                c.classList.add('hidden');
+            });
+
+            // Add active classes
+            btn.classList.add('border-brand-600', 'text-brand-700', 'active');
+            btn.classList.remove('border-transparent', 'text-ink-500');
+            const target = document.getElementById(btn.dataset.target);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+        });
+    });
 });
 </script>
