@@ -468,6 +468,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Wishlist Integration
     const wishlistBtn = document.querySelector('button[aria-label="Wishlist"]');
     if (wishlistBtn) {
+        const syncWishlistState = () => {
+            const yithBtn = document.querySelector('.add_to_wishlist');
+            const yithExists = document.querySelector('.yith-wcwl-add-button.hide') || document.querySelector('.yith-wcwl-wishlistexistsbrowse') || document.querySelector('.yith-wcwl-wishlistaddedbrowse');
+            const tiBtn = document.querySelector('.tinvwl_add_to_wishlist_button');
+            
+            let isAdded = false;
+            
+            // Check YITH state
+            if (document.querySelector('.yith-wcwl-wishlistaddedbrowse.show, .yith-wcwl-wishlistexistsbrowse.show') || (yithBtn && yithBtn.classList.contains('added'))) {
+                isAdded = true;
+            }
+            
+            // Check TI state
+            if (tiBtn && (tiBtn.classList.contains('tinvwl-product-in-list') || tiBtn.classList.contains('in-wishlist'))) {
+                isAdded = true;
+            }
+            
+            if (isAdded) {
+                wishlistBtn.classList.add('text-brand-600', 'border-brand-600');
+                wishlistBtn.classList.remove('text-ink-500', 'border-ink-200');
+                wishlistBtn.querySelector('svg').classList.add('fill-brand-600');
+            } else {
+                wishlistBtn.classList.remove('text-brand-600', 'border-brand-600');
+                wishlistBtn.classList.add('text-ink-500', 'border-ink-200');
+                wishlistBtn.querySelector('svg').classList.remove('fill-brand-600');
+            }
+        };
+
+        // Run on load and periodically to catch ajax updates
+        syncWishlistState();
+        setInterval(syncWishlistState, 500);
+
         wishlistBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const yithBtn = document.querySelector('.add_to_wishlist');
@@ -475,13 +507,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (yithBtn) {
                 yithBtn.click();
-                // Optionally give feedback immediately
-                wishlistBtn.classList.add('text-brand-600', 'border-brand-600');
-                wishlistBtn.querySelector('svg').classList.add('fill-brand-600');
+                // State will sync automatically via setInterval
             } else if (tiBtn) {
                 tiBtn.click();
-                wishlistBtn.classList.add('text-brand-600', 'border-brand-600');
-                wishlistBtn.querySelector('svg').classList.add('fill-brand-600');
             } else {
                 alert('Wishlist plugin is not active.');
             }
