@@ -26,7 +26,17 @@ require get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/cpt.php';
 
 
-if( function_exists('acf_add_options_page') ) { acf_add_options_page(array('page_title' => 'Theme General Settings', 'menu_title' => 'Theme Settings', 'menu_slug' => 'theme-general-settings', 'capability' => 'edit_posts', 'redirect' => false)); }
+add_action('acf/init', function() {
+    if( function_exists('acf_add_options_page') ) { 
+        acf_add_options_page(array(
+            'page_title' => 'Theme General Settings', 
+            'menu_title' => 'Theme Settings', 
+            'menu_slug'  => 'theme-general-settings', 
+            'capability' => 'edit_posts', 
+            'redirect'   => false
+        )); 
+    }
+});
 
 
 require_once get_template_directory() . '/inc/acf-options.php';
