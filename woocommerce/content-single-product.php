@@ -193,7 +193,7 @@ foreach ( $attributes as $attribute ) {
                             <button type="button" aria-label="Wishlist" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
                             </button>
-                            <button type="button" onclick="if(navigator.share){navigator.share({title: document.title, url: window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link copied to clipboard!');}" aria-label="Share" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors" title="Share this product">
+                            <button type="button" aria-label="Share" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors" title="Share this product">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
                             </button>
                         </div>
@@ -465,6 +465,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    // Share Integration
+    const shareBtn = document.querySelector('button[aria-label="Share"]');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (navigator.share && window.isSecureContext) {
+                navigator.share({
+                    title: document.title,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback: Copy to clipboard
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                } else {
+                    // Old school fallback for non-https local dev
+                    const textArea = document.createElement('textarea');
+                    textArea.value = window.location.href;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        alert('Link copied to clipboard!');
+                    } catch (err) {
+                        console.error('Unable to copy', err);
+                    }
+                    document.body.removeChild(textArea);
+                }
+            }
+        });
+    }
+
     // Wishlist Integration
     const wishlistBtn = document.querySelector('button[aria-label="Wishlist"]');
     if (wishlistBtn) {
