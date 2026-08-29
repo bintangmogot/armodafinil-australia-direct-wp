@@ -475,6 +475,15 @@ foreach ( $attributes as $attribute ) {
         ?>
     </div>
 
+    <?php 
+    if( have_rows('page_modules', get_the_ID()) ):
+        while( have_rows('page_modules', get_the_ID()) ) : the_row();
+            $layout = get_row_layout();
+            get_template_part('modules/content', $layout);
+        endwhile;
+    endif;
+    ?>
+
     <?php get_template_part('template-parts/order-cta'); ?>
 
 </div>
