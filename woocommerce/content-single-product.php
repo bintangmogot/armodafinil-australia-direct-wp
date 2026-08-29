@@ -170,32 +170,36 @@ foreach ( $attributes as $attribute ) {
                         <?php endif; ?>
 
                         <!-- Buy Row -->
-                        <div class="mt-6 flex flex-wrap items-center gap-3">
-                            <div class="inline-flex items-center border border-ink-200 rounded-full overflow-hidden bg-white shrink-0">
-                                <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="minus">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus text-ink-700"><path d="M5 12h14"/></svg>
-                                </button>
-                                <input type="number" name="quantity" value="1" min="1" class="qty-input w-10 text-center text-sm font-semibold border-none p-0 outline-none" style="-moz-appearance: textfield;" />
-                                <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="plus">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus text-ink-700"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                        <div class="mt-6 flex flex-col xl:flex-row items-stretch xl:items-center gap-3">
+                            <div class="flex items-center gap-3 w-full xl:w-auto">
+                                <div class="inline-flex items-center border border-ink-200 rounded-full overflow-hidden bg-white shrink-0">
+                                    <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="minus">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus text-ink-700"><path d="M5 12h14"/></svg>
+                                    </button>
+                                    <input type="number" name="quantity" value="1" min="1" class="qty-input w-10 text-center text-sm font-semibold border-none p-0 outline-none" style="-moz-appearance: textfield;" />
+                                    <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="plus">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus text-ink-700"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </button>
+                                </div>
+
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="flex-1 xl:flex-none inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors whitespace-nowrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
+                                    Add to Cart
                                 </button>
                             </div>
-
-                            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
-                                Add to Cart
-                            </button>
                             
-                            <button type="button" onclick="document.querySelector('form.cart').submit(); setTimeout(()=>window.location.href='/checkout/', 500);" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-ink-900 hover:bg-ink-800 text-white font-semibold transition-colors">
-                                Buy now <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </button>
+                            <div class="flex items-center gap-3 w-full xl:w-auto">
+                                <button type="button" onclick="document.querySelector('form.cart').submit(); setTimeout(()=>window.location.href='/checkout/', 500);" class="flex-1 xl:flex-none inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-6 rounded-full bg-ink-900 hover:bg-ink-800 text-white font-semibold transition-colors whitespace-nowrap">
+                                    Buy now <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </button>
 
-                            <button type="button" aria-label="Wishlist" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                            </button>
-                            <button type="button" aria-label="Share" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors" title="Share this product">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
-                            </button>
+                                <button type="button" aria-label="Wishlist" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                                </button>
+                                <button type="button" aria-label="Share" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors" title="Share this product">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                                </button>
+                            </div>
                         </div>
                         <?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                     </form>
