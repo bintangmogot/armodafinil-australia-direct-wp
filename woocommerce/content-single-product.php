@@ -314,6 +314,145 @@ foreach ( $attributes as $attribute ) {
     </div>
     <?php endif; ?>
 
+    <!-- Important Usage Note and Disclaimer -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div class="space-y-4 max-w-4xl mx-auto">
+            <!-- Important Usage Note -->
+            <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 sm:p-5 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert text-amber-600 shrink-0 mt-0.5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                <div>
+                    <h4 class="font-bold text-amber-900 text-sm mb-1">Important Usage Note</h4>
+                    <p class="text-[13px] text-amber-900/90 leading-relaxed">
+                        <?php echo esc_html($product->get_name()); ?> is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor's advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href="https://www.tga.gov.au/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Therapeutic Goods Administration (TGA)</a>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Informational Disclaimer -->
+            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert text-brand-700 shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                <div>
+                    <p class="text-[13px] text-slate-700 leading-relaxed">
+                        This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer" class="font-semibold text-brand-800 hover:underline">Read our full medical disclaimer.</a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Medically reviewed by -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 px-1">
+                <div>Medically reviewed by: <span class="font-semibold text-slate-700">Dr. Ginni Mansberg</span> (Physician)</div>
+                <div>Last updated: <?php echo date('F Y'); ?></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="bg-slate-50 border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <?php
+                $reviews = get_posts([
+                    'post_type' => 'review',
+                    'posts_per_page' => -1,
+                    'orderby' => 'date',
+                    'order' => 'DESC',
+                    'meta_query' => array(
+                        array(
+                            'key'     => 'linked_product',
+                            'value'   => get_the_ID(),
+                            'compare' => '='
+                        )
+                    )
+                ]);
+                $review_count = count($reviews);
+                
+                $total_rating = 0;
+                $average_rating = 5.0; // default if no reviews
+                if ($review_count > 0) {
+                    foreach ($reviews as $r) {
+                        $rating_val = get_field('rating', $r->ID);
+                        $total_rating += $rating_val ? (float)$rating_val : 5.0;
+                    }
+                    $average_rating = round($total_rating / $review_count, 1);
+                }
+                $average_rating_formatted = number_format($average_rating, 1);
+                $rounded_rating = round($average_rating);
+                ?>
+
+                <div class="flex flex-col items-center justify-center text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Customer Reviews</h2>
+                    
+                    <?php if ($review_count > 0): ?>
+                    <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-0.5">
+                            <?php for ($i = 0; $i < 5; $i++): ?>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="w-6 h-6 <?php echo ($i < $rounded_rating) ? 'text-amber-400' : 'text-slate-200'; ?>">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                </svg>
+                            <?php endfor; ?>
+                        </div>
+                        <div class="h-6 w-px bg-slate-200 hidden sm:block"></div>
+                        <div class="flex items-baseline gap-1.5">
+                            <span class="text-xl font-bold text-slate-900"><?php echo $average_rating_formatted; ?></span>
+                            <span class="text-sm font-medium text-slate-500">out of 5 (<?php echo $review_count; ?> reviews)</span>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="space-y-4">
+                    <?php if ($reviews): ?>
+                        <?php foreach ($reviews as $r): 
+                            $post_id = $r->ID;
+                            $title = get_the_title($post_id);
+                            $body = get_post_field('post_content', $post_id);
+                            $reviewer = get_field('name', $post_id) ?: $r->post_title;
+                            $meta = get_field('reviewer_meta', $post_id) ?: "Verified Buyer";
+                            $rating_val = get_field('rating', $post_id) ?: 5;
+                        ?>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm transition-shadow hover:shadow-md">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 shrink-0 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm uppercase">
+                                        <?php echo substr(esc_html($reviewer), 0, 1); ?>
+                                    </div>
+                                    <div>
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <p class="font-bold text-sm text-slate-900"><?php echo esc_html($reviewer); ?></p>
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-50 text-[10px] font-bold text-green-700 uppercase tracking-wide">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                                                <?php echo esc_html($meta); ?>
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center gap-0.5 mt-1 text-amber-400">
+                                            <?php for ($stars = 0; $stars < 5; $stars++): ?>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="<?php echo ($stars < $rating_val) ? 'text-amber-400' : 'text-slate-200'; ?>">
+                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                                </svg>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-slate-400 font-medium whitespace-nowrap">
+                                    <?php echo get_the_date('M j, Y', $post_id); ?>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-base text-slate-900 mb-2"><?php echo esc_html($title); ?></h4>
+                            <div class="text-sm text-slate-600 leading-relaxed">
+                                <?php echo wp_kses_post($body); ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="text-center py-12 bg-white rounded-2xl border border-slate-200 border-dashed">
+                            <p class="text-slate-500 font-medium">No reviews yet for this product.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php get_template_part('template-parts/order-cta'); ?>
 
 </div>
