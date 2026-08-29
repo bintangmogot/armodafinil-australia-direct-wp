@@ -357,7 +357,7 @@ foreach ( $attributes as $attribute ) {
     </div>
 
     <!-- Reviews Section -->
-    <div class="bg-slate-50 border-t border-slate-200 py-16">
+    <div id="reviews" class="bg-slate-50 border-t border-slate-200 py-16 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mx-auto">
                 <?php
