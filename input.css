@@ -73,14 +73,16 @@ body {
 .tinv-wishlist .tinvwl-button,
 .tinv-wishlist button.button,
 .tinv-wishlist input.button,
+.tinv-wishlist a.button,
 .tinv-modal .button,
 .tinvwl-popup .button,
 .tinv-wishlist .tinvwl-btn {
-  @apply inline-flex items-center justify-center h-12 px-8 rounded-full bg-brand-600 text-white font-semibold transition-colors border-0 !important;
+  @apply inline-flex items-center justify-center h-12 px-6 rounded-full bg-brand-600 text-white font-semibold transition-colors border-0 whitespace-nowrap text-sm !important;
 }
 .tinv-wishlist .tinvwl-button:hover,
 .tinv-wishlist button.button:hover,
 .tinv-wishlist input.button:hover,
+.tinv-wishlist a.button:hover,
 .tinv-modal .button:hover,
 .tinvwl-popup .button:hover,
 .tinv-wishlist .tinvwl-btn:hover {
