@@ -98,6 +98,19 @@ body {
   @apply bg-ink-800 !important;
 }
 
+/* Bulk action secondary buttons */
+.tinv-wishlist tfoot button,
+.tinv-wishlist .tinvwl-to-left button,
+.tinv-wishlist .tinvwl-to-right button,
+.tinv-wishlist button[name^="tinvwl-action"] {
+  @apply bg-white border border-ink-200 text-ink-700 hover:bg-ink-50 hover:text-brand-700 shadow-sm px-6 h-12 ml-2 whitespace-nowrap !important;
+}
+
+/* Wishlist dropdown */
+.tinv-wishlist select {
+  @apply h-12 border-ink-200 rounded-xl px-4 text-ink-700 bg-white min-w-[140px] focus:ring-brand-500 focus:border-brand-500 !important;
+}
+
 /* Wishlist table */
 .tinv-wishlist table.tinvwl-table-manage-list {
   @apply border border-ink-200 rounded-xl overflow-hidden shadow-none;
