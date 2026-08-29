@@ -77,20 +77,14 @@ get_header( 'shop' );
                 ?>
             </div>
 
-            <div class="mt-12 flex justify-center custom-pagination">
+            <div class="mt-12 flex justify-center">
                 <?php
-                echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
-                    'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
-                    'format'       => '',
-                    'add_args'     => false,
-                    'current'      => max( 1, get_query_var( 'paged' ) ),
-                    'total'        => $wp_query->max_num_pages,
-                    'prev_text'    => '&larr;',
-                    'next_text'    => '&rarr;',
-                    'type'         => 'list',
-                    'end_size'     => 3,
-                    'mid_size'     => 3,
-                ) ) );
+                $current_page = max(1, get_query_var('paged'));
+                $total_pages = $wp_query->max_num_pages;
+                if ($current_page < $total_pages) {
+                    $next_url = get_pagenum_link($current_page + 1);
+                    echo '<a href="' . esc_url($next_url) . '" class="inline-flex items-center justify-center h-11 px-8 rounded-full bg-brand-50 text-brand-700 font-semibold hover:bg-brand-600 hover:text-white transition-colors">Load more</a>';
+                }
                 ?>
             </div>
 

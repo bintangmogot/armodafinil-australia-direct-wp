@@ -31,3 +31,6 @@ if( function_exists('acf_add_options_page') ) { acf_add_options_page(array('page
 
 require_once get_template_directory() . '/inc/acf-options.php';
 
+
+add_filter( 'loop_shop_per_page', function() { return 20; }, 20 );
+

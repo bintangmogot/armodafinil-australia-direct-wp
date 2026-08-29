@@ -7,7 +7,6 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-// Ensure visibility.
 if ( empty( $product ) || ! $product->is_visible() ) {
     return;
 }
@@ -22,40 +21,44 @@ $variations = [];
 if ( $is_variable ) {
     $available_variations = $product->get_available_variations();
     foreach ( $available_variations as $var ) {
-        // Find the "Pack Size" or "Tablets" attribute
         $qty = 0;
         foreach($var['attributes'] as $key => $val) {
-            $qty = $val; // fallback assuming only one attribute
+            $qty = $val;
             break;
         }
         $variations[] = array(
             'id' => $var['variation_id'],
             'qty' => $qty,
-            'price' => $var['display_price']
+            'price' => $var['display_price'],
+            'attributes_raw' => $var['attributes']
         );
     }
 } else {
-    // Fake a single variant for the UI
     $variations[] = array(
         'id' => 0,
         'qty' => '1 Pack',
-        'price' => wc_get_price_to_display( $product )
+        'price' => wc_get_price_to_display( $product ),
+        'attributes_raw' => []
     );
 }
 
-$currency = get_woocommerce_currency_symbol();
+$currency = html_entity_decode(get_woocommerce_currency_symbol());
 $review_count = $product->get_review_count();
 $average_rating = $product->get_average_rating();
-$short_description = apply_filters( 'woocommerce_short_description', $product->get_short_description() );
 $full_description = apply_filters( 'the_content', $product->get_description() );
 
-// Try to get specs from ACF or WooCommerce attributes
+// Specs
 $specs = array();
 $attributes = $product->get_attributes();
 foreach ( $attributes as $attribute ) {
-    $specs[$attribute->get_name()] = $attribute->get_options()[0];
+    if ( $attribute->get_name() === 'package-size' && $is_variable ) continue; // Optionally hide the main variation attribute from specs if you want, but we'll leave it or format it.
+    if ( $attribute->is_taxonomy() ) {
+        $values = wc_get_product_terms( $product_id, $attribute->get_name(), array( 'fields' => 'names' ) );
+        $specs[ wc_attribute_label( $attribute->get_name() ) ] = implode( ', ', $values );
+    } else {
+        $specs[ $attribute->get_name() ] = implode( ', ', $attribute->get_options() );
+    }
 }
-
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
     
@@ -130,8 +133,11 @@ foreach ( $attributes as $attribute ) {
                             </div>
                             
                             <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2" id="variant-buttons">
-                                <?php foreach($variations as $i => $v): ?>
-                                    <button type="button" data-vid="<?php echo esc_attr($v['id']); ?>" data-price="<?php echo esc_attr($v['price']); ?>" data-qty="<?php echo esc_attr($v['qty']); ?>" class="variant-btn p-3 rounded-xl border text-left transition-colors <?php echo $i === 0 ? 'bg-brand-600 text-white border-brand-600 active' : 'bg-white text-ink-900 border-ink-200 hover:border-brand-500'; ?>">
+                                <?php foreach($variations as $i => $v): 
+                                    // Serialize attributes for JS parsing
+                                    $attrs_json = htmlspecialchars(json_encode($v['attributes_raw']), ENT_QUOTES, 'UTF-8');
+                                ?>
+                                    <button type="button" data-vid="<?php echo esc_attr($v['id']); ?>" data-price="<?php echo esc_attr($v['price']); ?>" data-qty="<?php echo esc_attr($v['qty']); ?>" data-attrs="<?php echo $attrs_json; ?>" class="variant-btn p-3 rounded-xl border text-left transition-colors <?php echo $i === 0 ? 'bg-brand-600 text-white border-brand-600 active' : 'bg-white text-ink-900 border-ink-200 hover:border-brand-500'; ?>">
                                         <div class="text-lg font-semibold"><?php echo esc_html($v['qty']); ?></div>
                                         <div class="text-xs <?php echo $i === 0 ? 'text-white/80' : 'text-ink-500'; ?> price-label"><?php echo $currency . number_format($v['price'], 2); ?></div>
                                     </button>
@@ -139,23 +145,22 @@ foreach ( $attributes as $attribute ) {
                             </div>
                             
                             <input type="hidden" name="variation_id" class="variation_id" value="<?php echo esc_attr($variations[0]['id']); ?>" />
-                            <!-- Hardcode attribute assuming it's pa_package-size, update logic if dynamic -->
-                            <?php 
-                            $attr_name = 'attribute_pa_package-size'; 
-                            $attr_val = strtolower($variations[0]['qty']); // might need to be sanitized slug
-                            ?>
-                            <input type="hidden" name="attribute_pa_package-size" class="variant_attr" value="<?php echo esc_attr($attr_val); ?>" />
+                            <div id="dynamic-attributes-container">
+                                <?php foreach($variations[0]['attributes_raw'] as $key => $val): ?>
+                                    <input type="hidden" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($val); ?>" />
+                                <?php endforeach; ?>
+                            </div>
                         <?php endif; ?>
 
                         <!-- Buy Row -->
                         <div class="mt-6 flex flex-wrap items-center gap-3">
-                            <div class="inline-flex items-center border border-ink-200 rounded-full overflow-hidden bg-white">
+                            <div class="inline-flex items-center border border-ink-200 rounded-full overflow-hidden bg-white shrink-0">
                                 <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="minus">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus w-4 h-4"><path d="M5 12h14"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus text-ink-700"><path d="M5 12h14"/></svg>
                                 </button>
                                 <input type="number" name="quantity" value="1" min="1" class="qty-input w-10 text-center text-sm font-semibold border-none p-0 outline-none" style="-moz-appearance: textfield;" />
                                 <button type="button" class="qty-btn w-10 h-11 grid place-items-center hover:bg-ink-100" data-action="plus">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus text-ink-700"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                                 </button>
                             </div>
 
@@ -163,20 +168,32 @@ foreach ( $attributes as $attribute ) {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
                                 Add to Cart
                             </button>
+                            
+                            <button type="button" onclick="document.querySelector('form.cart').submit(); setTimeout(()=>window.location.href='/checkout/', 500);" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-ink-900 hover:bg-ink-800 text-white font-semibold transition-colors">
+                                Buy now <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </button>
+
+                            <button type="button" aria-label="Wishlist" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                            </button>
+                            <button type="button" aria-label="Share" class="w-11 h-11 shrink-0 grid place-items-center rounded-full border border-ink-200 hover:border-brand-500 hover:text-brand-600 text-ink-500 bg-white transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                            </button>
                         </div>
                     </form>
 
                     <!-- Trust row -->
                     <div class="mt-6 grid grid-cols-3 gap-3">
-                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center gap-2 text-xs font-medium text-ink-700"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4 text-brand-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> AU-wide dispatch</div>
-                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center gap-2 text-xs font-medium text-ink-700"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock w-4 h-4 text-brand-600"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Encrypted checkout</div>
-                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center gap-2 text-xs font-medium text-ink-700"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-4 h-4 text-brand-600"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Quality verified</div>
+                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center justify-center sm:justify-start gap-2 text-xs font-medium text-ink-700 text-center sm:text-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4 text-brand-600 shrink-0"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> <span class="hidden sm:inline">AU-wide dispatch</span></div>
+                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center justify-center sm:justify-start gap-2 text-xs font-medium text-ink-700 text-center sm:text-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock w-4 h-4 text-brand-600 shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span class="hidden sm:inline">Encrypted checkout</span></div>
+                        <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center justify-center sm:justify-start gap-2 text-xs font-medium text-ink-700 text-center sm:text-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-4 h-4 text-brand-600 shrink-0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> <span class="hidden sm:inline">Quality verified</span></div>
                     </div>
 
                     <!-- Specs Accordion (Details tag) -->
+                    <?php if(!empty($specs)): ?>
                     <div class="mt-6 border border-ink-200 rounded-2xl bg-white overflow-hidden">
                         <details class="group [&_summary::-webkit-details-marker]:hidden" open>
-                            <summary class="w-full flex items-center justify-between px-5 py-3 cursor-pointer">
+                            <summary class="w-full flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-ink-50">
                                 <span class="font-semibold text-ink-900 inline-flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check w-4 h-4 text-brand-600"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg> 
                                     Product specs <span class="text-ink-500 font-normal">(<?php echo count($specs); ?>)</span>
@@ -186,7 +203,7 @@ foreach ( $attributes as $attribute ) {
                             <div class="px-5 pb-5 border-t border-ink-200 pt-4">
                                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
                                     <?php foreach($specs as $k => $v): ?>
-                                    <div class="flex justify-between gap-4">
+                                    <div class="flex justify-between gap-4 border-b border-ink-100 pb-2 sm:border-0 sm:pb-0">
                                         <dt class="text-ink-500 capitalize"><?php echo esc_html(str_replace('pa_', '', $k)); ?></dt>
                                         <dd class="text-ink-900 font-medium text-right"><?php echo esc_html($v); ?></dd>
                                     </div>
@@ -195,6 +212,7 @@ foreach ( $attributes as $attribute ) {
                             </div>
                         </details>
                     </div>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -228,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Variant Selection logic
     const buttons = document.querySelectorAll('.variant-btn');
     const inputVid = document.querySelector('.variation_id');
-    const inputAttr = document.querySelector('.variant_attr');
+    const dynamicAttrsContainer = document.getElementById('dynamic-attributes-container');
     const dynamicPrice = document.getElementById('dynamic-price');
     const dynamicPerPill = document.getElementById('dynamic-per-pill');
     const currency = '<?php echo $currency; ?>';
@@ -249,9 +267,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const vid = btn.dataset.vid;
         const price = parseFloat(btn.dataset.price);
         const qty = parseInt(btn.dataset.qty.replace(/\D/g, '')) || 1;
+        const attrs = JSON.parse(btn.dataset.attrs);
 
         if (inputVid) inputVid.value = vid;
-        if (inputAttr) inputAttr.value = btn.dataset.qty.toLowerCase();
+        
+        if (dynamicAttrsContainer) {
+            dynamicAttrsContainer.innerHTML = '';
+            for(const key in attrs) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = attrs[key];
+                dynamicAttrsContainer.appendChild(input);
+            }
+        }
 
         dynamicPrice.innerText = currency + price.toFixed(2);
         if (qty > 1) {
@@ -265,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         buttons.forEach(btn => {
             btn.addEventListener('click', () => updateUI(btn));
         });
-        updateUI(buttons[0]); // init
     }
 });
 </script>

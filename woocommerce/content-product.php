@@ -25,7 +25,7 @@ $rating = $product->get_average_rating();
 ?>
 <a href="<?php echo esc_url( $link ); ?>" <?php wc_product_class( 'group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift block', $product ); ?>>
     
-    <div class="aspect-square bg-brand-50 relative p-6">
+    <div class="aspect-square bg-brand-50 relative">
         <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 mix-blend-multiply drop-shadow-sm" />
         <span class="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider text-brand-800 bg-brand-200/80 backdrop-blur-sm px-2.5 py-1 rounded-full">
             <?php 
@@ -49,7 +49,7 @@ $rating = $product->get_average_rating();
             </div>
         </div>
         
-        <div class="mt-4 w-full h-10 inline-flex items-center justify-center rounded-xl bg-brand-50 text-brand-700 font-semibold text-sm group-hover:bg-brand-600 group-hover:text-white transition-colors">
+        <div class="mt-4 w-full h-10 inline-flex items-center justify-center rounded-xl bg-brand-600 text-white font-semibold text-sm group-hover:bg-brand-700 transition-colors">
             View product
         </div>
     </div>
