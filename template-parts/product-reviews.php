@@ -136,7 +136,7 @@ foreach($counts as $star => $count) {
                 
                 <div class="flex items-center justify-between mt-auto border-t border-slate-100 pt-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 shrink-0 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[11px] uppercase tracking-wider">
+                        <div class="w-9 h-9 shrink-0 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-[11px] uppercase tracking-wider">
                             <?php echo esc_html($initials); ?>
                         </div>
                         <div class="flex flex-col">
@@ -163,7 +163,7 @@ foreach($counts as $star => $count) {
         <!-- Form -->
         <div class="bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 mt-4 shadow-sm relative overflow-hidden">
             <div class="flex items-center gap-3 mb-6 pb-6 border-b border-slate-100">
-                <div class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 </div>
                 <div>
@@ -189,21 +189,21 @@ foreach($counts as $star => $count) {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Name</label>
-                        <input type="text" name="reviewer_name" required placeholder="John D." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-slate-400">
+                        <input type="text" name="reviewer_name" required placeholder="John D." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Email</label>
-                        <input type="email" name="reviewer_email" required placeholder="john@example.com" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-slate-400">
+                        <input type="email" name="reviewer_email" required placeholder="john@example.com" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Title</label>
-                        <input type="text" name="review_title" required placeholder="Great product!" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-slate-400">
+                        <input type="text" name="review_title" required placeholder="Great product!" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Your Review</label>
-                    <textarea name="review_content" required rows="4" placeholder="Share your experience..." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-slate-400 resize-none"></textarea>
+                    <textarea name="review_content" required rows="4" placeholder="Share your experience..." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400 resize-none"></textarea>
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
@@ -211,7 +211,7 @@ foreach($counts as $star => $count) {
                         Protected by reCAPTCHA. Google <a href="#" class="hover:underline">Privacy Policy</a> & <a href="#" class="hover:underline">Terms</a> apply.
                     </div>
                     <div class="flex flex-col items-end w-full sm:w-auto">
-                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-8 py-3.5 rounded-lg transition-colors focus:ring-4 focus:ring-indigo-600/20">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-8 py-3.5 rounded-lg transition-colors focus:ring-4 focus:ring-brand-600/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                             Submit Review
                         </button>
