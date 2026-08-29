@@ -1,11 +1,11 @@
-﻿<?php
+<?php
 /**
  * Related Products
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 if ( $related_products ) : ?>
 	<section class="related products mt-0">
-		<ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+		<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
 			<?php foreach ( $related_products as $related_product ) : ?>
 					<?php
 					$post_object = get_post( $related_product->get_id() );
@@ -13,7 +13,7 @@ if ( $related_products ) : ?>
 					wc_get_template_part( 'content', 'product' );
 					?>
 			<?php endforeach; ?>
-		</ul>
+		</div>
 	</section>
 <?php
 endif;

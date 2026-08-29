@@ -23,7 +23,7 @@ if ( $is_variable ) {
 
 $rating = $product->get_average_rating();
 ?>
-<div <?php wc_product_class( 'group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift flex flex-col relative', $product ); ?>>
+<div class="product group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift flex flex-col relative" data-product-id="<?php echo $product->get_id(); ?>">
     
     <div class="aspect-square bg-brand-50 relative">
         <a href="<?php echo esc_url( $link ); ?>" class="block w-full h-full">
