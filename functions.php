@@ -154,3 +154,119 @@ add_action('acf/init', function() {
         ));
     endif;
 });
+// Register Review CPT
+add_action('init', function() {
+    register_post_type('review', array(
+        'labels'             => array(
+            'name'                  => 'Reviews',
+            'singular_name'         => 'Review',
+            'menu_name'             => 'Reviews',
+            'add_new'               => 'Add New Review',
+            'edit_item'             => 'Edit Review',
+            'all_items'             => 'All Reviews',
+            'search_items'          => 'Search Reviews',
+            'not_found'             => 'No reviews found.',
+        ),
+        'public'             => false,
+        'publicly_queryable' => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'capability_type'    => 'post',
+        'menu_position'      => 20,
+        'menu_icon'          => 'dashicons-star-filled',
+        'supports'           => array('title', 'editor'),
+    ));
+});
+
+// ACF Fields for Review
+add_action('acf/init', function() {
+    if( function_exists('acf_add_local_field_group') ):
+        acf_add_local_field_group(array(
+            'key' => 'group_review_fields',
+            'title' => 'Review Details',
+            'fields' => array(
+                array(
+                    'key' => 'field_review_rating',
+                    'label' => 'Rating',
+                    'name' => 'rating',
+                    'type' => 'number',
+                    'min' => 1,
+                    'max' => 5,
+                    'default_value' => 5,
+                ),
+                array(
+                    'key' => 'field_review_name',
+                    'label' => 'Reviewer Name',
+                    'name' => 'name',
+                    'type' => 'text',
+                ),
+                array(
+                    'key' => 'field_review_meta',
+                    'label' => 'Reviewer Meta (Job/Location)',
+                    'name' => 'reviewer_meta',
+                    'type' => 'text',
+                    'default_value' => 'Verified Buyer',
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'review',
+                    ),
+                ),
+            ),
+            'position' => 'normal',
+        ));
+
+        acf_add_local_field_group(array(
+            'key' => 'group_review_linked_product',
+            'title' => 'Linked Product',
+            'fields' => array(
+                array(
+                    'key' => 'field_review_linked_product',
+                    'label' => 'Linked Product',
+                    'name' => 'linked_product',
+                    'type' => 'post_object',
+                    'post_type' => array('product'),
+                    'return_format' => 'id',
+                    'ui' => 1,
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'review',
+                    ),
+                ),
+            ),
+            'position' => 'side',
+        ));
+    endif;
+});
+
+// Admin Columns for Reviews
+add_filter('manage_review_posts_columns', function($columns) {
+    $new_columns = array();
+    foreach($columns as $key => $title) {
+        if ($key == 'date') {
+            $new_columns['linked_product'] = 'Linked Product';
+        }
+        $new_columns[$key] = $title;
+    }
+    return $new_columns;
+});
+
+add_action('manage_review_posts_custom_column', function($column, $post_id) {
+    if ($column === 'linked_product') {
+        $product_id = get_field('linked_product', $post_id);
+        if ($product_id) {
+            echo '<a href="' . get_edit_post_link($product_id) . '">' . get_the_title($product_id) . '</a>';
+        } else {
+            echo '—';
+        }
+    }
+}, 10, 2);
