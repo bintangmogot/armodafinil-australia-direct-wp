@@ -130,6 +130,12 @@ foreach ( $attributes as $attribute ) {
                         </span>
                     </div>
 
+                    <?php if ( $short_description = apply_filters( 'woocommerce_short_description', $product->get_short_description() ) ) : ?>
+                        <div class="mt-6 prose prose-ink prose-sm">
+                            <?php echo $short_description; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <!-- Promo strip -->
                     <div class="mt-5 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3 flex-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-5 h-5 text-amber-600 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
@@ -206,23 +212,49 @@ foreach ( $attributes as $attribute ) {
                         <div class="p-3 rounded-lg bg-white border border-ink-200 flex items-center justify-center sm:justify-start gap-2 text-xs font-medium text-ink-700 text-center sm:text-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-4 h-4 text-brand-600 shrink-0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> <span class="hidden sm:inline">Quality verified</span></div>
                     </div>
 
-                    <!-- Specs Accordion (Details tag) -->
-                    <?php if(!empty($specs)): ?>
-                    <div class="mt-6 border border-ink-200 rounded-2xl bg-white overflow-hidden">
-                        <details class="group [&_summary::-webkit-details-marker]:hidden" open>
-                            <summary class="w-full flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-ink-50">
-                                <span class="font-semibold text-ink-900 inline-flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check w-4 h-4 text-brand-600"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg> 
-                                    Product specs <span class="text-ink-500 font-normal">(<?php echo count($specs); ?>)</span>
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down w-4 h-4 text-ink-500 transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+                    <!-- Product Specs Accordion -->
+                    <?php
+                    $custom_specs = get_field('custom_product_specs', $product_id);
+                    $total_specs_count = count($attributes) + (is_array($custom_specs) ? count($custom_specs) : 0);
+                    if ($total_specs_count > 0):
+                    ?>
+                    <div class="mt-8 border border-ink-200 rounded-xl overflow-hidden bg-white">
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                <div class="flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 text-brand-600"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                                    <span class="font-medium text-ink-900">Product specs</span>
+                                    <span class="text-ink-500 text-sm">(<?php echo $total_specs_count; ?>)</span>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-ink-500 transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
                             </summary>
-                            <div class="px-5 pb-5 border-t border-ink-200 pt-4">
-                                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                                    <?php foreach($specs as $k => $v): ?>
-                                    <div class="flex justify-between gap-4 border-b border-ink-100 pb-2 sm:border-0 sm:pb-0">
-                                        <dt class="text-ink-500 capitalize"><?php echo esc_html(str_replace('pa_', '', $k)); ?></dt>
-                                        <dd class="text-ink-900 font-medium text-right"><?php echo esc_html($v); ?></dd>
+                            <div class="px-4 pb-4 border-t border-ink-100 text-sm pt-4">
+                                <dl class="divide-y divide-ink-100">
+                                    <?php if(is_array($custom_specs)): foreach($custom_specs as $spec): ?>
+                                    <div class="py-3 flex justify-between gap-4">
+                                        <dt class="text-ink-500 min-w-[120px]"><?php echo esc_html($spec['spec_name']); ?></dt>
+                                        <dd class="text-ink-900 font-medium text-right"><?php echo esc_html($spec['spec_value']); ?></dd>
+                                    </div>
+                                    <?php endforeach; endif; ?>
+                                    
+                                    <?php foreach ( $attributes as $attribute ) : ?>
+                                    <div class="py-3 flex justify-between gap-4">
+                                        <dt class="text-ink-500 min-w-[120px]"><?php echo wc_attribute_label( $attribute->get_name() ); ?></dt>
+                                        <dd class="text-ink-900 font-medium text-right">
+                                            <?php
+                                            $values = array();
+                                            if ( $attribute->is_taxonomy() ) {
+                                                $attribute_values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'all' ) );
+                                                foreach ( $attribute_values as $attribute_value ) {
+                                                    $value_name = esc_html( $attribute_value->name );
+                                                    $values[] = $value_name;
+                                                }
+                                            } else {
+                                                $values = $attribute->get_options();
+                                            }
+                                            echo wp_kses_post( implode( ', ', $values ) );
+                                            ?>
+                                        </dd>
                                     </div>
                                     <?php endforeach; ?>
                                 </dl>

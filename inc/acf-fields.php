@@ -472,4 +472,43 @@ acf_add_local_field_group(array(
 	),
 ));
 
+acf_add_local_field_group(array(
+	'key' => 'group_product_specs',
+	'title' => 'Product Specs',
+	'fields' => array(
+		array(
+			'key' => 'field_product_specs',
+			'label' => 'Product Specs',
+			'name' => 'custom_product_specs',
+			'type' => 'repeater',
+			'instructions' => 'Add additional product specifications here (e.g. Active Ingredient, Manufacturer). These will appear alongside the WooCommerce attributes.',
+			'layout' => 'table',
+			'button_label' => 'Add Spec',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_spec_name',
+					'label' => 'Spec Name',
+					'name' => 'spec_name',
+					'type' => 'text',
+				),
+				array(
+					'key' => 'field_spec_value',
+					'label' => 'Spec Value',
+					'name' => 'spec_value',
+					'type' => 'text',
+				),
+			),
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'product',
+			),
+		),
+	),
+));
+
 });
