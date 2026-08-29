@@ -20,17 +20,16 @@
 <div id="page" class="site">
 
 	<!-- TopBar -->
-	<div class="w-full bg-ink-900 text-white text-[10px] sm:text-xs">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[2.25rem] py-1.5 flex flex-wrap items-center justify-center sm:justify-between gap-x-4 gap-y-1">
-			<p class="opacity-90 text-center sm:text-left">Premium cognitive support &middot; Australia-wide dispatch</p>
-			<p class="opacity-90 hidden md:block">6–12 business days &middot; discreet packaging</p>
-			<a href="/contact" class="hidden sm:inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
-				<!-- Headphones Icon -->
-				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
-				Support
-			</a>
-		</div>
-	</div>
+	    <div class="w-full bg-ink-900 text-white text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
+            <p class="hidden sm:block opacity-90"><?php echo esc_html(get_field('topbar_left', 'option') ?: 'Premium cognitive support — Australia-wide dispatch'); ?></p>
+            <p class="opacity-90 hidden md:block"><?php echo esc_html(get_field('topbar_center', 'option') ?: '6–12 business days — discreet packaging'); ?></p>
+            <a href="mailto:<?php echo esc_attr(get_field('support_email', 'option') ?: 'support@armodafinil-australia-direct.com'); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-3.5 h-3.5"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+                <?php echo esc_html(get_field('topbar_right', 'option') ?: 'Support'); ?>
+            </a>
+        </div>
+    </div>
 
 	<!-- Navbar -->
 	<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-ink-200">
@@ -77,7 +76,7 @@
 			</div>
 
 			<!-- Cart -->
-			<a href="<?php echo wc_get_cart_url(); ?>" class="relative w-10 h-10 grid place-items-center rounded-full hover:bg-ink-100" aria-label="Cart">
+			<a href="<?php echo wc_get_cart_url(); ?>" class="xoo-wsc-cart-trigger relative w-10 h-10 grid place-items-center rounded-full hover:bg-ink-100" aria-label="Cart">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart text-ink-700"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                 <?php if ( WC()->cart && WC()->cart->get_cart_contents_count() > 0 ) : ?>
 				    <span class="absolute -top-0.5 -right-0.5 w-4 h-4 grid place-items-center text-[10px] font-semibold text-white bg-brand-600 rounded-full"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
