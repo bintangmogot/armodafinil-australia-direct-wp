@@ -44,3 +44,8 @@ require_once get_template_directory() . '/inc/acf-options.php';
 
 add_filter( 'loop_shop_per_page', function() { return 20; }, 20 );
 
+
+// Hide default wishlist buttons
+add_action('wp_head', function() {
+    echo '<style>.yith-wcwl-add-to-wishlist, .tinv-wraper { display: none !important; }</style>';
+});
