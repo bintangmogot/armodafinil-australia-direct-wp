@@ -130,12 +130,6 @@ foreach ( $attributes as $attribute ) {
                         </span>
                     </div>
 
-                    <?php if ( $short_description = apply_filters( 'woocommerce_short_description', $product->get_short_description() ) ) : ?>
-                        <div class="mt-6 prose prose-ink prose-sm">
-                            <?php echo $short_description; ?>
-                        </div>
-                    <?php endif; ?>
-
                     <!-- Promo strip -->
                     <div class="mt-5 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3 flex-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-5 h-5 text-amber-600 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
@@ -272,16 +266,23 @@ foreach ( $attributes as $attribute ) {
     <?php
     $extra_tabs = get_field('extra_tabs', $product_id);
     $has_tabs = !empty($extra_tabs);
+    $has_desc = !empty(trim(wp_strip_all_tags($full_description)));
     ?>
+    <?php if($has_desc || $has_tabs): ?>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-tabs-section">
         <div class="mt-8 sm:mt-12">
             <div class="border-b border-ink-200">
                 <nav class="-mb-px flex space-x-8 overflow-x-auto tab-navs" aria-label="Tabs">
+                    <?php if($has_desc): ?>
                     <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700" data-target="tab-description">
                         Description
                     </button>
-                    <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
-                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300 transition-colors" data-target="tab-extra-<?php echo $i; ?>">
+                    <?php endif; ?>
+                    <?php if($has_tabs): foreach($extra_tabs as $i => $tab): 
+                        $is_first_and_no_desc = !$has_desc && $i === 0;
+                        $btn_class = $is_first_and_no_desc ? 'tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700' : 'tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300 transition-colors';
+                    ?>
+                    <button class="<?php echo $btn_class; ?>" data-target="tab-extra-<?php echo $i; ?>">
                         <?php echo esc_html($tab['tab_title']); ?>
                     </button>
                     <?php endforeach; endif; ?>
@@ -289,17 +290,23 @@ foreach ( $attributes as $attribute ) {
             </div>
 
             <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
+                <?php if($has_desc): ?>
                 <div id="tab-description" class="tab-content block">
                     <?php echo $full_description; ?>
                 </div>
-                <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
-                <div id="tab-extra-<?php echo $i; ?>" class="tab-content hidden">
+                <?php endif; ?>
+                <?php if($has_tabs): foreach($extra_tabs as $i => $tab): 
+                    $is_first_and_no_desc = !$has_desc && $i === 0;
+                    $content_class = $is_first_and_no_desc ? 'tab-content block' : 'tab-content hidden';
+                ?>
+                <div id="tab-extra-<?php echo $i; ?>" class="<?php echo $content_class; ?>">
                     <?php echo $tab['tab_content']; ?>
                 </div>
                 <?php endforeach; endif; ?>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <?php get_template_part('template-parts/order-cta'); ?>
 
