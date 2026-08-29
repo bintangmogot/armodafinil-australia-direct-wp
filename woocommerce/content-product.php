@@ -21,7 +21,28 @@ if ( $is_variable ) {
     $price_html = 'From ' . wc_price($product->get_variation_price('min'));
 }
 
-$rating = $product->get_average_rating();
+$reviews = get_posts([
+    'post_type' => 'review',
+    'posts_per_page' => -1,
+    'meta_query' => array(
+        array(
+            'key'     => 'linked_product',
+            'value'   => $product->get_id(),
+            'compare' => '='
+        )
+    )
+]);
+$review_count = count($reviews);
+$total_rating = 0;
+if ($review_count > 0) {
+    foreach ($reviews as $r) {
+        $val = (float)(get_field('rating', $r->ID) ?: 5.0);
+        $total_rating += $val;
+    }
+    $rating = round($total_rating / $review_count, 1);
+} else {
+    $rating = 5.0; // Default if no reviews
+}
 ?>
 <div class="product group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift flex flex-col relative" data-product-id="<?php echo $product->get_id(); ?>">
     

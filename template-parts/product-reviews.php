@@ -36,8 +36,8 @@ if ($review_count > 0) {
     }
     $average_rating = round($total_rating / $review_count, 1);
 } else {
-    // Fake average if no reviews, or just set to 0. We'll show 0.
-    $average_rating = 0;
+    // Fake average if no reviews.
+    $average_rating = 5.0;
 }
 
 $average_rating_formatted = number_format($average_rating, 1);

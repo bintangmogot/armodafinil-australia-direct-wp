@@ -43,8 +43,31 @@ if ( $is_variable ) {
 }
 
 $currency = html_entity_decode(get_woocommerce_currency_symbol());
-$review_count = $product->get_review_count();
-$average_rating = $product->get_average_rating();
+
+// Fetch Custom Reviews
+$reviews = get_posts([
+    'post_type' => 'review',
+    'posts_per_page' => -1,
+    'meta_query' => array(
+        array(
+            'key'     => 'linked_product',
+            'value'   => $product_id,
+            'compare' => '='
+        )
+    )
+]);
+$review_count = count($reviews);
+$total_rating = 0;
+if ($review_count > 0) {
+    foreach ($reviews as $r) {
+        $val = (float)(get_field('rating', $r->ID) ?: 5.0);
+        $total_rating += $val;
+    }
+    $average_rating = round($total_rating / $review_count, 1);
+} else {
+    $average_rating = 5.0;
+}
+
 $full_description = apply_filters( 'the_content', $product->get_description() );
 
 // Specs
