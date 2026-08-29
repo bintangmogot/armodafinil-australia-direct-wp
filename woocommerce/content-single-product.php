@@ -339,6 +339,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // AJAX Add to Cart
+    const cartForm = document.querySelector('form.cart');
+    if (cartForm) {
+        cartForm.addEventListener('submit', function(e) {
+            // If they clicked Buy Now (we can check if event submitter was buy now, but wait, buy now button uses onclick=submit(), so let's check if the submitter is Add To Cart)
+            const submitter = e.submitter;
+            if (submitter && submitter.textContent.includes('Buy now')) {
+                return; // Let it submit normally (or redirect)
+            }
+            
+            e.preventDefault();
+            
+            const btn = cartForm.querySelector('button[name="add-to-cart"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="animate-spin inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full mr-2"></span> Adding...';
+            btn.disabled = true;
+
+            const formData = new FormData(cartForm);
+            // Append the add-to-cart value which is required
+            formData.append('add-to-cart', btn.value);
+
+            fetch('<?php echo esc_url( wc_get_cart_url() ); ?>', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(html => {
+                btn.innerHTML = 'Added!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 2000);
+
+                // Trigger jQuery event for Side Cart plugin
+                if (typeof jQuery !== 'undefined') {
+                    jQuery(document.body).trigger('added_to_cart', [null, null, jQuery(btn)]);
+                    jQuery(document.body).trigger('wc_fragment_refresh');
+                    // Some side carts use this specific trigger to open
+                    if (typeof xoo_wsc_cart !== 'undefined') {
+                        jQuery(document.body).trigger('xoo_wsc_cart_updated');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+    }
+
     // Tabs Logic
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
