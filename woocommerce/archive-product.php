@@ -63,6 +63,26 @@ else :
             <?php endif; ?>
         </div>
 
+        <?php
+        // Fetch custom ACF fields
+        $top_image = '';
+        $bottom_content = '';
+        if ( is_product_category() || is_product_tag() ) {
+            $current_term = get_queried_object();
+            $top_image = get_field('top_image', $current_term);
+            $bottom_content = get_field('bottom_content', $current_term);
+        } elseif ( is_shop() && ! is_search() ) {
+            $shop_page_id = wc_get_page_id('shop');
+            $bottom_content = get_field('bottom_content', $shop_page_id);
+        }
+        ?>
+
+        <?php if ( $top_image ) : ?>
+            <div class="mt-8 max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-sm border border-brand-100">
+                <img src="<?php echo esc_url( is_array($top_image) ? $top_image['url'] : $top_image ); ?>" alt="<?php echo esc_attr( is_array($top_image) ? $top_image['alt'] : 'Category Image' ); ?>" class="w-full h-auto object-cover" />
+            </div>
+        <?php endif; ?>
+
         <div class="mt-10 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
             <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar" style="scrollbar-width: none;">
                 <!-- Categories filter -->
@@ -134,9 +154,16 @@ else :
                 }
                 ?>
             </div>
+            <?php
+        } else {
+            echo '<p class="text-center text-ink-500 py-12">No products found matching your criteria.</p>';
+        }
+        ?>
 
-        <?php else : ?>
-            <p class="text-center text-ink-500 mt-16">No products found.</p>
+        <?php if ( ! empty( $bottom_content ) ) : ?>
+            <div class="mt-16 md:mt-24 max-w-4xl mx-auto prose prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700">
+                <?php echo wp_kses_post( $bottom_content ); ?>
+            </div>
         <?php endif; ?>
 
     </div>
