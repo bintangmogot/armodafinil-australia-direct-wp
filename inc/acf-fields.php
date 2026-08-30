@@ -487,6 +487,47 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+				'layout_rich_text' => array(
+			'key' => 'layout_rich_text',
+			'name' => 'rich_text',
+			'label' => 'Rich Text (Top/Bottom Content)',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_rt_content',
+					'label' => 'Content',
+					'name' => 'content',
+					'type' => 'wysiwyg',
+				),
+				array(
+					'key' => 'field_rt_width',
+					'label' => 'Container Width',
+					'name' => 'width',
+					'type' => 'select',
+					'choices' => array(
+						'default' => 'Default (Content width)',
+						'full' => 'Full width',
+						'narrow' => 'Narrow (Reading width)',
+					),
+					'default_value' => 'default',
+				),
+			),
+		),
+				'layout_archive_products' => array(
+			'key' => 'layout_archive_products',
+			'name' => 'archive_products',
+			'label' => 'Archive Product Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_ap_instructions',
+					'label' => 'Instructions',
+					'name' => '',
+					'type' => 'message',
+					'message' => 'This module will automatically output the WooCommerce product grid (with sorting and pagination) for the current category or shop page.',
+				),
+			),
+		),
 		'layout_category_showcase' => array(
 			'key' => 'layout_category_showcase',
 			'name' => 'category_showcase',
@@ -534,6 +575,13 @@ acf_add_local_field_group(array(
 				'value' => 'product',
 			),
 		),
+		array(
+			array(
+				'param' => 'taxonomy',
+				'operator' => '==',
+				'value' => 'product_cat',
+			),
+		),
 	),
 ));
 
@@ -577,3 +625,5 @@ acf_add_local_field_group(array(
 ));
 
 });
+
+

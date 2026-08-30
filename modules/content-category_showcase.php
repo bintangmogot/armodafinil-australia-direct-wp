@@ -52,7 +52,7 @@ if ( ! have_rows('sections') ) {
     <section class="scroll-mt-24" id="<?php echo esc_attr(sanitize_title($title)); ?>">
         
         <!-- Header Card -->
-        <div class="bg-[#F8FDFB] border border-brand-100 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
+        <div class="bg-gradient-to-r from-brand-50 to-white border border-brand-100 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
             
             <div class="flex items-start md:items-center gap-5">
                 <?php if ( $icon_url ) : ?>
@@ -96,8 +96,8 @@ if ( ! have_rows('sections') ) {
                     $image_url = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'medium_large' ) : 'https://placehold.co/600x450/e0f2fe/0369a1?text=' . urlencode($name);
                     ?>
                     <a href="<?php echo esc_url($link); ?>" class="group bg-white border border-ink-200 rounded-3xl overflow-hidden hover-lift flex flex-col transition-shadow hover:shadow-lg">
-                        <div class="aspect-[4/3] bg-brand-50 overflow-hidden relative">
-                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 mix-blend-multiply" />
+                        <div class="aspect-[4/3] bg-brand-50 overflow-hidden relative flex items-center justify-center p-6 md:p-8">
+                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 mix-blend-multiply" />
                         </div>
                         <div class="p-5 md:p-6 flex-1 flex flex-col justify-center bg-white z-10 relative">
                             <h3 class="font-serif text-lg font-bold text-ink-900 group-hover:text-brand-700 transition-colors line-clamp-1"><?php echo esc_html($name); ?></h3>

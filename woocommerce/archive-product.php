@@ -9,13 +9,19 @@ get_header( 'shop' );
 global $wp_query;
 
 $shop_page_id = wc_get_page_id('shop');
+$current_term = is_product_category() || is_product_tag() ? get_queried_object() : null;
 
-if ( is_shop() && ! is_search() && have_rows('page_modules', $shop_page_id) ) :
-    while( have_rows('page_modules', $shop_page_id) ) : the_row();
+$has_shop_modules = is_shop() && ! is_search() && have_rows('page_modules', $shop_page_id);
+$has_cat_modules = $current_term && have_rows('page_modules', $current_term);
+
+if ( $has_shop_modules || $has_cat_modules ) :
+    $acf_id = $has_cat_modules ? $current_term : $shop_page_id;
+    while( have_rows('page_modules', $acf_id) ) : the_row();
         $layout = get_row_layout();
         get_template_part('modules/content', $layout);
     endwhile;
 else :
+    // Fallback to standard WooCommerce layout if no modules defined
 ?>
 
 <div class="bg-gradient-to-b from-brand-50/60 to-white">
@@ -26,13 +32,11 @@ else :
         $top_image = '';
         $bottom_content = '';
         if ( is_product_category() || is_product_tag() ) {
-            $current_term = get_queried_object();
             $top_image = get_field('top_image', $current_term);
             $bottom_content = get_field('bottom_content', $current_term);
             $thumbnail_id = get_term_meta( $current_term->term_id, 'thumbnail_id', true );
             $image_url = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'medium_large' ) : '';
         } elseif ( is_shop() && ! is_search() ) {
-            $shop_page_id = wc_get_page_id('shop');
             $bottom_content = get_field('bottom_content', $shop_page_id);
         }
         ?>
@@ -132,153 +136,46 @@ else :
 
         <?php endif; ?>
 
-        <?php if ( $top_image && ! is_product_category() ) : ?>
-            <div class="mt-8 max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-sm border border-brand-100">
-                <img src="<?php echo esc_url( is_array($top_image) ? $top_image['url'] : $top_image ); ?>" alt="Banner Image" class="w-full h-auto object-cover" />
-            </div>
-        <?php endif; ?>
-
-            </div>
-</div>
-
-<div class="bg-white pb-16 md:pb-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="pt-4 md:pt-8 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
-            <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar" style="scrollbar-width: none;">
-                <!-- Categories filter -->
-                <a href="<?php echo esc_url( home_url( '/categories' ) ); ?>" class="shrink-0 text-sm font-medium px-4 h-9 rounded-full border transition-colors flex items-center <?php echo !is_product_category() && !is_search() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
-                <?php
-                $product_categories = get_terms( 'product_cat', array('hide_empty' => true) );
-                if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
-                    foreach ( $product_categories as $cat ) {
-                        $is_current = is_product_category($cat->term_id);
-                        $class = $is_current ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600';
-                        echo '<a href="' . esc_url( get_term_link( $cat ) ) . '" class="shrink-0 text-sm font-medium px-4 h-9 flex items-center rounded-full border transition-colors ' . $class . '">' . esc_html( $cat->name ) . '</a>';
-                    }
-                }
-                ?>
-            </div>
-            
-            <div class="flex items-center gap-3 w-full md:w-auto">
-                <div class="flex items-center bg-white border border-ink-200 rounded-full px-3 h-10 flex-1 md:w-72">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search text-ink-500"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <form role="search" method="get" class="flex-1 flex" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                        <input type="search" class="bg-transparent outline-none border-0 text-sm flex-1 mx-2" placeholder="Search products..." value="<?php echo get_search_query(); ?>" name="s" />
-                        <input type="hidden" name="post_type" value="product" />
-                    </form>
-                </div>
-                <!-- WooCommerce Native Sorting -->
-                <div class="custom-sort-wrapper">
-                    <?php
-                    if ( woocommerce_product_loop() ) {
-                        woocommerce_catalog_ordering();
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-
-        <?php if ( woocommerce_product_loop() ) : ?>
-            
-            <p class="mt-6 text-xs text-ink-500">
-                <?php
-                $paged    = max( 1, $wp_query->get( 'paged' ) );
-                $per_page = $wp_query->get( 'posts_per_page' );
-                $total    = $wp_query->found_posts;
-                $first    = ( $per_page * $paged ) - $per_page + 1;
-                $last     = min( $total, $wp_query->get( 'posts_per_page' ) * $paged );
-                echo esc_html( sprintf( _n( 'Showing %d of %d product', 'Showing %d–%d of %d products', $total, 'woocommerce' ), $first, $last, $total ) );
-                ?>
-            </p>
-
-            <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <?php
-                while ( have_posts() ) {
-                    the_post();
-                    /**
-                     * Hook: woocommerce_shop_loop.
-                     */
-                    do_action( 'woocommerce_shop_loop' );
-                    wc_get_template_part( 'content', 'product' );
-                }
-                ?>
-            </div>
-
-            <div class="mt-12 flex justify-center">
-                <?php
-                $current_page = max(1, get_query_var('paged'));
-                $total_pages = $wp_query->max_num_pages;
-                if ($current_page < $total_pages) {
-                    $next_url = get_pagenum_link($current_page + 1);
-                    echo '<a href="' . esc_url($next_url) . '" class="inline-flex items-center justify-center h-11 px-8 rounded-full bg-brand-50 text-brand-700 font-semibold hover:bg-brand-600 hover:text-white transition-colors">Load more</a>';
-                }
-                ?>
-            </div>
-        <?php else : ?>
-            <p class="text-center text-ink-500 py-12">No products found matching your criteria.</p>
-        <?php endif; ?>
-
-        <?php if ( ! empty( $bottom_content ) ) : ?>
-            <div class="mt-16 md:mt-24 max-w-4xl mx-auto prose prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700">
-                <?php echo wp_kses_post( $bottom_content ); ?>
-            </div>
-        <?php endif; ?>
-
     </div>
 </div>
+
+<?php 
+// Load the archive products module manually for the standard layout
+get_template_part('modules/content', 'archive_products'); 
+?>
+
+<?php if ( ! empty( $bottom_content ) ) : ?>
+    <section class="bg-white pb-16 md:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700 mx-auto">
+                <?php echo wp_kses_post( $bottom_content ); ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php endif; // End modules fallback check ?>
 
 <style>
 /* Clean up WC sorting dropdown */
 .custom-sort-wrapper select {
     height: 2.5rem;
     border-radius: 9999px;
-    border: 1px solid #e5e7eb;
+    border-color: #e2e8f0;
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+    font-size: 0.875rem;
+    color: #334155;
     background-color: #fff;
-    padding-left: 0.75rem;
-    padding-right: 2rem;
-    font-size: 0.875rem;
+    cursor: pointer;
+    box-shadow: none;
     outline: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
 }
-/* Style pagination */
-.custom-pagination ul {
-    display: flex;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.custom-pagination li a, .custom-pagination li span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-}
-.custom-pagination li span.current {
-    background: #0284c7;
-    border-color: #0284c7;
-    color: #fff;
-}
-.custom-pagination li a:hover {
-    border-color: #0284c7;
-    color: #0284c7;
+.custom-sort-wrapper select:focus {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 1px #0d9488;
 }
 </style>
 
-<?php 
-endif; // End page_modules check
-get_footer( 'shop' ); 
-?>
-
-
+<?php
+get_footer( 'shop' );
