@@ -21,7 +21,21 @@ else :
 <div class="section-wash">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="text-center">
-            <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5">Full catalogue</span>
+            <?php
+            $pill_text = 'Full catalogue';
+            if ( is_product_category() ) {
+                $current_term = get_queried_object();
+                if ( $current_term && $current_term->parent != 0 ) {
+                    $parent_term = get_term( $current_term->parent, 'product_cat' );
+                    if ( ! is_wp_error( $parent_term ) ) {
+                        $pill_text = $parent_term->name;
+                    }
+                } else {
+                    $pill_text = 'Shop by condition';
+                }
+            }
+            ?>
+            <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5"><?php echo esc_html($pill_text); ?></span>
             <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900">
                 <?php 
                 if ( is_search() ) {
@@ -36,7 +50,17 @@ else :
                 }
                 ?>
             </h1>
-            <p class="mt-3 text-ink-700 max-w-2xl mx-auto">Compare prescription and OTC medicines by category, check ratings and prices in AUD, and add to cart in a few taps — shipped discreetly across Australia.</p>
+            <?php if ( is_product_category() || is_product_tag() ) : ?>
+                <?php 
+                $term_desc = term_description();
+                if ( ! empty( $term_desc ) ) : 
+                    echo '<div class="mt-3 text-ink-700 max-w-2xl mx-auto">' . wp_kses_post( $term_desc ) . '</div>';
+                else : ?>
+                    <p class="mt-3 text-ink-700 max-w-2xl mx-auto">Browse products in this category, check ratings and prices in AUD, and add to cart in a few taps &mdash; shipped discreetly across Australia.</p>
+                <?php endif; ?>
+            <?php else : ?>
+                <p class="mt-3 text-ink-700 max-w-2xl mx-auto">Compare prescription and OTC medicines by category, check ratings and prices in AUD, and add to cart in a few taps &mdash; shipped discreetly across Australia.</p>
+            <?php endif; ?>
         </div>
 
         <div class="mt-10 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
