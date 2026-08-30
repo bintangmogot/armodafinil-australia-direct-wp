@@ -9,37 +9,45 @@ if ( ! have_rows('sections') ) {
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
     <?php while ( have_rows('sections') ) : the_row(); 
-        $title = get_sub_field('title');
-        $subtitle = get_sub_field('subtitle');
-        $icon_url = get_sub_field('icon');
-        $link_text = get_sub_field('link_text') ?: 'Browse category';
-        $link_url = get_sub_field('link_url') ?: '#';
-        $categories = get_sub_field('categories'); // This is an array of WP_Term objects
+        
+        $parent_cat = get_sub_field('parent_category');
+        
+        // Normalize term if it's returning an ID/Array due to ACF cache
+        if ( is_numeric($parent_cat) ) {
+            $parent_cat = get_term( $parent_cat, 'product_cat' );
+        } elseif ( is_array($parent_cat) && isset($parent_cat['term_id']) ) {
+            $parent_cat = get_term( $parent_cat['term_id'], 'product_cat' );
+        }
 
-        // If categories aren't objects for some reason, normalize them
-        $normalized_categories = array();
-        if ( ! empty($categories) && is_array($categories) ) {
-            foreach ( $categories as $cat ) {
-                if ( is_numeric($cat) ) {
-                    $term = get_term( $cat, 'product_cat' );
-                    if ( $term && ! is_wp_error($term) ) {
-                        $normalized_categories[] = $term;
-                    }
-                } elseif ( is_object($cat) && isset($cat->term_id) ) {
-                    $normalized_categories[] = $cat;
-                } elseif ( is_array($cat) && isset($cat['term_id']) ) {
-                    $term = get_term( $cat['term_id'], 'product_cat' );
-                    if ( $term && ! is_wp_error($term) ) {
-                        $normalized_categories[] = $term;
-                    }
-                }
+        if ( ! $parent_cat || is_wp_error($parent_cat) ) {
+            continue;
+        }
+
+        $title = $parent_cat->name;
+        $subtitle = term_description( $parent_cat->term_id, 'product_cat' );
+        $link_url = get_term_link( $parent_cat );
+        $link_text = 'Browse category';
+        
+        // Icon logic: Try custom ACF 'top_image', fallback to Woo thumbnail
+        $icon_url = '';
+        $top_image = get_field('top_image', $parent_cat);
+        if ( $top_image ) {
+            $icon_url = is_array($top_image) ? $top_image['url'] : $top_image;
+        } else {
+            $thumbnail_id = get_term_meta( $parent_cat->term_id, 'thumbnail_id', true );
+            if ( $thumbnail_id ) {
+                $icon_url = wp_get_attachment_image_url( $thumbnail_id, 'thumbnail' );
             }
         }
+
+        // Fetch all sub-categories of this parent automatically
+        $sub_categories = get_terms( array(
+            'taxonomy'   => 'product_cat',
+            'parent'     => $parent_cat->term_id,
+            'hide_empty' => false,
+        ) );
         
-        $product_count = 0;
-        foreach ($normalized_categories as $c) {
-            $product_count += $c->count;
-        }
+        $product_count = $parent_cat->count;
     ?>
     <section class="scroll-mt-24" id="<?php echo esc_attr(sanitize_title($title)); ?>">
         
@@ -48,8 +56,8 @@ if ( ! have_rows('sections') ) {
             
             <div class="flex items-start md:items-center gap-5">
                 <?php if ( $icon_url ) : ?>
-                    <div class="shrink-0 w-[72px] h-[72px] rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center text-brand-600">
-                        <img src="<?php echo esc_url($icon_url); ?>" alt="" class="w-8 h-8 object-contain" />
+                    <div class="shrink-0 w-[72px] h-[72px] rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center text-brand-600 overflow-hidden">
+                        <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-cover" />
                     </div>
                 <?php else : ?>
                     <!-- Default Icon -->
@@ -61,12 +69,10 @@ if ( ! have_rows('sections') ) {
                 <div>
                     <div class="flex flex-wrap items-center gap-4">
                         <h2 class="font-serif text-3xl font-bold text-ink-900 tracking-tight"><?php echo esc_html($title); ?></h2>
-                        <?php if ( ! empty($normalized_categories) ) : ?>
-                            <span class="text-xs font-semibold text-brand-700 bg-brand-100 rounded-full px-3 py-1"><?php echo esc_html($product_count); ?> products</span>
-                        <?php endif; ?>
+                        <span class="text-xs font-semibold text-brand-700 bg-brand-100 rounded-full px-3 py-1"><?php echo esc_html($product_count); ?> products</span>
                     </div>
                     <?php if ( $subtitle ) : ?>
-                        <p class="mt-2.5 text-ink-700 text-sm md:text-base max-w-3xl"><?php echo esc_html($subtitle); ?></p>
+                        <div class="mt-2.5 text-ink-700 text-sm md:text-base max-w-3xl prose prose-sm prose-ink"><?php echo wp_kses_post($subtitle); ?></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -80,10 +86,10 @@ if ( ! have_rows('sections') ) {
         </div>
 
         <!-- Sub-category Grid -->
-        <?php if ( ! empty( $normalized_categories ) ) : ?>
+        <?php if ( ! empty( $sub_categories ) && ! is_wp_error($sub_categories) ) : ?>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 <?php
-                foreach ( $normalized_categories as $sub_cat ) {
+                foreach ( $sub_categories as $sub_cat ) {
                     $link = get_term_link($sub_cat);
                     $name = $sub_cat->name;
                     $thumbnail_id = get_term_meta( $sub_cat->term_id, 'thumbnail_id', true );
@@ -104,6 +110,12 @@ if ( ! have_rows('sections') ) {
                 }
                 ?>
             </div>
+        <?php else : ?>
+            <?php if ( current_user_can('edit_posts') ) : ?>
+                <div class="p-6 border border-dashed border-ink-300 rounded-2xl text-center text-ink-500 text-sm">
+                    No sub-categories found for <?php echo esc_html($title); ?>. Go to Products > Categories and add some!
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
     </section>
