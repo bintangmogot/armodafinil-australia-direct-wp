@@ -44,7 +44,7 @@ else :
             
             <!-- Category Header -->
             <div class="mb-10">
-                <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors mb-6">
+                <a href="<?php echo esc_url( home_url( '/categories' ) ); ?>" class="inline-flex items-center gap-2 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                     All categories
                 </a>
@@ -138,7 +138,7 @@ else :
         <div class="mt-12 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
             <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar" style="scrollbar-width: none;">
                 <!-- Categories filter -->
-                <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="shrink-0 text-sm font-medium px-4 h-9 rounded-full border transition-colors flex items-center <?php echo !is_product_category() && !is_search() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
+                <a href="<?php echo esc_url( home_url( '/categories' ) ); ?>" class="shrink-0 text-sm font-medium px-4 h-9 rounded-full border transition-colors flex items-center <?php echo !is_product_category() && !is_search() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
                 <?php
                 $product_categories = get_terms( 'product_cat', array('hide_empty' => true) );
                 if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
