@@ -50,9 +50,13 @@ else :
                     All categories
                 </a>
                 
+                <style>
+                    .cat-header-icon { width: 80px; height: 80px; flex-shrink: 0; }
+                    @media (min-width: 768px) { .cat-header-icon { width: 128px; height: 128px; } }
+                </style>
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                     <?php if ( ! empty($image_url) ) : ?>
-                        <div class="w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-2xl md:rounded-3xl overflow-hidden shrink-0 border border-brand-100 shadow-sm bg-white p-2 md:p-3">
+                        <div class="cat-header-icon rounded-2xl md:rounded-3xl overflow-hidden border border-brand-100 shadow-sm bg-white p-2 md:p-4">
                             <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $current_term->name ); ?>" class="w-full h-full object-contain" />
                         </div>
                     <?php endif; ?>

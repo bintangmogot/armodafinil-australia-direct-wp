@@ -54,9 +54,13 @@ if ( ! have_rows('sections') ) {
         <!-- Header Card -->
         <div class="bg-gradient-to-r from-brand-50 to-white border border-brand-100 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
             
+            <style>
+                .showcase-header-icon { width: 64px; height: 64px; flex-shrink: 0; }
+                @media (min-width: 768px) { .showcase-header-icon { width: 72px; height: 72px; } }
+            </style>
             <div class="flex items-start md:items-center gap-5">
                 <?php if ( $icon_url ) : ?>
-                    <div class="shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center p-2 md:p-3 border border-ink-100">
+                    <div class="showcase-header-icon rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center p-2 md:p-3 border border-ink-100">
                         <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-contain" />
                     </div>
                 <?php else : ?>
