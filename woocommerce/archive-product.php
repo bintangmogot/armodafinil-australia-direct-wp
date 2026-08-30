@@ -6,6 +6,14 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header( 'shop' );
+$shop_page_id = wc_get_page_id('shop');
+
+if ( have_rows('page_modules', $shop_page_id) ) :
+    while( have_rows('page_modules', $shop_page_id) ) : the_row();
+        $layout = get_row_layout();
+        get_template_part('modules/content', $layout);
+    endwhile;
+else :
 ?>
 
 <div class="section-wash">
@@ -157,4 +165,7 @@ get_header( 'shop' );
 }
 </style>
 
-<?php get_footer( 'shop' ); ?>
+<?php 
+endif; // End page_modules check
+get_footer( 'shop' ); 
+?>
