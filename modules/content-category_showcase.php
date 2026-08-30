@@ -56,7 +56,7 @@ if ( ! have_rows('sections') ) {
             
             <div class="flex items-start md:items-center gap-5">
                 <?php if ( $icon_url ) : ?>
-                    <div class="shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center p-3 border border-ink-100">
+                    <div class="shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-[1.25rem] bg-white shadow-[0_2px_10px_-4px_rgba(0,169,157,0.1)] flex items-center justify-center p-3 border border-ink-100" style="width: 72px; height: 72px; flex-shrink: 0;">
                         <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-contain" />
                     </div>
                 <?php else : ?>

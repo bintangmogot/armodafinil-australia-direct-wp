@@ -51,7 +51,7 @@ else :
                 
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                     <?php if ( ! empty($image_url) ) : ?>
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shrink-0 border border-brand-100 shadow-sm bg-white p-3">
+                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shrink-0 border border-brand-100 shadow-sm bg-white p-3" style="width: 128px; height: 128px; flex-shrink: 0;">
                             <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $current_term->name ); ?>" class="w-full h-full object-contain" />
                         </div>
                     <?php endif; ?>
