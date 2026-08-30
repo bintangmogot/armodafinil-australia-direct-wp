@@ -6,9 +6,11 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header( 'shop' );
+global $wp_query;
+
 $shop_page_id = wc_get_page_id('shop');
 
-if ( have_rows('page_modules', $shop_page_id) ) :
+if ( is_shop() && ! is_search() && have_rows('page_modules', $shop_page_id) ) :
     while( have_rows('page_modules', $shop_page_id) ) : the_row();
         $layout = get_row_layout();
         get_template_part('modules/content', $layout);
