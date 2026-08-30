@@ -6,6 +6,23 @@ $link_text = get_sub_field('link_text') ?: 'Browse category';
 $category = get_sub_field('category');
 
 if ( ! $category ) {
+    if ( current_user_can('edit_posts') ) {
+        echo '<div class="max-w-7xl mx-auto px-4 py-8 text-center bg-brand-50 text-brand-700 border border-brand-200 rounded-2xl mb-8"><strong>Category Showcase Module:</strong> Please select a product category in the page editor to display this module.</div>';
+    }
+    return;
+}
+
+// Ensure $category is a WP_Term object
+if ( is_numeric( $category ) ) {
+    $category = get_term( $category, 'product_cat' );
+} elseif ( is_array( $category ) && isset($category['term_id']) ) {
+    $category = get_term( $category['term_id'], 'product_cat' );
+}
+
+if ( ! $category || is_wp_error( $category ) ) {
+    if ( current_user_can('edit_posts') ) {
+        echo '<div class="max-w-7xl mx-auto px-4 py-8 text-center bg-red-50 text-red-700 border border-red-200 rounded-2xl mb-8"><strong>Category Showcase Module:</strong> Invalid product category selected.</div>';
+    }
     return;
 }
 
