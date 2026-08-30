@@ -52,7 +52,7 @@ if ( ! have_rows('sections') ) {
     <section class="scroll-mt-24" id="<?php echo esc_attr(sanitize_title($title)); ?>">
         
         <!-- Header Card -->
-        <div class="bg-gradient-to-r from-brand-50 to-white border border-brand-100 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
+        <div class="bg-[#F8FDFB] border border-brand-100 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
             
             <style>
                 .showcase-header-icon { width: 64px; height: 64px; flex-shrink: 0; }
@@ -125,3 +125,4 @@ if ( ! have_rows('sections') ) {
     </section>
     <?php endwhile; ?>
 </div>
+

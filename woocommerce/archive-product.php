@@ -24,7 +24,7 @@ else :
     // Fallback to standard WooCommerce layout if no modules defined
 ?>
 
-<div class="bg-gradient-to-b from-brand-50/60 to-white">
+<div class="bg-gradient-to-b from-brand-50/60 to-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 md:pt-12 md:pb-16">
         
         <?php
@@ -183,3 +183,4 @@ get_template_part('modules/content', 'archive_products');
 
 <?php
 get_footer( 'shop' );
+

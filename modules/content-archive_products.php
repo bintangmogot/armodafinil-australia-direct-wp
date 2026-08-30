@@ -6,10 +6,10 @@ if ( ! woocommerce_product_loop() ) {
     return;
 }
 ?>
-<section class="bg-white pb-16 md:pb-24">
+<section class="bg-white pb-16 md:pb-24 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="pt-4 md:pt-8 flex flex-col xl:flex-row xl:items-center gap-4 justify-between">
-            <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar" style="scrollbar-width: none;">
+        <div class="pt-4 md:pt-8 flex flex-col xl:flex-row xl:items-center gap-4 justify-between w-full min-w-0">
+            <div class="flex overflow-x-auto pb-2 xl:pb-0 xl:flex-wrap gap-2 hide-scrollbar w-full min-w-0" style="scrollbar-width: none;">
                 <!-- Categories filter -->
                 <a href="<?php echo esc_url( home_url( '/categories' ) ); ?>" class="shrink-0 text-sm font-medium px-4 h-9 rounded-full border transition-colors flex items-center <?php echo !is_product_category() && !is_search() ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">All categories</a>
                 <?php
@@ -72,3 +72,4 @@ if ( ! woocommerce_product_loop() ) {
         </div>
     </div>
 </section>
+
