@@ -154,11 +154,9 @@ else :
                 }
                 ?>
             </div>
-            <?php
-        } else {
-            echo '<p class="text-center text-ink-500 py-12">No products found matching your criteria.</p>';
-        }
-        ?>
+        <?php else : ?>
+            <p class="text-center text-ink-500 py-12">No products found matching your criteria.</p>
+        <?php endif; ?>
 
         <?php if ( ! empty( $bottom_content ) ) : ?>
             <div class="mt-16 md:mt-24 max-w-4xl mx-auto prose prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700">
