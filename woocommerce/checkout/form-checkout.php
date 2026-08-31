@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSidebar();
     });
     
-        // Sync sidebar input changes back to the real hidden form
+            // Sync sidebar input changes back to the real hidden form
     $(document.body).on('change', '.sidebar-summary-container input', function() {
         var $this = $(this);
         var type = $this.attr('type');
@@ -177,23 +177,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Find the real radio in the form and trigger change
             var $realInput = $('form.checkout input[name="' + name + '"][value="' + val + '"]');
             if ($realInput.length) {
-                $realInput.prop('checked', true).trigger('change');
+                $realInput.addClass('update_totals_on_change').prop('checked', true).trigger('change');
             }
         } else if (type === 'checkbox') {
             var isChecked = $this.prop('checked');
             var $realInput = $('form.checkout input[name="' + name + '"]');
             if ($realInput.length) {
-                $realInput.prop('checked', isChecked).trigger('change');
+                $realInput.addClass('update_totals_on_change').prop('checked', isChecked).trigger('change');
             }
         } else {
             var $realInput = $('form.checkout input[name="' + name + '"]');
             if ($realInput.length) {
-                $realInput.val($this.val()).trigger('change');
+                $realInput.addClass('update_totals_on_change').val($this.val()).trigger('change');
             }
         }
-
-        // Force WooCommerce to update the checkout totals
-        $(document.body).trigger('update_checkout');
     });
     
     // Initial update
@@ -336,6 +333,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 .medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
 </style>
+
 
 
 
