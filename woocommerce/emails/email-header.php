@@ -1,39 +1,12 @@
-<?php
+﻿<?php
 /**
  * Email Header
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/emails/email-header.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see     https://woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates\Emails
- * @version 10.7.0
  */
-
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
-
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
-$store_name                 = $store_name ?? get_bloginfo( 'name', 'display' );
-
-/**
- * Filter the URL used for the email header image/logo link.
- *
- * Return an empty string to disable the link.
- *
- * @since 10.7.0
- * @param string $url The URL to link to. Defaults to the site home URL.
- */
-$header_image_url = apply_filters( 'woocommerce_email_header_image_url', home_url() );
-
+$store_name = get_bloginfo( 'name', 'display' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -45,64 +18,34 @@ $header_image_url = apply_filters( 'woocommerce_email_header_image_url', home_ur
 	<body <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 		<table width="100%" id="outer_wrapper" role="presentation">
 			<tr>
-				<td><!-- Deliberately empty to support consistent sizing and layout across multiple email clients. --></td>
+				<td></td>
 				<td width="600">
 					<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 						<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="inner_wrapper" role="presentation">
 							<tr>
 								<td align="center" valign="top">
-									<?php
-									$img = get_option( 'woocommerce_email_header_image' );
-									/**
-									 * This filter is documented in templates/emails/email-styles.php
-									 *
-									 * @since 9.6.0
-									 */
-									if ( apply_filters( 'woocommerce_is_email_preview', false ) ) {
-										$img_transient = get_transient( 'woocommerce_email_header_image' );
-										$img           = false !== $img_transient ? $img_transient : $img;
-									}
+                                    
+                                    <!-- HTML Logo -->
+                                    <div id="template_header_image" style="margin-bottom: 24px;">
+                                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration: none; display: inline-block;">
+                                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: 0 auto;">
+                                                <tr>
+                                                    <!-- Icon box -->
+                                                    <td valign="middle" style="padding-right: 12px;">
+                                                        <div style="width: 40px; height: 40px; border-radius: 12px; background-color: #0d9488; text-align: center; line-height: 40px;">
+                                                            <span style="color: #ffffff; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: bold;">A</span>
+                                                        </div>
+                                                    </td>
+                                                    <!-- Text -->
+                                                    <td valign="middle" style="text-align: left;">
+                                                        <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: bold; color: #09152b; line-height: 1.1; mso-line-height-rule: exactly;">Armodafinil</div>
+                                                        <div style="font-family: Inter, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #0d9488; margin-top: 4px; line-height: 1;">Australia Direct</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </a>
+                                    </div>
 
-									if ( $email_improvements_enabled ) :
-										?>
-										<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
-											<tr>
-												<td id="template_header_image">
-													<?php
-													if ( $img ) {
-														$image_html = '<img src="' . esc_url( $img ) . '" alt="' . esc_attr( $store_name ) . '" />';
-														if ( $header_image_url ) {
-															// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $image_html is built from esc_url() and esc_attr().
-															echo '<p style="margin-top:0;"><a href="' . esc_url( $header_image_url ) . '" style="display: inline-block; text-decoration: none;" target="_blank">' . $image_html . '</a></p>';
-														} else {
-															// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-															echo '<p style="margin-top:0;">' . $image_html . '</p>';
-														}
-													} elseif ( $header_image_url ) {
-														echo '<p class="email-logo-text"><a href="' . esc_url( $header_image_url ) . '" style="color: inherit; text-decoration: none;" target="_blank">' . esc_html( $store_name ) . '</a></p>';
-													} else {
-														echo '<p class="email-logo-text">' . esc_html( $store_name ) . '</p>';
-													}
-													?>
-												</td>
-											</tr>
-										</table>
-									<?php else : ?>
-										<div id="template_header_image">
-											<?php
-											if ( $img ) {
-												$image_html = '<img src="' . esc_url( $img ) . '" alt="' . esc_attr( $store_name ) . '" />';
-												if ( $header_image_url ) {
-													// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $image_html is built from esc_url() and esc_attr().
-													echo '<p style="margin-top:0;"><a href="' . esc_url( $header_image_url ) . '" style="display: inline-block; text-decoration: none;" target="_blank">' . $image_html . '</a></p>';
-												} else {
-													// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-													echo '<p style="margin-top:0;">' . $image_html . '</p>';
-												}
-											}
-											?>
-										</div>
-									<?php endif; ?>
 									<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_container" role="presentation">
 										<tr>
 											<td align="center" valign="top">
@@ -128,3 +71,4 @@ $header_image_url = apply_filters( 'woocommerce_email_header_image_url', home_ur
 																<tr>
 																	<td valign="top" id="body_content_inner_cell">
 																		<div id="body_content_inner">
+

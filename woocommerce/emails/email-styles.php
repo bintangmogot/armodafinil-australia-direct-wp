@@ -11,10 +11,10 @@ body {
     margin: 0;
     -webkit-text-size-adjust: none !important;
     width: 100%;
-    background-color: #f8fafc;
+    background-color: #f0fdfa;
 }
 #outer_wrapper {
-    background-color: #f8fafc;
+    background-color: #f0fdfa;
 }
 #wrapper {
     margin: 0 auto;
@@ -29,7 +29,7 @@ body {
     overflow: hidden;
 }
 #template_header {
-    background-color: #09152b;
+    background-color: #0d9488;
     color: #ffffff;
     border-bottom: 0;
     border-radius: 12px 12px 0 0;
@@ -120,7 +120,7 @@ p {
     border-bottom: 1px solid #e2e8f0;
 }
 #body_content table .email-order-details th {
-    background-color: #f8fafc;
+    background-color: #f0fdfa;
     color: #09152b;
     font-weight: 600;
 }
@@ -156,7 +156,7 @@ p {
     color: #334155;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
-    background-color: #f8fafc;
+    background-color: #f0fdfa;
     word-break: break-word;
     font-style: normal;
     line-height: 1.5;
@@ -206,3 +206,4 @@ p {
         font-size: 14px !important;
     }
 }
+
