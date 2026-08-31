@@ -6,19 +6,19 @@ $show_shipping_calculator = ! empty( $show_shipping_calculator );
 $calculator_text          = '';
 ?>
 <div class="flex flex-col gap-2 pt-2 pb-2 woocommerce-shipping-totals shipping">
-    <dt class="text-ink-500 font-normal"><?php echo wp_kses_post( $package_name ); ?></dt>
-    <dd data-title="<?php echo esc_attr( $package_name ); ?>">
+    <div class="text-ink-500 font-normal"><?php echo wp_kses_post( $package_name ); ?></div>
+    <div>
         <?php if ( $available_methods ) : ?>
-            <ul id="shipping_method" class="woocommerce-shipping-methods space-y-1">
+            <ul id="shipping_method" class="woocommerce-shipping-methods space-y-1 !m-0 !p-0 list-none">
                 <?php foreach ( $available_methods as $method ) : ?>
-                    <li class="flex items-center gap-2">
+                    <li class="flex items-center gap-2 !m-0">
                         <?php
                         if ( 1 < count( $available_methods ) ) {
                             printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) );
                         } else {
                             printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) );
                         }
-                        printf( '<label class="text-ink-900" for="shipping_method_%1$s_%2$s">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
+                        printf( '<label class="text-ink-900 !m-0 !inline" for="shipping_method_%1$s_%2$s">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) );
                         do_action( 'woocommerce_after_shipping_rate', $method, $index );
                         ?>
                     </li>
@@ -54,5 +54,5 @@ $calculator_text          = '';
         <?php if ( $show_shipping_calculator ) : ?>
             <?php woocommerce_shipping_calculator( $calculator_text ); ?>
         <?php endif; ?>
-    </dd>
+    </div>
 </div>

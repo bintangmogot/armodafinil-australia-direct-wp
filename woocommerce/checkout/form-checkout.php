@@ -263,5 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 0.875rem;
     color: #64748b;
 }
-</style>
+.medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0f172a; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } </style>
+
 

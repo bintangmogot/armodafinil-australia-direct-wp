@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * The template for displaying all single pages
  */
@@ -21,13 +21,20 @@ get_header(); ?>
             get_template_part('modules/content', $layout);
         endwhile;
     else: ?>
-        <div class="max-w-7xl mx-auto px-4 py-20">
-            <?php 
-            while ( have_posts() ) : the_post();
+        <?php 
+        while ( have_posts() ) : the_post();
+            // If it's a WooCommerce cart or checkout page, don't wrap it in the default prose wrapper
+            if ( is_cart() || is_checkout() || is_account_page() ) {
                 the_content();
-            endwhile; 
-            ?>
-        </div>
+            } else {
+                ?>
+                <div class="max-w-7xl mx-auto px-4 py-20">
+                    <?php the_content(); ?>
+                </div>
+                <?php
+            }
+        endwhile; 
+        ?>
     <?php endif; ?>
 
 </main>
