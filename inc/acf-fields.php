@@ -400,6 +400,95 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+				'layout_advanced_hero' => array(
+			'key' => 'layout_advanced_hero',
+			'name' => 'advanced_hero',
+			'label' => 'Advanced Hero',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ah_badge', 'label' => 'Badge', 'name' => 'badge', 'type' => 'text'),
+				array('key' => 'field_ah_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_ah_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
+				array(
+					'key' => 'field_ah_buttons',
+					'label' => 'Buttons',
+					'name' => 'buttons',
+					'type' => 'repeater',
+					'layout' => 'table',
+					'button_label' => 'Add Button',
+					'sub_fields' => array(
+						array('key' => 'field_ah_btn_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text'),
+						array('key' => 'field_ah_btn_link', 'label' => 'Link', 'name' => 'link', 'type' => 'text'),
+						array('key' => 'field_ah_btn_style', 'label' => 'Style', 'name' => 'style', 'type' => 'select', 'choices' => array('primary' => 'Primary', 'outline' => 'Outline')),
+					),
+				),
+			),
+		),
+		'layout_timeline' => array(
+			'key' => 'layout_timeline',
+			'name' => 'timeline',
+			'label' => 'Timeline Steps',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_tl_badge', 'label' => 'Badge', 'name' => 'badge', 'type' => 'text'),
+				array('key' => 'field_tl_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array(
+					'key' => 'field_tl_steps',
+					'label' => 'Steps',
+					'name' => 'steps',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Step',
+					'sub_fields' => array(
+						array('key' => 'field_tl_step_n', 'label' => 'Step Number (e.g. 01)', 'name' => 'number', 'type' => 'text'),
+						array('key' => 'field_tl_step_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+						array('key' => 'field_tl_step_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
+						array('key' => 'field_tl_step_icon', 'label' => 'Lucide Icon', 'name' => 'icon', 'type' => 'text', 'default_value' => 'check'),
+					),
+				),
+			),
+		),
+		'layout_features_grid' => array(
+			'key' => 'layout_features_grid',
+			'name' => 'features_grid',
+			'label' => 'Features Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_fg_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'),
+				array(
+					'key' => 'field_fg_features',
+					'label' => 'Features',
+					'name' => 'features',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Feature',
+					'sub_fields' => array(
+						array('key' => 'field_fg_feat_icon', 'label' => 'Lucide Icon', 'name' => 'icon', 'type' => 'text'),
+						array('key' => 'field_fg_feat_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+						array('key' => 'field_fg_feat_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
+					),
+				),
+			),
+		),
+				'layout_trust_signals' => array(
+			'key' => 'layout_trust_signals',
+			'name' => 'trust_signals',
+			'label' => 'Trust Signals',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ts_note', 'label' => 'Note', 'name' => 'note', 'type' => 'message', 'message' => 'Displays 3 trust icons (Verified, Secure, AU-wide).'),
+			),
+		),
+		'layout_support_cta' => array(
+			'key' => 'layout_support_cta',
+			'name' => 'support_cta',
+			'label' => 'Support CTA Inline',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_sc_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_sc_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'text'),
+			),
+		),
 		'layout_conditions_grid' => array(
 			'key' => 'layout_conditions_grid',
 			'name' => 'conditions_grid',
@@ -661,6 +750,8 @@ acf_add_local_field_group(array(
 ));
 
 });
+
+
 
 
 
