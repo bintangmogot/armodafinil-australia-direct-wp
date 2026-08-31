@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+﻿/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: ["./*.php", "./template-parts/**/*.php", "./inc/**/*.php", "./woocommerce/**/*.php", "./modules/**/*.php"],
@@ -66,8 +66,8 @@ module.exports = {
           400: '#94a3b8',
           500: '#64748b',
           700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
+          800: '#13233b',
+          900: '#09152b',
         },
       },
       boxShadow: {
@@ -90,3 +90,5 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+

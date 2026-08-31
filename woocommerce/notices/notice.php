@@ -16,3 +16,4 @@ if ( ! $notices ) {
         </div>
     <?php endforeach; ?>
 </div>
+
