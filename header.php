@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * The header for our theme
  *
@@ -19,11 +19,34 @@
 
 <div id="page" class="site">
 
+	<?php if ( function_exists('is_checkout') && is_checkout() && empty( is_wc_endpoint_url('order-received') ) ) : ?>
+    <header class="sticky top-0 z-40 bg-white border-b border-ink-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-ink-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m15 18-6-6 6-6"/></svg> Cart
+            </a>
+            
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2 shrink-0 min-w-0">
+                <span class="w-8 h-8 shrink-0 rounded-lg bg-brand-600 grid place-items-center text-white shadow-soft">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                </span>
+                <span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
+                    <span class="block font-serif text-[15px] sm:text-base font-bold text-brand-700 leading-none truncate">Armodafinil</span>
+                    <span class="block text-[8px] uppercase tracking-[0.2em] text-brand-600 mt-[3px] truncate">Australia Direct</span>
+                </span>
+            </a>
+
+            <div class="flex items-center gap-1.5 text-brand-700 text-sm font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path style="fill:none !important;" d="m9 12 2 2 4-4"/></svg> Secure
+            </div>
+        </div>
+    </header>
+<?php else: ?>
 	<!-- TopBar -->
 	    <div class="w-full bg-ink-900 text-white text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
-            <p class="hidden sm:block opacity-90"><?php echo esc_html(get_field('topbar_left', 'option') ?: 'Premium cognitive support — Australia-wide dispatch'); ?></p>
-            <p class="opacity-90 hidden md:block"><?php echo esc_html(get_field('topbar_center', 'option') ?: '6–12 business days — discreet packaging'); ?></p>
+            <p class="hidden sm:block opacity-90"><?php echo esc_html(get_field('topbar_left', 'option') ?: 'Premium cognitive support â€” Australia-wide dispatch'); ?></p>
+            <p class="opacity-90 hidden md:block"><?php echo esc_html(get_field('topbar_center', 'option') ?: '6â€“12 business days â€” discreet packaging'); ?></p>
             <a href="mailto:<?php echo esc_attr(get_field('support_email', 'option') ?: 'support@armodafinil-australia-direct.com'); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-3.5 h-3.5"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
                 <?php echo esc_html(get_field('topbar_right', 'option') ?: 'Support'); ?>
@@ -107,7 +130,8 @@
                 <a href="/faq" class="px-3 py-2 rounded-md text-sm font-medium text-ink-700 hover:bg-ink-100">FAQ</a>
 			</div>
 		</div>
-	</header>
+		</header>
+    <?php endif; ?>
 	
 	<!-- Basic script for mobile menu toggle -->
 	<script>
@@ -116,3 +140,5 @@
 			menu.classList.toggle('hidden');
 		});
 	</script>
+
+
