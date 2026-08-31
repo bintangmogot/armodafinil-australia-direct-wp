@@ -2,7 +2,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 if ( ! $notices ) {
 	return;
 }
@@ -12,7 +11,7 @@ if ( ! $notices ) {
         <ul class="space-y-2 !m-0 !p-0 list-none">
             <?php foreach ( $notices as $notice ) : ?>
                 <li class="flex items-start gap-3 !m-0" <?php echo wc_get_notice_data_attr( $notice ); ?>>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600 shrink-0 mt-0.5"><circle class="!fill-none" style="fill: none !important;" cx="12" cy="12" r="10"/><line class="!fill-none" style="fill: none !important;" x1="12" x2="12" y1="8" y2="12"/><line class="!fill-none" style="fill: none !important;" x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-red-600 shrink-0 mt-0.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
                     <div class="flex-1 text-sm font-medium leading-relaxed">
                         <?php echo wc_kses_notice( $notice['notice'] ); ?>
                     </div>
