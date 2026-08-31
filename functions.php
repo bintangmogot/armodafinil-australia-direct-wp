@@ -231,4 +231,92 @@ add_action('manage_review_posts_custom_column', function($column, $post_id) {
 }, 10, 2);
 
 require_once get_template_directory() . '/inc/ajax-reviews.php';
+// Magic Link Login Logic
+add_action( 'wp_ajax_nopriv_request_magic_link', 'armodafinil_request_magic_link' );
+function armodafinil_request_magic_link() {
+    check_ajax_referer( 'magic_link_nonce', 'security' );
+
+    $email = sanitize_email( $_POST['email'] );
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( 'Invalid email address.' );
+    }
+
+    $user = get_user_by( 'email', $email );
+    
+    // If user doesn't exist, create one!
+    if ( ! $user ) {
+        $password = wp_generate_password( 12, false );
+        $user_id = wp_create_user( $email, $password, $email );
+        if ( is_wp_error( $user_id ) ) {
+            wp_send_json_error( 'Could not create account.' );
+        }
+        $user = get_user_by( 'id', $user_id );
+    }
+
+    // Generate token
+    $token = wp_generate_password( 32, false );
+    update_user_meta( $user->ID, '_magic_link_token', wp_hash( $token ) );
+    update_user_meta( $user->ID, '_magic_link_expiry', time() + HOUR_IN_SECONDS );
+
+    // Send Email
+    $login_url = add_query_arg( array(
+        'magic_token' => $token,
+        'email'       => rawurlencode( $email )
+    ), wc_get_page_permalink( 'myaccount' ) );
+
+    $subject = 'Your secure sign-in link';
+    
+    // Use WooCommerce mailer so it looks like the branded emails
+    $mailer = WC()->mailer();
+    
+    // Build custom email content
+    ob_start();
+    ?>
+    <div style="text-align: center; padding: 40px 0;">
+        <h1 style="font-size: 24px; color: #09152b; margin-bottom: 10px;">Your secure sign-in link</h1>
+        <p style="color: #64748b; font-size: 16px; margin-bottom: 30px;">
+            You requested a magic link to sign in to your <strong>Armodafinil Australia</strong> account.<br>
+            Click the button below to log in instantly. No password required.
+        </p>
+        <a href="<?php echo esc_url( $login_url ); ?>" style="display: inline-block; background-color: #0d9488; color: #ffffff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">Log in to my account &rarr;</a>
+        <p style="color: #94a3b8; font-size: 13px; margin-top: 30px;">
+            This link expires in <strong>1 hour</strong> and can only be used once.
+        </p>
+    </div>
+    <?php
+    $content = ob_get_clean();
+    $wrapped_content = $mailer->wrap_message( $subject, $content );
+    
+    $mailer->send( $email, $subject, $wrapped_content );
+
+    wp_send_json_success( 'Magic link sent!' );
+}
+
+add_action( 'template_redirect', 'armodafinil_process_magic_link' );
+function armodafinil_process_magic_link() {
+    if ( isset( $_GET['magic_token'] ) && isset( $_GET['email'] ) && ! is_user_logged_in() ) {
+        $email = sanitize_email( $_GET['email'] );
+        $token = $_GET['magic_token'];
+        
+        $user = get_user_by( 'email', $email );
+        if ( $user ) {
+            $saved_token = get_user_meta( $user->ID, '_magic_link_token', true );
+            $expiry      = get_user_meta( $user->ID, '_magic_link_expiry', true );
+            
+            if ( $saved_token === wp_hash( $token ) && $expiry > time() ) {
+                // Success!
+                delete_user_meta( $user->ID, '_magic_link_token' );
+                delete_user_meta( $user->ID, '_magic_link_expiry' );
+                
+                wp_set_auth_cookie( $user->ID, true );
+                wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+                exit;
+            } else {
+                wc_add_notice( 'This magic link has expired or is invalid. Please request a new one.', 'error' );
+                wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+                exit;
+            }
+        }
+    }
+}
 
