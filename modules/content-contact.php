@@ -30,23 +30,23 @@ $icons = array(
 <div class="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
     
     <!-- Contact Information Cards -->
-    <div class="lg:col-span-1 space-y-4">
+    <div class="lg:col-span-1 space-y-4 min-w-0">
         <?php foreach ($methods as $method) : 
             $icon_name = strtolower(trim($method['icon']));
             $icon_svg = isset($icons[$icon_name]) ? $icons[$icon_name] : $icons['mail'];
         ?>
             <?php if (!empty($method['link'])) : ?>
-                <a href="<?php echo esc_url($method['link']); ?>" class="flex items-start gap-3 p-4 bg-white border border-ink-200 rounded-2xl hover-lift">
+                <a href="<?php echo esc_url($method['link']); ?>" class="flex items-start gap-3 p-4 bg-white border border-ink-200 rounded-2xl hover-lift min-w-0">
             <?php else : ?>
-                <div class="flex items-start gap-3 p-4 bg-white border border-ink-200 rounded-2xl">
+                <div class="flex items-start gap-3 p-4 bg-white border border-ink-200 rounded-2xl min-w-0">
             <?php endif; ?>
                 
                 <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 grid place-items-center shrink-0">
                     <?php echo $icon_svg; ?>
                 </div>
-                <div>
+                <div class="min-w-0 flex-1">
                     <div class="text-xs uppercase tracking-widest text-ink-500 font-semibold"><?php echo esc_html($method['label']); ?></div>
-                    <div class="mt-0.5 font-medium text-ink-900"><?php echo esc_html($method['value']); ?></div>
+                    <div class="mt-0.5 font-medium text-ink-900 break-all"><?php echo esc_html($method['value']); ?></div>
                 </div>
                 
             <?php if (!empty($method['link'])) : ?>
@@ -103,4 +103,6 @@ $icons = array(
         <?php endif; ?>
     </div>
 </div>
+
+
 
