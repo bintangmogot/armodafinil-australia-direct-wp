@@ -89,6 +89,8 @@
 <?php wp_footer(); ?>
 
 <?php get_template_part( 'template-parts/search-modal' ); ?>
+<?php get_template_part( 'template-parts/side-cart' ); ?>
 </body>
 </html>
+
 
