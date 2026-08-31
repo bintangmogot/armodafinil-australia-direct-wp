@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 add_action('acf/init', function() {
 
 acf_add_local_field_group(array(
@@ -454,7 +454,7 @@ acf_add_local_field_group(array(
 			'label' => 'Features Grid',
 			'display' => 'block',
 			'sub_fields' => array(
-				array('key' => 'field_fg_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_fg_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'), array('key' => 'field_fg_center_title', 'label' => 'Center Title', 'name' => 'center_title', 'type' => 'true_false', 'default_value' => 0),
 				array(
 					'key' => 'field_fg_features',
 					'label' => 'Features',
@@ -509,6 +509,96 @@ acf_add_local_field_group(array(
 					'sub_fields' => array(
 						array('key' => 'field_pps_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'),
 						array('key' => 'field_pps_content', 'label' => 'Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'full'),
+					),
+				),
+			),
+		),
+				'layout_centered_hero' => array(
+			'key' => 'layout_centered_hero',
+			'name' => 'centered_hero',
+			'label' => 'Centered Hero',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ch_badge', 'label' => 'Badge', 'name' => 'badge', 'type' => 'text'),
+				array('key' => 'field_ch_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_ch_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
+			),
+		),
+		'layout_stats_grid' => array(
+			'key' => 'layout_stats_grid',
+			'name' => 'stats_grid',
+			'label' => 'Stats Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_sg_stats',
+					'label' => 'Stats',
+					'name' => 'stats',
+					'type' => 'repeater',
+					'layout' => 'table',
+					'button_label' => 'Add Stat',
+					'sub_fields' => array(
+						array('key' => 'field_sg_n', 'label' => 'Number', 'name' => 'n', 'type' => 'text'),
+						array('key' => 'field_sg_l', 'label' => 'Label', 'name' => 'l', 'type' => 'text'),
+					),
+				),
+			),
+		),
+		'layout_split_story' => array(
+			'key' => 'layout_split_story',
+			'name' => 'split_story',
+			'label' => 'Split Story',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_ss_badge', 'label' => 'Left Badge', 'name' => 'badge', 'type' => 'text'),
+				array('key' => 'field_ss_title', 'label' => 'Left Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_ss_desc', 'label' => 'Left Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'basic'),
+				array(
+					'key' => 'field_ss_buttons',
+					'label' => 'Left Buttons',
+					'name' => 'buttons',
+					'type' => 'repeater',
+					'layout' => 'table',
+					'button_label' => 'Add Button',
+					'sub_fields' => array(
+						array('key' => 'field_ss_btn_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text'),
+						array('key' => 'field_ss_btn_link', 'label' => 'Link', 'name' => 'link', 'type' => 'text'),
+						array('key' => 'field_ss_btn_style', 'label' => 'Style', 'name' => 'style', 'type' => 'select', 'choices' => array('primary' => 'Primary', 'outline' => 'Outline')),
+					),
+				),
+				array(
+					'key' => 'field_ss_cards',
+					'label' => 'Right Cards',
+					'name' => 'cards',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Card',
+					'sub_fields' => array(
+						array('key' => 'field_ss_card_icon', 'label' => 'Icon Name', 'name' => 'icon', 'type' => 'text'),
+						array('key' => 'field_ss_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+						array('key' => 'field_ss_card_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 2),
+					),
+				),
+			),
+		),
+		'layout_team_grid' => array(
+			'key' => 'layout_team_grid',
+			'name' => 'team_grid',
+			'label' => 'Team Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_tg_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array(
+					'key' => 'field_tg_team',
+					'label' => 'Team Members',
+					'name' => 'team',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Team Member',
+					'sub_fields' => array(
+						array('key' => 'field_tg_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text'),
+						array('key' => 'field_tg_role', 'label' => 'Role', 'name' => 'role', 'type' => 'text'),
+						array('key' => 'field_tg_bio', 'label' => 'Bio', 'name' => 'bio', 'type' => 'textarea', 'rows' => 3),
 					),
 				),
 			),
@@ -774,6 +864,8 @@ acf_add_local_field_group(array(
 ));
 
 });
+
+
 
 
 
