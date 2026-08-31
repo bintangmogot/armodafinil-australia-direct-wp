@@ -227,14 +227,16 @@ body {
 }
 .xoo-wsc-body {
     background-color: #f8fafc !important;
-    padding: 20px 24px !important;
+    padding: 16px !important;
 }
 .xoo-wsc-product {
     background-color: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 12px !important;
     padding: 16px !important;
-    margin-bottom: 16px !important;
+    margin: 0 0 12px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
     position: relative !important;
 }
