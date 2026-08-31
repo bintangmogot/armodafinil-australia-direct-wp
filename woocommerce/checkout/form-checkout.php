@@ -162,6 +162,20 @@ document.addEventListener('DOMContentLoaded', function() {
 #step-3 .review-order-summary-wrapper {
     display: none !important;
 }
+/* Strip WooCommerce default grey background from #payment */
+#payment.woocommerce-checkout-payment {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+#payment.woocommerce-checkout-payment ul.payment_methods {
+    border-bottom: 0 !important;
+}
+#payment.woocommerce-checkout-payment div.form-row.place-order {
+    padding: 0 !important;
+    margin: 1.5rem 0 0 !important;
+    background: transparent !important;
+}
 /* Basic styling for WooCommerce fields inside the accordion */
 .step-content .form-row {
     margin-bottom: 1.25rem;
@@ -208,20 +222,25 @@ document.addEventListener('DOMContentLoaded', function() {
     justify-content: center;
     gap: 0.5rem;
     height: 3rem;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     border-radius: 9999px;
     background-color: #0d9488;
     color: white;
     font-weight: 600;
-    width: 100%;
     font-size: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.15s;
+    width: auto;
 }
 #place_order:hover {
     background-color: #0f766e;
+}
+.woocommerce-privacy-policy-text {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
 }
 .wc_payment_methods {
     list-style: none !important;
@@ -232,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow: hidden;
 }
 .wc_payment_methods li {
-    padding: 1rem;
+    padding: 1.25rem;
     margin: 0 !important;
     border-bottom: 1px solid #e2e8f0;
     background: #f8fafc;
@@ -245,24 +264,31 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .wc_payment_methods li label {
     font-weight: 600;
-    color: #0f172a;
+    color: #09152b;
     display: inline-block;
     margin: 0;
 }
 .wc_payment_methods li .payment_box {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
     padding: 1rem;
     background: #fff;
     border-radius: 0.5rem;
     border: 1px solid #e2e8f0;
     font-size: 0.875rem;
     color: #475569;
+    position: relative;
+}
+/* Hide the ugly WooCommerce triangle */
+.wc_payment_methods li .payment_box::before {
+    display: none !important;
 }
 .woocommerce-terms-and-conditions-wrapper {
     margin-top: 1.5rem;
     font-size: 0.875rem;
     color: #64748b;
 }
-.medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0f172a; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } </style>
+.medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
+</style>
+
 
 

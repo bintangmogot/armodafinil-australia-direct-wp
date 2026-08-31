@@ -140,7 +140,7 @@ defined( 'ABSPATH' ) || exit;
 }
 .woocommerce-thankyou-hooks ul.order_details {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
@@ -161,42 +161,73 @@ defined( 'ABSPATH' ) || exit;
 }
 .woocommerce-thankyou-hooks section.woocommerce-bacs-bank-details {
     background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
 }
-.woocommerce-thankyou-hooks .woocommerce-table--order-details {
+
+/* All WooCommerce tables (Order Details, Medical Conditions, etc) */
+.woocommerce-thankyou-hooks table.shop_table {
     width: 100%;
-    text-align: left;
-    border-collapse: collapse;
+    border-collapse: separate; border-spacing: 0;
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     border-radius: 1rem;
     overflow: hidden;
+    margin-bottom: 2rem;
 }
-.woocommerce-thankyou-hooks .woocommerce-table--order-details th,
-.woocommerce-thankyou-hooks .woocommerce-table--order-details td {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 0.875rem;
-}
-.woocommerce-thankyou-hooks .woocommerce-table--order-details th {
+.woocommerce-thankyou-hooks table.shop_table thead th {
+    background: #f8fafc;
     font-weight: 600;
     color: #09152b;
-    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
 }
-.woocommerce-thankyou-hooks .woocommerce-table--order-details tfoot th {
-    text-align: right;
-    background: #fff;
+.woocommerce-thankyou-hooks table.shop_table th,
+.woocommerce-thankyou-hooks table.shop_table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
 }
-.woocommerce-thankyou-hooks .woocommerce-table--order-details tr:last-child th,
-.woocommerce-thankyou-hooks .woocommerce-table--order-details tr:last-child td {
+.woocommerce-thankyou-hooks table.shop_table tr:last-child th,
+.woocommerce-thankyou-hooks table.shop_table tr:last-child td {
     border-bottom: none;
 }
+
+/* Receipt-style alignment for Order Details Table */
+.woocommerce-thankyou-hooks table.shop_table.order_details th:first-child,
+.woocommerce-thankyou-hooks table.shop_table.order_details td:first-child {
+    text-align: left;
+}
+.woocommerce-thankyou-hooks table.shop_table.order_details th:last-child,
+.woocommerce-thankyou-hooks table.shop_table.order_details td:last-child {
+    text-align: right;
+}
+.woocommerce-thankyou-hooks table.shop_table.order_details tfoot th {
+    font-weight: 600;
+    color: #09152b;
+}
+.woocommerce-thankyou-hooks table.shop_table.order_details tfoot td {
+    font-weight: 500;
+    color: #09152b;
+}
+
+/* Medical Conditions Table specific tweaks */
+.woocommerce-thankyou-hooks table.woocommerce-table--customer-details th {
+    font-weight: 600;
+    color: #09152b;
+    width: 40%;
+    text-align: left;
+}
+.woocommerce-thankyou-hooks table.woocommerce-table--customer-details td {
+    text-align: left;
+}
+
 .woocommerce-customer-details {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     border-radius: 1rem;
     padding: 1.5rem;
     margin-top: 1.5rem;
@@ -208,3 +239,7 @@ defined( 'ABSPATH' ) || exit;
     line-height: 1.6;
 }
 </style>
+
+
+
+
