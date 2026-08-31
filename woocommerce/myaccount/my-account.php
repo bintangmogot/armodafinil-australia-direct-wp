@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
         
         <!-- Main Content -->
         <main class="flex-1 min-w-0">
-            <div class="woocommerce-MyAccount-content bg-white rounded-2xl shadow-sm border border-ink-200 p-6 sm:p-8 lg:p-10">
+            <div class="woocommerce-MyAccount-content !w-full !float-none bg-white rounded-2xl shadow-sm border border-ink-200 p-6 sm:p-8 lg:p-10">
                 <?php do_action( 'woocommerce_account_content' ); ?>
             </div>
         </main>
@@ -129,3 +129,4 @@ defined( 'ABSPATH' ) || exit;
     border-radius: 9999px;
 }
 </style>
+

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'woocommerce_before_account_navigation' );
 ?>
 
-<nav class="woocommerce-MyAccount-navigation bg-white rounded-2xl shadow-sm border border-ink-200 p-3" aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
+<nav class="woocommerce-MyAccount-navigation !w-full !float-none bg-white rounded-2xl shadow-sm border border-ink-200 p-3" aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
     <h3 class="font-serif text-lg font-semibold text-ink-900 px-4 py-3 mb-2 border-b border-ink-100">My Account</h3>
 	<ul class="space-y-1">
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
@@ -51,3 +51,4 @@ do_action( 'woocommerce_before_account_navigation' );
 </style>
 
 <?php do_action( 'woocommerce_after_account_navigation' ); ?>
+
