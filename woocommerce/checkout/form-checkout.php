@@ -141,15 +141,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Move Sidebar Summary
+        // Move Sidebar Summary
     function updateSidebar() {
         var $wrapper = $('#order_review .review-order-summary-wrapper').clone();
         $wrapper.removeClass('hidden'); // Ensure it shows in sidebar
+        
+        // Fix duplicate IDs in the cloned sidebar so labels work correctly
+        $wrapper.find('[id]').each(function() {
+            var oldId = $(this).attr('id');
+            var newId = 'sidebar_' + oldId;
+            $(this).attr('id', newId);
+            
+            // Update any labels pointing to this ID within the wrapper
+            $wrapper.find('label[for="' + oldId + '"]').attr('for', newId);
+        });
+
         $('.sidebar-summary-container').html($wrapper);
     }
     
     $(document.body).on('updated_checkout', function() {
         updateSidebar();
+    });
+    
+    // Sync sidebar input changes back to the real hidden form
+    $(document.body).on('change', '.sidebar-summary-container input', function() {
+        var $this = $(this);
+        var type = $this.attr('type');
+        var name = $this.attr('name');
+        
+        // Add a visual loading state to the sidebar
+        $('.sidebar-summary-container').css('opacity', '0.6');
+        
+        if (type === 'radio') {
+            var val = $this.val();
+            // Find the real radio in the form and trigger change
+            var $realInput = $('form.checkout input[name="' + name + '"][value="' + val + '"]');
+            if ($realInput.length) {
+                $realInput.prop('checked', true).trigger('change');
+            }
+        } else if (type === 'checkbox') {
+            var isChecked = $this.prop('checked');
+            var $realInput = $('form.checkout input[name="' + name + '"]');
+            if ($realInput.length) {
+                $realInput.prop('checked', isChecked).trigger('change');
+            }
+        } else {
+            var $realInput = $('form.checkout input[name="' + name + '"]');
+            if ($realInput.length) {
+                $realInput.val($this.val()).trigger('change');
+            }
+        }
     });
     
     // Initial update
@@ -289,6 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
 </style>
+
+
 
 
 
