@@ -2,11 +2,52 @@
 /**
  * FAQ Module Template (Advanced JS Filter)
  * 
- * Data provided by ACF Sub Fields: title, subtitle, faqs
+ * Data provided by ACF Sub Fields: faq_categories
  */
 
-$faqs = get_sub_field('faqs');
-if ( empty( $faqs ) ) {
+$raw_categories = get_sub_field('faq_categories');
+$categories = array('All topics');
+$faqs = array();
+
+// Default icons mapping for fallback
+$icons = array(
+    'All topics' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+    'package' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package w-4 h-4"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>',
+    'credit-card' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card w-4 h-4"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>',
+    'truck' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>',
+    'user' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+);
+$category_icons = array();
+
+if ( !empty( $raw_categories ) ) {
+    foreach ( $raw_categories as $cat ) {
+        if ( empty($cat['cat_name']) ) continue;
+        
+        $cat_name = $cat['cat_name'];
+        $categories[] = $cat_name;
+        
+        $icon_name = !empty($cat['cat_icon']) ? $cat['cat_icon'] : 'help-circle';
+        $category_icons[$cat_name] = isset($icons[$icon_name]) ? $icons[$icon_name] : $icons['All topics'];
+        
+        if ( !empty($cat['faqs']) ) {
+            foreach ( $cat['faqs'] as $faq ) {
+                $faqs[] = array(
+                    'category' => $cat_name,
+                    'question' => $faq['question'],
+                    'answer'   => $faq['answer'],
+                );
+            }
+        }
+    }
+} else {
+    // Fallback data if module is empty
+    $categories = array('All topics', 'Ordering', 'Payment', 'Shipping', 'Account');
+    $category_icons = array(
+        'Ordering' => $icons['package'],
+        'Payment' => $icons['credit-card'],
+        'Shipping' => $icons['truck'],
+        'Account' => $icons['user'],
+    );
     $faqs = array(
         array('category' => 'Ordering', 'question' => 'How do I place an order?', 'answer' => 'Pick your product and pack size, add it to your cart, then complete checkout with your delivery details. A confirmation email with payment instructions will land in your inbox shortly after.'),
         array('category' => 'Payment', 'question' => 'What payment methods do you accept?', 'answer' => 'We accept Australian bank transfer, major cards through our encrypted gateway, and a handful of supported cryptocurrencies. Every transaction is processed on a secure, PCI-aligned checkout.'),
@@ -20,16 +61,6 @@ if ( empty( $faqs ) ) {
         array('category' => 'Account', 'question' => 'How do I contact support?', 'answer' => 'WhatsApp is fastest during business hours, or email support@armodafinildirect.example anytime. Our team usually replies within one business day.'),
     );
 }
-
-// Map categories to icons (Lucide SVG strings)
-$icons = array(
-    'All topics' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
-    'Ordering' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package w-4 h-4"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>',
-    'Payment' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card w-4 h-4"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>',
-    'Shipping' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>',
-    'Account' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-);
-$categories = array('All topics', 'Ordering', 'Payment', 'Shipping', 'Account');
 ?>
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-10" id="faq-app">
@@ -40,7 +71,7 @@ $categories = array('All topics', 'Ordering', 'Payment', 'Shipping', 'Account');
             <button type="button" 
                 data-faq-cat="<?php echo esc_attr($cat); ?>"
                 class="faq-cat-btn inline-flex items-center gap-2 text-sm font-medium px-4 h-10 rounded-full border transition-colors <?php echo $cat === 'All topics' ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">
-                <?php echo isset($icons[$cat]) ? $icons[$cat] : $icons['All topics']; ?> <?php echo esc_html($cat); ?>
+                <?php echo $cat === 'All topics' ? $icons['All topics'] : (isset($category_icons[$cat]) ? $category_icons[$cat] : $icons['All topics']); ?> <?php echo esc_html($cat); ?>
             </button>
         <?php endforeach; ?>
     </div>
