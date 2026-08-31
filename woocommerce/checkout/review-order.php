@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
                 ?>
                 <li class="flex gap-3 items-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-                    <div class="relative w-14 h-14 rounded-lg overflow-hidden bg-brand-50 border border-ink-200 shrink-0 flex items-center justify-center">
-                        <?php echo apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image('thumbnail', array('class' => 'w-full h-full object-cover')), $cart_item, $cart_item_key ); ?>
+                    <div class="relative w-14 h-14 rounded-lg bg-brand-50 border border-ink-200 shrink-0 flex items-center justify-center">
+                        <?php echo apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image('thumbnail', array('class' => 'w-full h-full object-cover rounded-lg')), $cart_item, $cart_item_key ); ?>
                         <span class="absolute -top-1 -right-1 w-5 h-5 grid place-items-center rounded-full bg-ink-900 text-white text-[10px] font-semibold leading-none pt-0.5">
                             <?php echo $cart_item['quantity']; ?>
                         </span>
@@ -110,3 +110,4 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 !fill-none"><path style="fill: none !important;" d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path style="fill: none !important;" d="M14 9h4l4 4v5c0 .6-.4 1-1 1h-2"/><circle style="fill: none !important;" cx="7" cy="18" r="2"/><circle style="fill: none !important;" cx="17" cy="18" r="2"/></svg> Tracked</span>
     </div>
 </div>
+
