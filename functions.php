@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Theme functions and definitions
  *
@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( '_S_VERSION' ) ) {
-	define( '_S_VERSION', '1.0.0' );
+	define( '_S_VERSION', filemtime( get_stylesheet_directory() . '/style.css' ) );
 }
 
 function armodafinil_australia_scripts() {
@@ -225,9 +225,10 @@ add_action('manage_review_posts_custom_column', function($column, $post_id) {
         if ($product_id) {
             echo '<a href="' . get_edit_post_link($product_id) . '">' . get_the_title($product_id) . '</a>';
         } else {
-            echo '—';
+            echo 'â€”';
         }
     }
 }, 10, 2);
 
 require_once get_template_directory() . '/inc/ajax-reviews.php';
+
