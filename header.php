@@ -89,14 +89,12 @@
 
 			<div class="flex-1"></div>
 
-			<!-- Search -->
-			<div class="hidden md:flex items-center bg-ink-100/70 rounded-full px-3 h-10 w-72">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search text-ink-500"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-				<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex-1 flex items-center mx-2">
-					<input type="search" aria-label="Search" placeholder="Search products..." value="<?php echo get_search_query(); ?>" name="s" class="bg-transparent outline-none border-0 text-sm w-full placeholder:text-ink-500" />
-				</form>
-				<span class="text-[10px] font-medium text-ink-500 border border-ink-200 rounded px-1.5 py-0.5">Ctrl K</span>
-			</div>
+						<!-- Search Trigger Button -->
+			<button id="header-search-trigger" aria-label="Open Search" class="hidden md:flex items-center bg-ink-50 hover:bg-ink-100 transition-colors rounded-full px-4 h-[42px] w-80 border border-ink-200 shadow-sm cursor-text text-left group">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-400 group-hover:text-brand-600 transition-colors shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+				<span class="flex-1 mx-3 text-[13px] text-ink-500 font-medium truncate">Search products, strengths, brands...</span>
+				<span class="text-[10px] font-semibold text-ink-500 bg-white border border-ink-200 rounded px-1.5 py-0.5 shadow-sm shrink-0">Ctrl K</span>
+			</button>
 
 			<!-- Cart -->
 			<a href="<?php echo wc_get_cart_url(); ?>" class="xoo-wsc-cart-trigger relative w-10 h-10 grid place-items-center rounded-full hover:bg-ink-100" aria-label="Cart">
@@ -140,6 +138,7 @@
 			menu.classList.toggle('hidden');
 		});
 	</script>
+
 
 
 

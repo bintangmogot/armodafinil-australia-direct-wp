@@ -320,3 +320,40 @@ function armodafinil_process_magic_link() {
     }
 }
 
+<?php
+// Custom AJAX Product Search
+add_action( 'wp_ajax_nopriv_armodafinil_search', 'armodafinil_ajax_search' );
+add_action( 'wp_ajax_armodafinil_search', 'armodafinil_ajax_search' );
+function armodafinil_ajax_search() {
+    $query = isset( $_GET['q'] ) ? sanitize_text_field( $_GET['q'] ) : '';
+    
+    if ( empty( $query ) ) {
+        wp_send_json_success( array() );
+    }
+
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => 8,
+        's'              => $query,
+    );
+
+    $products = new WP_Query( $args );
+    $results = array();
+
+    if ( $products->have_posts() ) {
+        while ( $products->have_posts() ) {
+            $products->the_post();
+            $product = wc_get_product( get_the_ID() );
+            $results[] = array(
+                'title' => get_the_title(),
+                'url'   => get_permalink(),
+                'price' => $product->get_price_html(),
+                'image' => get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' ) ?: wc_placeholder_img_src( 'thumbnail' ),
+            );
+        }
+    }
+    wp_reset_postdata();
+
+    wp_send_json_success( $results );
+}
