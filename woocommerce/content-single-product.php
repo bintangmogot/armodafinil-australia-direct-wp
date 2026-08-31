@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * The template for displaying product content in the single-product.php template
  */
@@ -471,14 +471,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.disabled = false;
                 }, 2000);
 
-                // Trigger jQuery event for Side Cart plugin
+                                // Trigger jQuery event for Side Cart plugin
                 if (typeof jQuery !== 'undefined') {
-                    jQuery(document.body).trigger('added_to_cart', [null, null, jQuery(btn)]);
-                    jQuery(document.body).trigger('wc_fragment_refresh');
-                    // Some side carts use this specific trigger to open
-                    if (typeof xoo_wsc_cart !== 'undefined') {
-                        jQuery(document.body).trigger('xoo_wsc_cart_updated');
-                    }
+                    // Fetch real fragments to pass to side cart
+                    var fragUrl = (typeof wc_cart_fragments_params !== 'undefined') 
+                        ? wc_cart_fragments_params.wc_ajax_url.toString().replace('%%endpoint%%', 'get_refreshed_fragments')
+                        : '/?wc-ajax=get_refreshed_fragments';
+                        
+                    jQuery.ajax({
+                        url: fragUrl,
+                        type: 'POST',
+                        success: function(data) {
+                            if (data && data.fragments) {
+                                jQuery(document.body).trigger('added_to_cart', [data.fragments, data.cart_hash, jQuery(btn)]);
+                            } else {
+                                jQuery(document.body).trigger('wc_fragment_refresh');
+                            }
+                        },
+                        error: function() {
+                            jQuery(document.body).trigger('wc_fragment_refresh');
+                        }
+                    });
                 }
             })
             .catch(error => {
@@ -604,3 +617,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
+
