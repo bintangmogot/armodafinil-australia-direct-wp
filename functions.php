@@ -318,9 +318,8 @@ function armodafinil_process_magic_link() {
             }
         }
     }
-}
+} 
 
-<?php
 // Custom AJAX Product Search
 add_action( 'wp_ajax_nopriv_armodafinil_search', 'armodafinil_ajax_search' );
 add_action( 'wp_ajax_armodafinil_search', 'armodafinil_ajax_search' );
@@ -357,3 +356,5 @@ function armodafinil_ajax_search() {
 
     wp_send_json_success( $results );
 }
+
+
