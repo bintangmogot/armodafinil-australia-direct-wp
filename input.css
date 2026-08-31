@@ -186,16 +186,120 @@ body {
 .policy-rich-text blockquote.warning { @apply bg-amber-50 border-amber-200 text-amber-900; }
 .policy-rich-text blockquote.warning::before { content: "IMPORTANT"; @apply text-amber-800; }
 
-/* Custom Mini Cart Overrides */
-.woocommerce-mini-cart__total strong {
-    @apply text-ink-500 font-medium text-sm font-sans uppercase tracking-wider;
+
+
+/* XootiX Side Cart Overrides */
+.xoo-wsc-modal {
+    backdrop-filter: blur(4px);
+    background-color: rgba(9, 21, 43, 0.4) !important;
 }
-.woocommerce-mini-cart__total .amount {
-    @apply text-xl font-bold text-ink-900;
+.xoo-wsc-container {
+    background-color: #ffffff !important;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1) !important;
+    border-radius: 16px 0 0 16px !important;
 }
-.woocommerce-mini-cart__buttons .button:not(.checkout) {
-    @apply hidden; /* Hide 'View Cart' button, only show checkout */
+.xoo-wsc-header {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+    padding: 20px 24px !important;
+    border-radius: 16px 0 0 0 !important;
 }
-.woocommerce-mini-cart__buttons .checkout {
-    @apply w-full block py-4 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-sm transition-colors text-center text-base;
+.xoo-wsc-header .xoo-wsc-ch-txt {
+    font-family: "Playfair Display", serif !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #09152b !important;
+}
+.xoo-wsc-header .xoo-wsc-close {
+    background: #f1f5f9 !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #64748b !important;
+    transition: all 0.2s !important;
+}
+.xoo-wsc-header .xoo-wsc-close:hover {
+    background: #e2e8f0 !important;
+    color: #09152b !important;
+}
+.xoo-wsc-body {
+    background-color: #f8fafc !important;
+    padding: 20px 24px !important;
+}
+.xoo-wsc-product {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
+    position: relative !important;
+}
+.xoo-wsc-product .xoo-wsc-img-col img {
+    border-radius: 8px !important;
+    border: 1px solid #f1f5f9 !important;
+}
+.xoo-wsc-product .xoo-wsc-pname {
+    font-weight: 600 !important;
+    color: #09152b !important;
+    font-size: 14px !important;
+}
+.xoo-wsc-product .xoo-wsc-pprice {
+    color: #0d9488 !important;
+    font-weight: 700 !important;
+}
+.xoo-wsc-product .xoo-wsc-sm-btn {
+    border-radius: 50% !important;
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    width: 28px !important;
+    height: 28px !important;
+}
+.xoo-wsc-product .xoo-wsc-sm-btn:hover {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+.xoo-wsc-qty-col {
+    background: #f8fafc !important;
+    border-radius: 6px !important;
+    border: 1px solid #e2e8f0 !important;
+}
+.xoo-wsc-footer {
+    border-top: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+    padding: 24px !important;
+}
+.xoo-wsc-ft-amt {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #09152b !important;
+}
+.xoo-wsc-ft-btn-checkout {
+    background-color: #0d9488 !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    padding: 16px !important;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2) !important;
+    transition: all 0.2s !important;
+}
+.xoo-wsc-ft-btn-checkout:hover {
+    background-color: #0f766e !important;
+}
+.xoo-wsc-ft-btn-cart {
+    display: none !important;
+}
+.xoo-wsc-empty-cart {
+    background: transparent !important;
+    text-align: center !important;
+}
+.xoo-wsc-empty-cart h4 {
+    font-weight: 700 !important;
+    color: #09152b !important;
+}
+.xoo-wsc-empty-cart .xoo-wsc-ec-icon {
+    color: #94a3b8 !important;
 }
