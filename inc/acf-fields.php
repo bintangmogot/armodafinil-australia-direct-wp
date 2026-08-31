@@ -489,6 +489,30 @@ acf_add_local_field_group(array(
 				array('key' => 'field_sc_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'text'),
 			),
 		),
+				'layout_policy_page' => array(
+			'key' => 'layout_policy_page',
+			'name' => 'policy_page',
+			'label' => 'Policy Page (TOC)',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_pp_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text', 'default_value' => 'Legal'),
+				array('key' => 'field_pp_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+				array('key' => 'field_pp_intro', 'label' => 'Intro', 'name' => 'intro', 'type' => 'textarea', 'rows' => 3),
+				array('key' => 'field_pp_updated', 'label' => 'Last Updated', 'name' => 'updated', 'type' => 'text'),
+				array(
+					'key' => 'field_pp_sections',
+					'label' => 'Sections',
+					'name' => 'sections',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Section',
+					'sub_fields' => array(
+						array('key' => 'field_pps_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'),
+						array('key' => 'field_pps_content', 'label' => 'Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'full'),
+					),
+				),
+			),
+		),
 		'layout_conditions_grid' => array(
 			'key' => 'layout_conditions_grid',
 			'name' => 'conditions_grid',
@@ -750,6 +774,7 @@ acf_add_local_field_group(array(
 ));
 
 });
+
 
 
 
