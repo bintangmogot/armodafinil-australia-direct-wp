@@ -1,4 +1,4 @@
-﻿<div id="cmdk-search-modal" class="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4 sm:px-6 hidden" aria-modal="true" role="dialog">
+<div id="cmdk-search-modal" class="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4 sm:px-6 hidden" aria-modal="true" role="dialog">
     <!-- Backdrop -->
     <div class="fixed inset-0 bg-ink-900/40 backdrop-blur-sm transition-opacity" id="cmdk-backdrop"></div>
 
@@ -20,12 +20,11 @@
             <!-- Filters -->
             <div class="mt-4 flex items-center gap-2 px-1">
                 <span class="text-[11px] font-bold tracking-widest text-ink-400 uppercase mr-2">Look in</span>
-                <button class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm hover:bg-brand-700 transition-colors">All</button>
-                <button class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Men's Health</button>
-                <button class="w-7 h-7 rounded-full bg-ink-50 flex items-center justify-center text-ink-500 hover:bg-ink-100 border border-ink-200/60 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                </button>
-            </div>
+<button data-cat="" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm hover:bg-brand-700 transition-colors">All</button>
+<button data-cat="18" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Armodafinil</button>
+<button data-cat="19" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Modafinil</button>
+<button data-cat="17" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Smart Pills</button>
+</div>
         </div>
 
         <!-- Results Area -->
@@ -151,10 +150,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (state === 'no-results') noResults.classList.remove('hidden');
     }
 
+    let activeCategory = '';
+
+    document.querySelectorAll('.cat-filter').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.cat-filter').forEach(b => {
+                b.className = 'cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors';
+            });
+            this.className = 'cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm hover:bg-brand-700 transition-colors';
+            activeCategory = this.getAttribute('data-cat');
+            const q = input.value.trim();
+            if (q.length >= 2) performSearch(q);
+        });
+    });
+
     function performSearch(query) {
         showState('loading');
         
-        fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=armodafinil_search&q=' + encodeURIComponent(query))
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=armodafinil_search&q=' + encodeURIComponent(query) + '&cat=' + activeCategory)
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data && data.data.length > 0) {

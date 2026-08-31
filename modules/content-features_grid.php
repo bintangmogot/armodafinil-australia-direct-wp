@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $title = get_sub_field('title');
 $center_title = get_sub_field('center_title');
 $features = get_sub_field('features');

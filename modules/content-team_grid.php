@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $title = get_sub_field('title');
 $team = get_sub_field('team');
 if (!empty($team)) :

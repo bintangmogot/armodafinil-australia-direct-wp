@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Empty cart page
  */

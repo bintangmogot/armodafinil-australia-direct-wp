@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * My Account page
  */

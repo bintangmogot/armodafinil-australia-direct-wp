@@ -330,12 +330,24 @@ function armodafinil_ajax_search() {
         wp_send_json_success( array() );
     }
 
+    $cat = isset( $_GET['cat'] ) ? sanitize_text_field( $_GET['cat'] ) : '';
+
     $args = array(
         'post_type'      => 'product',
         'post_status'    => 'publish',
         'posts_per_page' => 8,
         's'              => $query,
     );
+
+    if ( ! empty( $cat ) ) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'term_id',
+                'terms'    => $cat,
+            ),
+        );
+    }
 
     $products = new WP_Query( $args );
     $results = array();
@@ -359,3 +371,16 @@ function armodafinil_ajax_search() {
 
 
 
+
+add_action('wp_footer', function() {
+    if (is_checkout()) {
+        echo '<script>
+        /* Fix: Sync selected insurance to window data so React remounts read current value */
+        document.addEventListener("change", function(e) {
+            if (e.target && e.target.name === "shipping-insurance" && window.shippingInsuranceData) {
+                window.shippingInsuranceData.selected_insurance = e.target.value;
+            }
+        });
+        </script>';
+    }
+});

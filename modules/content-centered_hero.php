@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $badge = get_sub_field('badge');
 $title = get_sub_field('title');
 $desc = get_sub_field('desc');

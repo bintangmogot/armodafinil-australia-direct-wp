@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $stats = get_sub_field('stats');
 if (!empty($stats)) :
 ?>

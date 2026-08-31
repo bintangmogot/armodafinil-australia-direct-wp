@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Checkout coupon form
  */
