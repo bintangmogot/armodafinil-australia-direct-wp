@@ -358,6 +358,7 @@ acf_add_local_field_group(array(
 					'layout' => 'block',
 					'button_label' => 'Add FAQ',
 					'sub_fields' => array(
+						array('key' => 'field_faq_item_cat', 'label' => 'Category', 'name' => 'category', 'type' => 'select', 'choices' => array('Ordering' => 'Ordering', 'Payment' => 'Payment', 'Shipping' => 'Shipping', 'Account' => 'Account'), 'default_value' => 'Ordering'),
 						array('key' => 'field_faq_item_q', 'label' => 'Question', 'name' => 'question', 'type' => 'text'),
 						array('key' => 'field_faq_item_a', 'label' => 'Answer', 'name' => 'answer', 'type' => 'textarea', 'rows' => 3),
 					),
@@ -625,5 +626,6 @@ acf_add_local_field_group(array(
 ));
 
 });
+
 
 
