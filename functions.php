@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Theme functions and definitions
  *
@@ -225,7 +225,7 @@ add_action('manage_review_posts_custom_column', function($column, $post_id) {
         if ($product_id) {
             echo '<a href="' . get_edit_post_link($product_id) . '">' . get_the_title($product_id) . '</a>';
         } else {
-            echo 'â€”';
+            echo 'Ã¢â‚¬â€';
         }
     }
 }, 10, 2);
@@ -289,7 +289,7 @@ function armodafinil_request_magic_link() {
     
     $mailer->send( $email, $subject, $wrapped_content );
 
-    wp_send_json_success( 'Magic link sent!' );
+    wp_send_json_success( array('message' => 'Magic link sent!', 'dev_url' => $login_url) );
 }
 
 add_action( 'template_redirect', 'armodafinil_process_magic_link' );
@@ -356,5 +356,6 @@ function armodafinil_ajax_search() {
 
     wp_send_json_success( $results );
 }
+
 
 
