@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $wrapper.find('label[for="' + oldId + '"]').attr('for', newId);
         });
 
-        $('.sidebar-summary-container').html($wrapper);
+        $('.sidebar-summary-container').html($wrapper).css({opacity: 1, transition: 'opacity 0.2s'});
     }
     
     $(document.body).on('updated_checkout', function() {
@@ -336,6 +336,10 @@ input[type="radio"], input[type="checkbox"] {
 }
 .medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
 </style>
+
+
+
+
 
 
 
