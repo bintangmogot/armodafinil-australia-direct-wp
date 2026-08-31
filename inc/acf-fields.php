@@ -376,6 +376,30 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+		'layout_contact' => array(
+			'key' => 'layout_contact',
+			'name' => 'contact',
+			'label' => 'Contact Block',
+			'display' => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_contact_form_title', 'label' => 'Form Title', 'name' => 'form_title', 'type' => 'text', 'default_value' => 'Send us a message'),
+				array('key' => 'field_contact_form_shortcode', 'label' => 'Form Shortcode', 'name' => 'form_shortcode', 'type' => 'text', 'instructions' => 'Paste a Gravity Forms shortcode here, e.g. [gravityform id="1" title="false" description="false" ajax="true"]. If left blank, a demo form will be shown.'),
+				array(
+					'key' => 'field_contact_methods',
+					'label' => 'Contact Methods',
+					'name' => 'methods',
+					'type' => 'repeater',
+					'layout' => 'block',
+					'button_label' => 'Add Method',
+					'sub_fields' => array(
+						array('key' => 'field_cm_icon', 'label' => 'Lucide Icon', 'name' => 'icon', 'type' => 'text', 'default_value' => 'mail'),
+						array('key' => 'field_cm_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
+						array('key' => 'field_cm_value', 'label' => 'Value', 'name' => 'value', 'type' => 'text'),
+						array('key' => 'field_cm_link', 'label' => 'Link', 'name' => 'link', 'type' => 'text', 'instructions' => 'e.g. mailto:..., tel:...'),
+					),
+				),
+			),
+		),
 		'layout_conditions_grid' => array(
 			'key' => 'layout_conditions_grid',
 			'name' => 'conditions_grid',
