@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSidebar();
     });
     
-    // Sync sidebar input changes back to the real hidden form
+        // Sync sidebar input changes back to the real hidden form
     $(document.body).on('change', '.sidebar-summary-container input', function() {
         var $this = $(this);
         var type = $this.attr('type');
@@ -191,6 +191,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 $realInput.val($this.val()).trigger('change');
             }
         }
+
+        // Force WooCommerce to update the checkout totals
+        $(document.body).trigger('update_checkout');
     });
     
     // Initial update
@@ -256,6 +259,9 @@ document.addEventListener('DOMContentLoaded', function() {
 .step-content .form-row select:focus,
 .step-content .form-row textarea:focus {
     border-color: #0d9488;
+}
+input[type="radio"], input[type="checkbox"] {
+    accent-color: #0d9488;
 }
 #place_order {
     display: inline-flex;
@@ -330,6 +336,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
 </style>
+
+
 
 
 
