@@ -66,13 +66,13 @@ $icons = array(
                 <!-- Apply some structural tailwind styles to standard Gravity Form elements if needed -->
                 <style>
                     .gform_wrapper input[type="text"], .gform_wrapper input[type="email"], .gform_wrapper textarea {
-                        width: 100%; border-radius: 0.5rem; border: 1px solid #e2e8f0; padding: 0.5rem 0.75rem; outline: none; transition: border-color 0.2s;
+                        width: 100% !important; border-radius: 0.5rem !important; border: 1px solid #e2e8f0 !important; padding: 0.5rem 0.75rem !important; outline: none !important; transition: border-color 0.2s !important; box-shadow: none !important;
                     }
                     .gform_wrapper input[type="text"]:focus, .gform_wrapper input[type="email"]:focus, .gform_wrapper textarea:focus {
                         border-color: #0d9488;
                     }
                     .gform_wrapper input[type="submit"] {
-                        height: 2.75rem; padding: 0 1.5rem; border-radius: 9999px; background-color: #0d9488; color: white; font-weight: 600; cursor: pointer; transition: background-color 0.2s; border: none;
+                        height: 2.75rem !important; padding: 0 1.5rem !important; border-radius: 9999px !important; background-color: #0d9488 !important; color: white !important; font-weight: 600 !important; cursor: pointer !important; transition: background-color 0.2s !important; border: none !important;
                     }
                     .gform_wrapper input[type="submit"]:hover { background-color: #0f766e; }
                     .gform_wrapper .gfield_label { font-size: 0.875rem; color: #334155; margin-bottom: 0.25rem; display: block; }
@@ -103,3 +103,4 @@ $icons = array(
         <?php endif; ?>
     </div>
 </div>
+
