@@ -1,4 +1,4 @@
-﻿/*!
+/*!
 Theme Name: Armodafinil Australia Direct
 Theme URI: https://armodafinilaustralia.com.au
 Author: Armodafinil Australia
@@ -189,7 +189,7 @@ body {
 
 
 /* XootiX Side Cart Overrides */
-.xoo-wsc-modal {
+.xoo-wsc-opac {
     backdrop-filter: blur(4px);
     background-color: rgba(9, 21, 43, 0.4) !important;
 }
@@ -303,3 +303,4 @@ body {
 .xoo-wsc-empty-cart .xoo-wsc-ec-icon {
     color: #94a3b8 !important;
 }
+
