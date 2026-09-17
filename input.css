@@ -1,3 +1,4 @@
+@layer base { html { scroll-behavior: smooth; } }
 /*!
 Theme Name: Armodafinil Australia Direct
 Theme URI: https://armodafinilaustralia.com.au
@@ -327,3 +328,67 @@ body {
 
 
 
+
+/* Custom Typography Overrides */
+.prose ul {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+.prose ul > li {
+  position: relative;
+  padding-left: 1.75em !important;
+}
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 1.2em;
+  height: 1.2em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z'/%3E%3Cpath d='m8.5 8.5 7 7'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.prose table {
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .prose thead {
+    background-color: #f8fafc !important;
+  }
+  .prose thead th, .prose thead td {
+    color: #0f172a !important;
+    font-weight: 600;
+    padding: 12px 16px !important;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+  .prose tbody tr:nth-child(even) {
+    background-color: #f8fafc !important;
+  }
+  .prose tbody tr:nth-child(odd) {
+    background-color: #ffffff !important;
+  }
+  .prose tbody td {
+    padding: 12px 16px !important;
+    color: #334155 !important;
+    border-top: 1px solid #e2e8f0 !important;
+  }
+
+
+
+/* Hide default plugin wishlist buttons on single product page since we use a custom round button */
+.single-product .yith-wcwl-add-to-wishlist,
+.single-product .tinv-wraper,
+.single-product .tinv-wishlist {
+    display: none !important;
+}

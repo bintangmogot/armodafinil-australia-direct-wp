@@ -79,13 +79,7 @@
 					// Custom walker can be added here for perfect Tailwind classes on <li> and <a>
 				) );
 				?>
-                <!-- Hardcoded fallback if no menu assigned -->
-                <a href="/shop" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Products</a>
-                <a href="/categories" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Categories</a>
-                <a href="/conditions" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Conditions</a>
-                <a href="/blog" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">Blog</a>
-                <a href="/faq" class="px-3 py-2 rounded-md text-sm font-medium transition-colors text-ink-700 hover:text-brand-700 hover:bg-brand-50/60">FAQ</a>
-			</nav>
+                </nav>
 
 			<div class="flex-1"></div>
 
@@ -119,27 +113,5 @@
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
 			</button>
 		</div>
-
-		<!-- Mobile Menu Dropdown -->
-		<div id="mobile-menu" class="hidden lg:hidden border-t border-ink-200 bg-white">
-			<div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
-				<a href="/shop" class="px-3 py-2 rounded-md text-sm font-medium text-ink-700 hover:bg-ink-100">Products</a>
-                <a href="/about" class="px-3 py-2 rounded-md text-sm font-medium text-ink-700 hover:bg-ink-100">About</a>
-                <a href="/faq" class="px-3 py-2 rounded-md text-sm font-medium text-ink-700 hover:bg-ink-100">FAQ</a>
-			</div>
-		</div>
 		</header>
     <?php endif; ?>
-	
-	<!-- Basic script for mobile menu toggle -->
-	<script>
-		document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-			var menu = document.getElementById('mobile-menu');
-			menu.classList.toggle('hidden');
-		});
-	</script>
-
-
-
-
-
