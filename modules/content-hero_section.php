@@ -52,7 +52,7 @@ if ( $product_obj ) {
 ?>
 
 <section class="section-wash">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 md:pt-10 md:pb-20 grid lg:grid-cols-2 gap-10 items-center">
         <div class="animate-fadeup">
             <?php if ( $eyebrow ) : ?>
             <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full">

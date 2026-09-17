@@ -3067,6 +3067,10 @@ h1,h2,h3,h4{
   padding-bottom: 2.5rem;
 }
 
+.pb-14{
+  padding-bottom: 3.5rem;
+}
+
 .pb-16{
   padding-bottom: 4rem;
 }
@@ -4932,12 +4936,20 @@ body {
     padding-bottom: 4rem;
   }
 
+  .md\:pb-20{
+    padding-bottom: 5rem;
+  }
+
   .md\:pb-24{
     padding-bottom: 6rem;
   }
 
   .md\:pl-10{
     padding-left: 2.5rem;
+  }
+
+  .md\:pt-10{
+    padding-top: 2.5rem;
   }
 
   .md\:pt-12{
