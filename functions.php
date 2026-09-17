@@ -479,7 +479,10 @@ add_filter('acf/update_value/type=wysiwyg', 'aad_clean_acf_wysiwyg_bookmarks', 1
 // add_filter('content_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
 function aad_clean_acf_wysiwyg_bookmarks($value, $post_id = null, $field = null) {
     if (!empty($value) && is_string($value)) {
-        $value = preg_replace('/<span[^>]*data-mce-type="bookmark"[^>]*>.*?<\/span>/is', '', $value);
+        // Selection bookmarks are TinyMCE's temporary cursor markers. They must
+        // never be stored in ACF content; accept both quote styles because pasted
+        // HTML and older editor versions may use either one.
+        $value = preg_replace('/<span\b[^>]*\bdata-mce-type\s*=\s*(["\'])bookmark\1[^>]*>(?:.*?<\/span>|)/is', '', $value);
     }
     return $value;
 }
@@ -609,4 +612,51 @@ function aad_fix_tinymce_text_color($init) {
     }
     return $init;
 }
+
+/**
+ * Keep the native editor stable while this site has Advanced Editor Tools 5.x
+ * installed.
+ *
+ * Version 5.9.2 ships TinyMCE 4-era plugins (including its table and code
+ * extensions). WordPress 7.1 loads a newer TinyMCE API, so those extensions
+ * throw a JavaScript error as soon as an editor switches to Visual mode. ACF
+ * WYSIWYG fields and WooCommerce's product description both use that same
+ * editor instance, which is why they fail together.
+ *
+ * This is deliberately conditional: once Advanced Editor Tools is upgraded to
+ * a compatible 6.x release, its integration is left alone. Until then,
+ * WordPress's own maintained editor handles rich text, pasted HTML, lists,
+ * links, and tables without the incompatible add-ons.
+ */
+function aad_disable_legacy_advanced_editor_tools() {
+    if ( ! class_exists( 'Advanced_Editor_Tools' ) ) {
+        return;
+    }
+
+    $plugin_file = WP_PLUGIN_DIR . '/tinymce-advanced/tinymce-advanced.php';
+    $plugin_data = get_file_data( $plugin_file, array( 'Version' => 'Version' ) );
+
+    if ( empty( $plugin_data['Version'] ) || ! version_compare( $plugin_data['Version'], '6.0.0', '<' ) ) {
+        return;
+    }
+
+    global $wp_filter;
+
+    foreach ( array( 'wp_editor_settings', 'mce_buttons', 'mce_buttons_2', 'mce_buttons_3', 'mce_buttons_4', 'tiny_mce_before_init', 'mce_external_plugins', 'tiny_mce_plugins' ) as $hook_name ) {
+        if ( empty( $wp_filter[ $hook_name ] ) || empty( $wp_filter[ $hook_name ]->callbacks ) ) {
+            continue;
+        }
+
+        foreach ( $wp_filter[ $hook_name ]->callbacks as $priority => $callbacks ) {
+            foreach ( $callbacks as $callback ) {
+                $function = $callback['function'];
+
+                if ( is_array( $function ) && isset( $function[0] ) && $function[0] instanceof Advanced_Editor_Tools ) {
+                    remove_filter( $hook_name, $function, $priority );
+                }
+            }
+        }
+    }
+}
+add_action( 'admin_init', 'aad_disable_legacy_advanced_editor_tools', 1 );
 
