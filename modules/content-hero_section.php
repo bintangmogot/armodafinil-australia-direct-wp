@@ -133,9 +133,9 @@ if ( $product_obj ) {
                             <div class="text-[11px] text-ink-500 font-medium mt-0.5">On all orders over A$299.00</div>
                         </div>
                     </div>
-                    <button type="button" onclick="navigator.clipboard.writeText('ARM10'); const original = this.innerHTML; this.innerHTML='<span class=\'text-emerald-600\'>Copied!</span>'; setTimeout(()=>this.innerHTML=original, 2000);" class="shrink-0 group flex items-center justify-center gap-1.5 bg-white border border-slate-200 border-dashed hover:border-brand-600 hover:bg-brand-50 transition-all text-xs font-bold text-ink-900 px-3 py-1.5 rounded-lg shadow-sm w-full sm:w-auto cursor-pointer" title="Click to copy code">
-                        <span class="text-brand-600 tracking-wider">ARM10</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-ink-400 group-hover:text-brand-600"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <button type="button" id="promo-copy-btn" class="shrink-0 group flex items-center justify-center gap-1.5 bg-white border border-slate-200 border-dashed hover:border-brand-600 hover:bg-brand-50 transition-all text-xs font-bold text-ink-900 px-3 py-1.5 rounded-lg shadow-sm w-full sm:w-auto cursor-pointer" title="Click to copy code">
+                        <span class="text-brand-600 tracking-wider promo-code-text">ARM10</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-ink-400 group-hover:text-brand-600 promo-copy-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                     </button>
                 </div>
 
@@ -261,3 +261,47 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <?php endif; ?>
+
+<script>
+// Promo Copy Logic
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('promo-copy-btn');
+    if (!copyBtn) return;
+    
+    copyBtn.addEventListener('click', function() {
+        const textToCopy = 'ARM10';
+        
+        // Fallback for insecure contexts (HTTP) or older browsers
+        const fallbackCopy = () => {
+            const tempInput = document.createElement('input');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                return true;
+            } catch (err) {
+                return false;
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        };
+
+        const showSuccess = () => {
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<span class="text-emerald-600 tracking-wider font-bold">Copied!</span>';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+            }, 2000);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy).then(showSuccess).catch(() => {
+                if (fallbackCopy()) showSuccess();
+            });
+        } else {
+            if (fallbackCopy()) showSuccess();
+        }
+    });
+});
+</script>
