@@ -108,16 +108,18 @@ foreach ( $attributes as $attribute ) {
                 <!-- Gallery -->
                 <div class="lg:sticky lg:top-24">
                     <div class="bg-white rounded-2xl border border-ink-200 overflow-hidden shadow-sm">
-                        <div class="aspect-square bg-brand-50">
-                            <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>" class="w-full h-full object-cover" />
+                        <div class="bg-white flex items-center justify-center">
+                            <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>" class="w-full h-auto object-contain max-h-[500px]" />
                         </div>
                     </div>
                     <?php 
                     $text_under_img = get_field('text_under_product_image', $product_id);
                     if($text_under_img): 
                     ?>
-                        <div class="mt-4 p-4 bg-white rounded-xl border border-ink-200 text-sm prose prose-ink prose-p:last:mb-0">
-                            <?php echo $text_under_img; ?>
+
+                      <div class="mt-3 px-4 py-3 bg-brand-50 rounded-xl border border-brand-100" style="display:flex; align-items:flex-start; gap:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600" style="flex-shrink:0; margin-top:1px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                            <div class="text-xs text-brand-800 font-medium leading-relaxed [&>div]:m-0 [&>p]:m-0" style="flex:1; margin:0; text-align:left;"><?php echo strip_tags($text_under_img, '<b><strong><i><em><a><br><br/>'); ?></div>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -152,14 +154,22 @@ foreach ( $attributes as $attribute ) {
                             ?>
                         </span>
                     </div>
+                      <?php 
+                      $short_desc = apply_filters('woocommerce_short_description', $product->get_short_description());
+                      if($short_desc): 
+                      ?>
+                          <div class="mt-5 p-5 bg-white rounded-xl border border-ink-200 shadow-sm text-[14px] text-ink-700 leading-relaxed prose prose-ink prose-a:text-brand-700 max-w-none">
+                              <?php echo wp_kses_post($short_desc); ?>
+                          </div>
+                      <?php endif; ?>
 
                     <!-- Promo strip -->
                     <div class="mt-5 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3 flex-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-5 h-5 text-amber-600 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                         <p class="text-sm text-amber-900 flex-1 min-w-[200px]">Free shipping + 10% off on orders above <b>$299</b>. Use code:</p>
-                        <button type="button" class="inline-flex items-center gap-2 h-9 px-3 rounded-lg border border-dashed border-amber-500 bg-white text-amber-800 font-mono font-semibold text-sm hover:bg-amber-100 transition-colors">
+                        <button type="button" class="promo-copy-btn inline-flex items-center gap-2 h-9 px-3 rounded-lg border border-dashed border-amber-500 bg-white text-amber-800 font-mono font-semibold text-sm hover:bg-amber-100 transition-colors" data-code="<?php echo esc_attr(get_field('promo_code', 'option') ?: 'ARMD10'); ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy w-4 h-4"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> 
-                            <?php echo esc_html(get_field('promo_code', 'option') ?: 'ARMD10'); ?>
+                            <span><?php echo esc_html(get_field('promo_code', 'option') ?: 'ARMD10'); ?></span>
                         </button>
                     </div>
 
@@ -178,7 +188,16 @@ foreach ( $attributes as $attribute ) {
                                     $attrs_json = htmlspecialchars(json_encode($v['attributes_raw']), ENT_QUOTES, 'UTF-8');
                                 ?>
                                     <button type="button" data-vid="<?php echo esc_attr($v['id']); ?>" data-price="<?php echo esc_attr($v['price']); ?>" data-qty="<?php echo esc_attr($v['qty']); ?>" data-attrs="<?php echo $attrs_json; ?>" class="variant-btn p-3 rounded-xl border text-left transition-colors <?php echo $i === 0 ? 'bg-brand-600 text-white border-brand-600 active' : 'bg-white text-ink-900 border-ink-200 hover:border-brand-500'; ?>">
-                                        <div class="text-lg font-semibold"><?php echo esc_html($v['qty']); ?></div>
+                                        <div class="text-lg font-semibold"><?php 
+    $display_qty = $v['qty'];
+    preg_match("/[0-9]+/", $display_qty, $matches);
+    if (!empty($matches)) {
+        $display_qty = $matches[0] . " Tablets";
+    } else {
+        $display_qty = ucwords(str_replace("-", " ", $display_qty));
+    }
+    echo esc_html($display_qty); 
+?></div>
                                         <div class="text-xs <?php echo $i === 0 ? 'text-white/80' : 'text-ink-500'; ?> price-label"><?php echo $currency . number_format($v['price'], 2); ?></div>
                                     </button>
                                 <?php endforeach; ?>
@@ -238,7 +257,14 @@ foreach ( $attributes as $attribute ) {
                     <!-- Product Specs Accordion -->
                     <?php
                     $custom_specs = get_field('custom_product_specs', $product_id);
-                    $total_specs_count = count($attributes) + (is_array($custom_specs) ? count($custom_specs) : 0);
+                    $visible_attributes = 0;
+                      foreach ($attributes as $attr) {
+                          $attr_label = strtolower(wc_attribute_label($attr->get_name()));
+                          if (!$attr->get_variation() && $attr_label !== 'quantity' && $attr_label !== 'tablets') {
+                              $visible_attributes++;
+                          }
+                      }
+                      $total_specs_count = $visible_attributes + (is_array($custom_specs) ? count($custom_specs) : 0);
                     if ($total_specs_count > 0):
                     ?>
                     <div class="mt-8 border border-ink-200 rounded-xl overflow-hidden bg-white">
@@ -260,107 +286,189 @@ foreach ( $attributes as $attribute ) {
                                     </div>
                                     <?php endforeach; endif; ?>
                                     
-                                    <?php foreach ( $attributes as $attribute ) : ?>
-                                    <div class="py-3 flex justify-between gap-4">
-                                        <dt class="text-ink-500 min-w-[120px]"><?php echo wc_attribute_label( $attribute->get_name() ); ?></dt>
-                                        <dd class="text-ink-900 font-medium text-right">
-                                            <?php
-                                            $values = array();
-                                            if ( $attribute->is_taxonomy() ) {
-                                                $attribute_values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'all' ) );
-                                                foreach ( $attribute_values as $attribute_value ) {
-                                                    $value_name = esc_html( $attribute_value->name );
-                                                    $values[] = $value_name;
-                                                }
-                                            } else {
-                                                $values = $attribute->get_options();
-                                            }
-                                            echo wp_kses_post( implode( ', ', $values ) );
-                                            ?>
-                                        </dd>
-                                    </div>
-                                    <?php endforeach; ?>
-                                </dl>
-                            </div>
-                        </details>
-                    </div>
-                    <?php endif; ?>
-
-                </div>
-            </div>
+                                                                          <?php foreach ( $attributes as $attribute ) :
+                                          // Skip variation attributes (like Quantity, Tablets, etc.)
+                                          if ( $attribute->get_variation() ) { continue; }
+                                          
+                                          // Extra safety check for explicitly named attributes we want to hide
+                                          $attr_name = wc_attribute_label( $attribute->get_name() );
+                                          if ( strtolower($attr_name) === 'quantity' || strtolower($attr_name) === 'tablets' ) { continue; }
+                                          
+                                          $values = array();
+                                          if ( $attribute->is_taxonomy() ) {
+                                              $attribute_taxonomy = $attribute->get_taxonomy_object();
+                                              $attribute_values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'all' ) );
+                                              foreach ( $attribute_values as $attribute_value ) {
+                                                  $value_name = esc_html( $attribute_value->name );
+                                                  if ( $attribute_taxonomy->attribute_public ) {
+                                                      $values[] = '<a href="' . esc_url( get_term_link( $attribute_value->term_id, $attribute->get_name() ) ) . '" rel="tag">' . $value_name . '</a>';
+                                                  } else {
+                                                      $values[] = $value_name;
+                                                  }
+                                              }
+                                          } else {
+                                              $values = $attribute->get_options();
+                                              foreach ( $values as &$value ) {
+                                                  $value = make_clickable( esc_html( $value ) );
+                                              }
+                                          }
+                                          // Skip pack size attribute
+                                          if($attribute->get_name() === 'pa_pack-size' || $attribute->get_name() === 'pack-size') continue;
+                                      ?>
+                                      <div class="py-3 flex justify-between gap-4">
+                                          <dt class="text-ink-500 min-w-[120px]"><?php echo wc_attribute_label( $attribute->get_name() ); ?></dt>
+                                          <dd class="text-ink-900 font-medium text-right"><?php echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values ); ?></dd>
+                                      </div>
+                                      <?php endforeach; ?>
+                                  </dl>
+                              </div>
+                          </details>
+                      </div>
+                      <?php endif; ?>
+                      
+                  </div>
+              </div>
         </div>
     </div>
+    
+    <div class="bg-white">
+        <!-- Tabs and Description -->
+<div class="bg-white">
+              <?php
+              $extra_tabs = get_field('extra_tabs', get_the_ID());
+              $has_tabs = !empty($extra_tabs);
+              $has_desc = !empty(trim(wp_strip_all_tags($full_description)));
+              ?>
+              <?php if($has_desc || $has_tabs): ?>
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-tabs-section">
+                  <div class="mt-8 sm:mt-12">
+                      <div class="border-b border-ink-200">
+                          <nav class="-mb-px flex space-x-8 overflow-x-auto tab-navs" aria-label="Tabs">
+                              <?php if($has_desc): ?>
+                              <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700" data-target="tab-description">
+                                  Description
+                              </button>
+                              <?php endif; ?>
+                              <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
+                              <button class="tab-btn <?php echo (!$has_desc && $i===0) ? 'active border-brand-600 text-brand-700' : 'border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" data-target="tab-extra-<?php echo $i; ?>">
+                                  <?php echo esc_html($tab['tab_title']); ?>
+                              </button>
+                              <?php endforeach; endif; ?>
+                          </nav>
+                      </div>
+  
+                      <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
+                          <?php if($has_desc): ?>
+                          <div id="tab-description" class="tab-content block">
+                              <?php echo $full_description; ?>
+                          </div>
+                          <?php endif; ?>
+                          <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
+                          <div id="tab-extra-<?php echo $i; ?>" class="tab-content <?php echo (!$has_desc && $i===0) ? 'block' : 'hidden'; ?>">
+                              <?php echo $tab['tab_content']; ?>
+                          </div>
+                          <?php endforeach; endif; ?>
+                      </div>
+                  </div>
+              </div>
+              <?php endif; ?>
+              </div>
+              </div>
+<?php if( have_rows('page_modules', get_the_ID()) ): ?>
+              <div class="bg-slate-50 py-8">
+              <?php
+                  while( have_rows('page_modules', get_the_ID()) ) : the_row();
+                      $layout = get_row_layout();
+                      get_template_part('modules/content', $layout);
+                  endwhile;
+              ?>
+              </div>
+              <?php endif; ?>
+  
+              <!-- Medical Disclaimer Block -->
+              <?php
+              // Pull fields, fallback to global options
+              $usage_title = get_field('usage_note_title', get_the_ID()) ?: (get_field('usage_note_title', 'option') ?: 'Important Usage Note');
+              $usage_text = get_field('usage_note_text', get_the_ID()) ?: get_field('usage_note_text', 'option');
+              $info_text = get_field('informational_warning_text', get_the_ID()) ?: get_field('informational_warning_text', 'option');
+              
+              $rev_name = get_field('reviewer_name', get_the_ID()) ?: get_field('reviewer_name', 'option');
+              $rev_title = get_field('reviewer_title', get_the_ID()) ?: get_field('reviewer_title', 'option');
+              $last_updated = get_the_modified_date('F Y');
+              
+              if ($usage_text) {
+                  $usage_text = str_replace('{product_name}', get_the_title(), $usage_text);
+              }
+              
+              // Only render the wrapper if AT LEAST ONE piece of content exists
+              if (!empty($usage_text) || !empty($info_text) || !empty($rev_name)):
+              ?>
+              <div class="bg-white"><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                  
+                  <?php if (!empty($usage_text)): ?>
+                  <div class="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6 flex gap-4">
+                      <div class="flex-shrink-0 pt-0.5">
+                          <svg class="w-5 h-5 text-amber-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                      </div>
+                      <div>
+                          <h4 class="text-[15px] font-bold text-ink-900 mb-1"><?php echo esc_html($usage_title); ?></h4>
+                          <div class="text-[14px] text-ink-700 leading-relaxed [&_a]:text-brand-700 [&_a]:underline hover:[&_a]:text-brand-800">
+                              <?php echo wp_kses_post($usage_text); ?>
+                          </div>
+                      </div>
+                  </div>
+                  <?php endif; ?>
+  
+                  <?php if (!empty($info_text)): ?>
+                  <div class="bg-slate-50 border border-slate-200 rounded-lg p-5 mb-8 flex gap-4">
+                      <div class="flex-shrink-0 pt-0.5">
+                          <svg class="w-5 h-5 text-brand-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                      </div>
+                      <div class="text-[14px] text-ink-700 leading-relaxed [&_a]:text-brand-700 [&_a]:underline hover:[&_a]:text-brand-800">
+                          <?php echo wp_kses_post($info_text); ?>
+                      </div>
+                  </div>
+                  <?php endif; ?>
+  
+                  <?php if (!empty($rev_name)): ?>
+                  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[13px] text-ink-500 gap-4 w-full mt-2">
+                      <div>
+                          Medically reviewed by: <span class="font-bold text-ink-900"><?php echo esc_html($rev_name); ?></span> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
+                      </div>
+                      <div>
+                          Last updated: <?php echo esc_html($last_updated); ?>
+                      </div>
+                  </div>
+                  <?php endif; ?>
+              </div>
+              </div>
+              <?php endif; ?>
 
-    <!-- Tabs and Description -->
-    <?php
-    $extra_tabs = get_field('extra_tabs', $product_id);
-    $has_tabs = !empty($extra_tabs);
-    $has_desc = !empty(trim(wp_strip_all_tags($full_description)));
-    ?>
-    <?php if($has_desc || $has_tabs): ?>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-tabs-section">
-        <div class="mt-8 sm:mt-12">
-            <div class="border-b border-ink-200">
-                <nav class="-mb-px flex space-x-8 overflow-x-auto tab-navs" aria-label="Tabs">
-                    <?php if($has_desc): ?>
-                    <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700" data-target="tab-description">
-                        Description
-                    </button>
-                    <?php endif; ?>
-                    <?php if($has_tabs): foreach($extra_tabs as $i => $tab): 
-                        $is_first_and_no_desc = !$has_desc && $i === 0;
-                        $btn_class = $is_first_and_no_desc ? 'tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700' : 'tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300 transition-colors';
-                    ?>
-                    <button class="<?php echo $btn_class; ?>" data-target="tab-extra-<?php echo $i; ?>">
-                        <?php echo esc_html($tab['tab_title']); ?>
-                    </button>
-                    <?php endforeach; endif; ?>
-                </nav>
-            </div>
-
-            <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
-                <?php if($has_desc): ?>
-                <div id="tab-description" class="tab-content block">
-                    <?php echo $full_description; ?>
-                </div>
-                <?php endif; ?>
-                <?php if($has_tabs): foreach($extra_tabs as $i => $tab): 
-                    $is_first_and_no_desc = !$has_desc && $i === 0;
-                    $content_class = $is_first_and_no_desc ? 'tab-content block' : 'tab-content hidden';
-                ?>
-                <div id="tab-extra-<?php echo $i; ?>" class="<?php echo $content_class; ?>">
-                    <?php echo $tab['tab_content']; ?>
-                </div>
-                <?php endforeach; endif; ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-
-    <?php get_template_part('template-parts/product-reviews'); ?>
-
-    <!-- Frequently Bought Together -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-2xl font-bold text-ink-900 mb-8">Frequently Bought Together</h2>
-        <?php 
-        woocommerce_output_related_products(array(
-            'posts_per_page' => 4,
-            'columns'        => 4,
-            'orderby'        => 'rand'
-        )); 
-        ?>
-    </div>
-
-    <?php 
-    if( have_rows('page_modules', get_the_ID()) ):
-        while( have_rows('page_modules', get_the_ID()) ) : the_row();
-            $layout = get_row_layout();
-            get_template_part('modules/content', $layout);
-        endwhile;
-    endif;
-    ?>
-
-    <?php get_template_part('template-parts/order-cta'); ?>
+              <div class="bg-brand-50/30 border-t border-ink-100 py-12">
+              <?php get_template_part('template-parts/product-reviews'); ?>
+              </div>
+  
+              <!-- Frequently Bought Together -->
+              <div class="bg-white py-12"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <h2 class="text-2xl font-bold text-ink-900 mb-8">Frequently Bought Together</h2>
+                  <?php 
+                  $related_products = wc_get_related_products(get_the_ID(), 4);
+                  if (empty($related_products)) {
+                      // Native WC Shortcode fallback
+                      echo do_shortcode('[products limit="4" columns="4" orderby="rand" excludes="' . get_the_ID() . '"]');
+                  } else {
+                      add_filter( 'woocommerce_product_related_products_heading', '__return_empty_string' );
+                      woocommerce_output_related_products(array(
+                          'posts_per_page' => 4,
+                          'columns'        => 4,
+                          'orderby'        => 'rand'
+                      )); 
+                      remove_filter( 'woocommerce_product_related_products_heading', '__return_empty_string' );
+                  }
+                  ?>
+              </div>
+  
+              <?php get_template_part('template-parts/order-cta'); ?>
 
 </div>
 
@@ -615,6 +723,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    // Promo Copy Button Logic
+    const copyBtns = document.querySelectorAll('.promo-copy-btn');
+    copyBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const code = this.getAttribute('data-code');
+            const originalContent = this.innerHTML;
+            
+                        
+            const successState = () => {
+                this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"/></svg> <span>Copied!</span>';
+                this.classList.add('bg-amber-100');
+                setTimeout(() => {
+                    this.innerHTML = originalContent;
+                    this.classList.remove('bg-amber-100');
+                }, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(code).then(successState).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = code;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    successState();
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        });
+    });
+
 });
 </script>
+
+
+</div><!-- End product -->
 
