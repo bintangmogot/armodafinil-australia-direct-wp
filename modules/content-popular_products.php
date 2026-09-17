@@ -90,7 +90,7 @@ $products = get_sub_field('products');
                     </div>
                     
                     <form action="<?php echo esc_url( $p_url ); ?>" method="get" class="mt-1">
-                        <button type="submit" class="w-full inline-flex justify-center items-center gap-2 h-11 rounded-xl bg-ink-900 hover:bg-ink-800 text-white text-sm font-bold transition-all hover:shadow-md hover:shadow-ink-900/10">
+                        <button type="submit" class="w-full inline-flex justify-center items-center gap-2 h-11 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold transition-all hover:shadow-md hover:shadow-brand-600/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
                             View Details
                         </button>

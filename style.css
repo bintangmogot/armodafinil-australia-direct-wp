@@ -4552,11 +4552,6 @@ body {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.hover\:shadow-ink-900\/10:hover{
-  --tw-shadow-color: rgb(9 21 43 / 0.1);
-  --tw-shadow: var(--tw-shadow-colored);
-}
-
 .focus\:border-brand-300:focus{
   --tw-border-opacity: 1;
   border-color: rgb(94 234 212 / var(--tw-border-opacity, 1));
