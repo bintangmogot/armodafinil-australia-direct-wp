@@ -46,7 +46,7 @@ acf_add_local_field_group(array(
 							'key' => 'field_hero_cta_url',
 							'label' => 'CTA URL',
 							'name' => 'cta_url',
-							'type' => 'url',
+							'type' => 'text',
 						),
 						array(
 							'key' => 'field_hero_featured_product',
@@ -112,7 +112,7 @@ acf_add_local_field_group(array(
 							'key' => 'field_popular_link_url',
 							'label' => 'View All Link URL',
 							'name' => 'view_all_url',
-							'type' => 'url',
+							'type' => 'text',
 						),
 						array(
 							'key' => 'field_popular_products_list',
@@ -313,7 +313,7 @@ acf_add_local_field_group(array(
 						array('key' => 'field_audience_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 3),
 						array('key' => 'field_audience_badge', 'label' => 'Badge', 'name' => 'badge', 'type' => 'text'),
 						array('key' => 'field_audience_cta_text', 'label' => 'CTA Text', 'name' => 'cta_text', 'type' => 'text'),
-						array('key' => 'field_audience_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url'),
+						array('key' => 'field_audience_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'text'),
 					),
 				),
 			),
@@ -372,6 +372,28 @@ acf_add_local_field_group(array(
 								array('key' => 'field_faq_item_a', 'label' => 'Answer', 'name' => 'answer', 'type' => 'textarea', 'rows' => 3),
 							),
 						),
+					),
+				),
+			),
+		),
+		'layout_faq_simple' => array(
+			'key'        => 'layout_faq_simple',
+			'name'       => 'faq_simple',
+			'label'      => 'FAQ Block (No Categories)',
+			'display'    => 'block',
+			'sub_fields' => array(
+				array('key' => 'field_faq_simple_title',    'label' => 'Title',    'name' => 'title',    'type' => 'text'),
+				array('key' => 'field_faq_simple_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'text'),
+				array(
+					'key'          => 'field_faq_simple_items',
+					'label'        => 'Questions',
+					'name'         => 'faqs',
+					'type'         => 'repeater',
+					'layout'       => 'row',
+					'button_label' => 'Add Question',
+					'sub_fields'   => array(
+						array('key' => 'field_faq_simple_q', 'label' => 'Question', 'name' => 'question', 'type' => 'text'),
+						array('key' => 'field_faq_simple_a', 'label' => 'Answer',   'name' => 'answer',   'type' => 'textarea', 'rows' => 3),
 					),
 				),
 			),
@@ -612,13 +634,13 @@ acf_add_local_field_group(array(
 				array('key' => 'field_cond_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
 				array('key' => 'field_cond_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'text'),
 				array('key' => 'field_cond_link_text', 'label' => 'View All Text', 'name' => 'view_all_text', 'type' => 'text'),
-				array('key' => 'field_cond_link_url', 'label' => 'View All URL', 'name' => 'view_all_url', 'type' => 'url'),
+				array('key' => 'field_cond_link_url', 'label' => 'View All URL', 'name' => 'view_all_url', 'type' => 'text'),
 				array(
 					'key' => 'field_cond_posts',
-					'label' => 'Posts',
-					'name' => 'posts',
-					'type' => 'relationship',
-					'post_type' => array('post'),
+  					'label' => 'Posts',
+  					'name' => 'posts',
+  					'type' => 'relationship',
+  					'post_type' => array('condition'),
 					'filters' => array('search'),
 					'return_format' => 'object',
 				),
@@ -633,7 +655,7 @@ acf_add_local_field_group(array(
 				array('key' => 'field_blog_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
 				array('key' => 'field_blog_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'text'),
 				array('key' => 'field_blog_link_text', 'label' => 'View All Text', 'name' => 'view_all_text', 'type' => 'text'),
-				array('key' => 'field_blog_link_url', 'label' => 'View All URL', 'name' => 'view_all_url', 'type' => 'url'),
+				array('key' => 'field_blog_link_url', 'label' => 'View All URL', 'name' => 'view_all_url', 'type' => 'text'),
 				array(
 					'key' => 'field_blog_posts',
 					'label' => 'Posts',
@@ -811,6 +833,20 @@ acf_add_local_field_group(array(
 			array(
 				'param' => 'post_type',
 				'operator' => '==',
+				'value' => 'post',
+			),
+		),
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'condition',
+			),
+		),
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
 				'value' => 'product',
 			),
 		),
@@ -864,6 +900,10 @@ acf_add_local_field_group(array(
 ));
 
 });
+
+
+
+
 
 
 

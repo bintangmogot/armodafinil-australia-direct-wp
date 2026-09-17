@@ -7,6 +7,14 @@ add_action('acf/init', function() {
         'title' => 'Theme Settings',
         'fields' => array(
             array(
+                'key' => 'field_tab_header',
+                'label' => 'Header & Top Bar',
+                'name' => '',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ),
+            array(
                 'key' => 'field_topbar_left',
                 'label' => 'Top Bar Left Text',
                 'name' => 'topbar_left',
@@ -49,6 +57,86 @@ add_action('acf/init', function() {
                 'type' => 'text',
                 'default_value' => 'ARMD10',
             ),
+
+
+            array(
+                'key' => 'field_tab_social',
+                'label' => 'Social Media',
+                'name' => '',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ),
+            array(
+                'key' => 'field_facebook_link',
+                'label' => 'Facebook Link',
+                'name' => 'facebook_link',
+                'type' => 'url',
+            ),
+            array(
+                'key' => 'field_instagram_link',
+                'label' => 'Instagram Link',
+                'name' => 'instagram_link',
+                'type' => 'url',
+            ),
+            array(
+                'key' => 'field_twitter_link',
+                'label' => 'Twitter Link',
+                'name' => 'twitter_link',
+                'type' => 'url',
+            ),
+
+            array(
+                'key' => 'field_tab_footer',
+                'label' => 'Footer',
+                'name' => '',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ),
+            array(
+                'key' => 'field_footer_description',
+                'label' => 'Footer Description',
+                'name' => 'footer_description',
+                'type' => 'textarea',
+                'default_value' => 'Steady focus, cleaner clarity, and dependable dispatch &mdash; built for Australian customers who take their day seriously.',
+            ),
+            array(
+                'key' => 'field_ssl_text',
+                'label' => 'SSL Text',
+                'name' => 'ssl_text',
+                'type' => 'text',
+                'default_value' => 'SSL secured',
+            ),
+            array(
+                'key' => 'field_dispatch_text',
+                'label' => 'Dispatch Text',
+                'name' => 'dispatch_text',
+                'type' => 'text',
+                'default_value' => 'AU-wide dispatch',
+            ),
+            array(
+                'key' => 'field_checkout_text',
+                'label' => 'Checkout Text',
+                'name' => 'checkout_text',
+                'type' => 'text',
+                'default_value' => 'Encrypted checkout',
+            ),
+            array(
+                'key' => 'field_location_text',
+                'label' => 'Location Text',
+                'name' => 'location_text',
+                'type' => 'text',
+                'default_value' => 'Sydney, AU',
+            ),
+            array(
+                'key' => 'field_copyright_text',
+                'label' => 'Copyright Text',
+                'name' => 'copyright_text',
+                'type' => 'text',
+                'default_value' => '© 2026 Armodafinil. Information only &mdash; not medical advice.',
+            ),
+
         ),
         'location' => array(
             array(

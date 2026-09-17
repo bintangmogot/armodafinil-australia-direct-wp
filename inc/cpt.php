@@ -39,6 +39,6 @@ function armd_register_cpts() {
         'show_in_rest'          => true,
         'rewrite'               => array('slug' => 'condition-guides'),
     );
-    register_post_type( 'condition', $args );
+    // register_post_type( 'condition', $args );
 }
 add_action( 'init', 'armd_register_cpts', 0 );
