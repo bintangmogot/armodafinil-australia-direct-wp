@@ -115,7 +115,7 @@ if ( $product_obj ) {
                                 <button type="button" 
                                         data-attribute="<?php echo esc_attr( 'attribute_' . sanitize_title( $attribute_name ) ); ?>"
                                         data-value="<?php echo esc_attr( $option ); ?>"
-                                        class="variation-btn text-xs font-bold px-3 py-2 rounded-lg border transition-all duration-200 <?php echo $is_selected ? 'bg-ink-900 text-white border-ink-900 shadow-md scale-[1.02]' : 'bg-white text-ink-600 border-ink-200 hover:border-ink-400 hover:text-ink-900 hover:bg-slate-50'; ?>">
+                                        class="variation-btn text-xs font-bold px-3 py-2 rounded-lg border transition-all duration-200 <?php echo $is_selected ? 'bg-brand-600 text-white border-brand-600 shadow-md scale-[1.02]' : 'bg-white text-ink-600 border-ink-200 hover:border-brand-600 hover:text-brand-700 hover:bg-brand-50'; ?>">
                                     <?php echo esc_html( $display_option ); ?>
                                 </button>
                             <?php endforeach; ?>
@@ -239,11 +239,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update UI styling for this group
             const group = this.closest('.attribute-selector');
             group.querySelectorAll('.variation-btn').forEach(b => {
-                b.classList.remove('bg-ink-900', 'text-white', 'border-ink-900', 'shadow-md', 'scale-[1.02]');
+                b.classList.remove('bg-brand-600', 'text-white', 'border-brand-600', 'shadow-md', 'scale-[1.02]');
                 b.classList.add('bg-white', 'text-ink-600', 'border-ink-200');
             });
             this.classList.remove('bg-white', 'text-ink-600', 'border-ink-200');
-            this.classList.add('bg-ink-900', 'text-white', 'border-ink-900', 'shadow-md', 'scale-[1.02]');
+            this.classList.add('bg-brand-600', 'text-white', 'border-brand-600', 'shadow-md', 'scale-[1.02]');
 
             // Update hidden input
             const hiddenInput = heroSection.querySelector(`input[name="${attrName}"]`);
