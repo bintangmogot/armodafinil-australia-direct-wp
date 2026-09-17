@@ -26,7 +26,7 @@ $products = get_sub_field('products');
             </a>
         </div>
         
-        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             <?php 
             if ( $products ) : 
                 foreach ( $products as $post ) : 

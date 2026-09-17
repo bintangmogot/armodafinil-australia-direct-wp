@@ -28,7 +28,7 @@ $query = new WP_Query( $args );
                     <div class="p-5">
                         <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold">Guide</div>
                         <h3 class="mt-1 font-serif text-lg font-semibold text-ink-900 line-clamp-2"><?php the_title(); ?></h3>
-                        <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo get_the_excerpt(); ?></p>
+                        <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 25, "..." ) ); ?></p>
                         <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
                             Read guide <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </span>

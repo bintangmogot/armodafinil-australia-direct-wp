@@ -38,7 +38,7 @@ if (!$has_posts) {
                 if ($has_posts) {
                     $p_id = $p->ID;
                     $p_title = get_the_title($p_id);
-                    $p_excerpt = get_the_excerpt($p_id);
+                    $p_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt($p_id) ), 25, "..." );
                     $p_url = get_permalink($p_id);
                     $p_date = get_the_date('M j', $p_id);
                     $p_author = get_the_author_meta('display_name', $p->post_author);

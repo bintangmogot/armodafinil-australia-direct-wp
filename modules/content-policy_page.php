@@ -60,13 +60,19 @@ $sections = get_sub_field('sections');
             </aside>
 
             <div class="space-y-10 policy-content-wrap">
+                <?php if (is_single() && has_post_thumbnail()) : ?>
+                    <div class="aspect-[16/9] rounded-2xl overflow-hidden bg-brand-50 border border-ink-200 mb-10">
+                        <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>" alt="Featured Image" class="w-full h-full object-cover" />
+                    </div>
+                <?php endif; ?>
+
                 <?php foreach ($sections as $i => $s) : 
                     $id = 'section-' . sanitize_title($s['title']);
                 ?>
                     <section id="<?php echo esc_attr($id); ?>" class="policy-section scroll-mt-24">
                         <div class="text-[11px] uppercase tracking-widest text-ink-400 font-semibold tabular-nums"><?php echo str_pad($i + 1, 2, '0', STR_PAD_LEFT); ?></div>
                         <h2 class="mt-1 font-serif text-2xl md:text-3xl font-semibold text-ink-900"><?php echo esc_html($s['title']); ?></h2>
-                        <div class="mt-4 space-y-4 text-ink-700 leading-relaxed policy-rich-text">
+                        <div class="mt-4 text-ink-700 leading-relaxed prose prose-ink prose-a:text-brand-700 max-w-none">
                             <?php echo apply_filters('the_content', $s['content']); ?>
                         </div>
                     </section>
@@ -114,3 +120,4 @@ document.addEventListener('DOMContentLoaded', function() {
     onScroll(); // initial state
 });
 </script>
+

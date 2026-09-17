@@ -95,7 +95,7 @@ if ( !empty( $raw_categories ) ) {
                     <span class="flex-1 font-medium text-ink-900"><?php echo esc_html($f['question']); ?></span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron lucide lucide-chevron-down w-4 h-4 text-ink-500 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
-                <div class="faq-content hidden px-5 pb-5 pl-16 text-sm text-ink-700 leading-relaxed flex gap-3 items-start border-t border-transparent">
+                <div class="faq-content hidden p-5 text-sm text-ink-700 leading-relaxed flex gap-3 items-start border-t border-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 text-brand-600 mt-1 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
                     <span><?php echo wp_kses_post( wpautop( $f['answer'] ) ); ?></span>
                 </div>
@@ -242,3 +242,6 @@ document.addEventListener('DOMContentLoaded', function() {
     filterFaqs();
 });
 </script>
+
+
+

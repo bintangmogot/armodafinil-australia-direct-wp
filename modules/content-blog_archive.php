@@ -22,7 +22,7 @@ $query = new WP_Query( $args );
             $query->the_post();
             $feat_id = get_the_ID();
             $feat_title = get_the_title();
-            $feat_excerpt = get_the_excerpt();
+            $feat_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 25, "..." );
             $feat_url = get_permalink();
             $feat_date = get_the_date('M j');
             $feat_author = get_the_author_meta('display_name');
@@ -71,7 +71,7 @@ $query = new WP_Query( $args );
                         <div class="p-5">
                             <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold"><?php echo esc_html($p_cat); ?></div>
                             <h3 class="mt-1 font-serif text-lg font-semibold text-ink-900 line-clamp-2"><?php the_title(); ?></h3>
-                            <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo get_the_excerpt(); ?></p>
+                            <p class="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 25, "..." ) ); ?></p>
                         </div>
                     </a>
                 <?php endwhile; ?>

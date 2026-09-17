@@ -38,7 +38,7 @@ if (!$has_posts) {
                 if ($has_posts) {
                     $p_id = $p->ID;
                     $p_title = get_the_title($p_id);
-                    $p_excerpt = get_the_excerpt($p_id);
+                    $p_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt($p_id) ), 25, "..." );
                     $p_url = get_permalink($p_id);
                     $p_image = get_the_post_thumbnail_url($p_id, 'medium_large') ?: 'https://placehold.co/600x400/e0f2fe/0369a1?text=Guide';
                 } else {
