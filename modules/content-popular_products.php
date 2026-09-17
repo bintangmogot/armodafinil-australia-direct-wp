@@ -43,33 +43,54 @@ $products = get_sub_field('products');
                         $p_image = wp_get_attachment_image_url( $product->get_image_id(), 'medium' );
                     }
                     
-                    // Simple average rating logic (or hardcode like React mock)
-                    $rating = $product->get_average_rating() ?: 4.8;
+                    // True dynamic rating from WooCommerce
+                    $rating = (float) $product->get_average_rating();
+                    $review_count = (int) $product->get_review_count();
             ?>
-            <div class="group bg-white border border-ink-200 rounded-2xl overflow-hidden hover:shadow-soft transition-shadow flex flex-col">
-                <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[4/3] bg-brand-50 overflow-hidden relative">
-                    <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_name); ?>" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+            <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2.5">
+                <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
+                    <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_name); ?>" loading="lazy" class="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
                 </a>
-                <div class="p-5 flex flex-col gap-3 flex-1">
-                    <div class="flex items-center gap-1 text-amber-500">
-                        <?php for($i=1; $i<=5; $i++): ?>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="<?php echo $i <= floor($rating) ? 'currentColor' : 'none'; ?>" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 <?php echo $i > floor($rating) ? 'text-ink-200' : ''; ?>"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <?php endfor; ?>
-                        <span class="ml-1 text-xs text-ink-500 font-medium"><?php echo number_format($rating, 1); ?></span>
+                <div class="px-3 pt-4 pb-2 flex flex-col gap-3 flex-1">
+                    
+                    <!-- Dynamic Star Rating -->
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center text-amber-400">
+                            <?php for($i=1; $i<=5; $i++): 
+                                if ( $rating >= $i ) {
+                                    // Full star
+                                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                                } elseif ( $rating >= ( $i - 0.5 ) ) {
+                                    // Half star
+                                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-half w-3.5 h-3.5"><path d="M12 17.8 5.8 21 7 14.1 2 9.3l7-1L12 2"/></svg>';
+                                } else {
+                                    // Empty star
+                                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 text-ink-200"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                                }
+                            endfor; ?>
+                        </div>
+                        <span class="text-xs text-ink-500 font-medium">
+                            <?php if ($review_count > 0): ?>
+                                <?php echo number_format($rating, 1); ?> <span class="text-ink-400 font-normal">(<?php echo $review_count; ?>)</span>
+                            <?php else: ?>
+                                0 reviews
+                            <?php endif; ?>
+                        </span>
                     </div>
-                    <a href="<?php echo esc_url($p_url); ?>" class="font-serif text-lg font-semibold text-ink-900 leading-snug hover:text-brand-700 line-clamp-2"><?php echo esc_html($p_name); ?></a>
+
+                    <a href="<?php echo esc_url($p_url); ?>" class="font-serif text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
                     
                     <div class="flex items-baseline gap-2 mt-auto">
-                        <span class="text-xl font-semibold text-ink-900 price-html-wrapper"><?php echo $p_price_html; ?></span>
+                        <span class="text-xl font-bold text-ink-900 price-html-wrapper tracking-tight"><?php echo $p_price_html; ?></span>
                     </div>
                     
-                    <div class="inline-flex items-center gap-1.5 text-xs font-medium text-brand-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 w-3.5 h-3.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> 
+                    <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest <?php echo $product->is_in_stock() ? 'text-emerald-700' : 'text-rose-600'; ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> 
                         <?php echo $product->is_in_stock() ? 'In Stock' : 'Out of Stock'; ?>
                     </div>
                     
-                    <form action="<?php echo esc_url( $p_url ); ?>" method="get" class="mt-2">
-                        <button type="submit" class="w-full inline-flex justify-center items-center gap-2 h-10 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors">
+                    <form action="<?php echo esc_url( $p_url ); ?>" method="get" class="mt-1">
+                        <button type="submit" class="w-full inline-flex justify-center items-center gap-2 h-11 rounded-xl bg-ink-900 hover:bg-ink-800 text-white text-sm font-bold transition-all hover:shadow-md hover:shadow-ink-900/10">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
                             View Details
                         </button>
