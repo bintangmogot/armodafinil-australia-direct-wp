@@ -86,29 +86,37 @@ if ( $product_obj ) {
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-ink-200 shadow-card overflow-hidden animate-fadeup" id="hero-product-<?php echo esc_attr($p_id); ?>">
-            <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-brand-50">
-                <img src="<?php echo esc_url( $p_image ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-cover mix-blend-multiply" />
+        <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4" id="hero-product-<?php echo esc_attr($p_id); ?>">
+            <!-- Image Box with border instead of full bleed -->
+            <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
+                <img src="<?php echo esc_url( $p_image ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
             </a>
-            <div class="p-5 md:p-6">
+            
+            <div class="p-3 md:p-4 pb-1">
                 <div class="flex items-start justify-between gap-3">
-                    <h3 class="font-serif text-xl font-semibold text-ink-900"><a href="<?php echo esc_url($p_url); ?>"><?php echo esc_html( $p_title ); ?></a></h3>
-                    <span class="shrink-0 text-xs font-semibold text-brand-700 bg-brand-100 px-2.5 py-1 rounded-full"><?php echo esc_html( $p_stock ); ?></span>
+                    <h3 class="font-serif text-2xl font-bold text-ink-900 leading-tight">
+                        <a href="<?php echo esc_url($p_url); ?>" class="hover:text-brand-600 transition-colors"><?php echo esc_html( $p_title ); ?></a>
+                    </h3>
+                    <span class="shrink-0 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full"><?php echo esc_html( $p_stock ); ?></span>
                 </div>
                 
                 <?php if ( $is_variable && ! empty( $attributes ) ) : ?>
                     <?php foreach ( $attributes as $attribute_name => $options ) : ?>
-                    <div class="mt-4 attribute-selector">
-                        <div class="text-[11px] uppercase tracking-widest text-ink-500 mb-2"><?php echo wc_attribute_label( $attribute_name ); ?></div>
-                        <div class="flex flex-wrap gap-1.5">
+                    <div class="mt-5 attribute-selector">
+                        <div class="text-[10px] uppercase tracking-widest font-bold text-ink-500 mb-2.5"><?php echo wc_attribute_label( $attribute_name ); ?></div>
+                        <div class="flex flex-wrap gap-2">
                             <?php foreach ( $options as $index => $option ) : 
                                 $is_selected = $index === 0;
+                                $display_option = trim($option);
+                                if ( is_numeric( $display_option ) ) {
+                                    $display_option .= ' Tablets';
+                                }
                             ?>
                                 <button type="button" 
                                         data-attribute="<?php echo esc_attr( 'attribute_' . sanitize_title( $attribute_name ) ); ?>"
                                         data-value="<?php echo esc_attr( $option ); ?>"
-                                        class="variation-btn text-xs font-semibold px-2.5 py-1.5 rounded-md border transition-colors <?php echo $is_selected ? 'bg-brand-600 text-white border-brand-600' : 'bg-white text-ink-700 border-ink-200 hover:border-brand-600'; ?>">
-                                    <?php echo esc_html( $option ); ?>
+                                        class="variation-btn text-xs font-bold px-3 py-2 rounded-lg border transition-all duration-200 <?php echo $is_selected ? 'bg-ink-900 text-white border-ink-900 shadow-md scale-[1.02]' : 'bg-white text-ink-600 border-ink-200 hover:border-ink-400 hover:text-ink-900 hover:bg-slate-50'; ?>">
+                                    <?php echo esc_html( $display_option ); ?>
                                 </button>
                             <?php endforeach; ?>
                         </div>
@@ -116,27 +124,27 @@ if ( $product_obj ) {
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="mt-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> 
+                <div class="mt-5 p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-xs font-medium text-amber-900 flex items-start gap-2.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert mt-0.5 shrink-0 text-amber-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 
                     <?php echo esc_html($p_note); ?>
                 </div>
 
-                <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                <div class="mt-5 pt-5 border-t border-ink-100 flex flex-wrap items-end justify-between gap-4">
                     <div>
-                        <div class="text-2xl font-semibold text-ink-900 price-display">
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-ink-400 mb-1">Total Price</div>
+                        <div class="text-3xl font-bold text-brand-700 price-display tabular-nums tracking-tight">
                             <?php echo $p_price_html; ?>
                         </div>
-                        <div class="text-xs text-ink-500">250mg strength</div>
                     </div>
                     
-                    <form action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" enctype='multipart/form-data' class="flex items-center gap-2 hero-add-to-cart-form">
-                        <div class="inline-flex items-center border border-ink-200 rounded-full overflow-hidden bg-white">
-                            <button type="button" onclick="this.nextElementSibling.stepDown()" class="w-9 h-9 grid place-items-center hover:bg-ink-100 text-ink-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+                    <form action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" enctype='multipart/form-data' class="flex items-center gap-2.5 hero-add-to-cart-form">
+                        <div class="inline-flex items-center border-2 border-ink-100 rounded-xl overflow-hidden bg-white h-12 shadow-sm">
+                            <button type="button" onclick="this.nextElementSibling.stepDown()" class="w-10 h-full grid place-items-center hover:bg-ink-50 text-ink-500 hover:text-ink-900 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
                             </button>
-                            <input type="number" name="quantity" value="1" min="1" class="w-8 text-center text-sm font-medium border-0 p-0 focus:ring-0 text-ink-900" style="-moz-appearance: textfield;" />
-                            <button type="button" onclick="this.previousElementSibling.stepUp()" class="w-9 h-9 grid place-items-center hover:bg-ink-100 text-ink-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            <input type="number" name="quantity" value="1" min="1" class="w-10 text-center text-sm font-bold border-0 p-0 focus:ring-0 text-ink-900 bg-transparent" style="-moz-appearance: textfield;" />
+                            <button type="button" onclick="this.previousElementSibling.stepUp()" class="w-10 h-full grid place-items-center hover:bg-ink-50 text-ink-500 hover:text-ink-900 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                             </button>
                         </div>
                         
@@ -151,9 +159,9 @@ if ( $product_obj ) {
                             <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $p_id ); ?>" />
                         <?php endif; ?>
 
-                        <button type="submit" class="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-ink-900 hover:bg-ink-800 text-white text-sm font-semibold transition-colors shadow-soft whitespace-nowrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-                            Add
+                        <button type="submit" class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold transition-all hover:shadow-lg hover:shadow-brand-600/20 whitespace-nowrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                            Add to Cart
                         </button>
                     </form>
                 </div>
@@ -186,8 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < variations.length; i++) {
             let match = true;
             for (let attrName in currentSelections) {
-                // Woo saves attributes as 'attribute_pa_size' or 'attribute_package-size'
-                // the value could be empty (any) or matched
                 let val = currentSelections[attrName];
                 if (variations[i].attributes[attrName] !== undefined && variations[i].attributes[attrName] !== '' && variations[i].attributes[attrName] !== val) {
                     match = false;
@@ -218,11 +224,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update UI styling for this group
             const group = this.closest('.attribute-selector');
             group.querySelectorAll('.variation-btn').forEach(b => {
-                b.classList.remove('bg-brand-600', 'text-white', 'border-brand-600');
-                b.classList.add('bg-white', 'text-ink-700', 'border-ink-200');
+                b.classList.remove('bg-ink-900', 'text-white', 'border-ink-900', 'shadow-md', 'scale-[1.02]');
+                b.classList.add('bg-white', 'text-ink-600', 'border-ink-200');
             });
-            this.classList.remove('bg-white', 'text-ink-700', 'border-ink-200');
-            this.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+            this.classList.remove('bg-white', 'text-ink-600', 'border-ink-200');
+            this.classList.add('bg-ink-900', 'text-white', 'border-ink-900', 'shadow-md', 'scale-[1.02]');
 
             // Update hidden input
             const hiddenInput = heroSection.querySelector(`input[name="${attrName}"]`);
