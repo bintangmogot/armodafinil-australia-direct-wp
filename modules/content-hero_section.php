@@ -89,6 +89,11 @@ if ( $product_obj ) {
         <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4" id="hero-product-<?php echo esc_attr($p_id); ?>">
             <!-- Image Box with border instead of full bleed -->
             <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
+                <!-- Most Popular Badge -->
+                <div class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-ink-900 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md backdrop-blur-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    Most Popular
+                </div>
                 <img src="<?php echo esc_url( $p_image ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
             </a>
             
