@@ -49,7 +49,7 @@ $products = get_sub_field('products');
             ?>
             <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2.5">
                 <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
-                    <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_name); ?>" loading="lazy" class="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
+                    <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_name); ?>" loading="lazy" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
                 </a>
                 <div class="px-3 pt-4 pb-2 flex flex-col gap-3 flex-1">
                     

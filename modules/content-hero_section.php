@@ -89,7 +89,7 @@ if ( $product_obj ) {
         <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4" id="hero-product-<?php echo esc_attr($p_id); ?>">
             <!-- Image Box with border instead of full bleed -->
             <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
-                <img src="<?php echo esc_url( $p_image ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
+                <img src="<?php echo esc_url( $p_image ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
             </a>
             
             <div class="p-3 md:p-4 pb-1">
