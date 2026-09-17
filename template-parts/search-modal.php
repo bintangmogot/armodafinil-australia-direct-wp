@@ -23,7 +23,6 @@
 <button data-cat="" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm hover:bg-brand-700 transition-colors">All</button>
 <button data-cat="18" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Armodafinil</button>
 <button data-cat="19" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Modafinil</button>
-<button data-cat="17" class="cat-filter px-3.5 py-1.5 rounded-full text-xs font-semibold bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200/60 transition-colors">Smart Pills</button>
 </div>
         </div>
 
@@ -190,7 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${product.image}" alt="" class="w-12 h-12 rounded-lg object-cover border border-ink-100 bg-white">
                     <div class="flex-1 min-w-0">
                         <h4 class="font-semibold text-ink-900 group-hover:text-brand-600 transition-colors truncate">${product.title}</h4>
-                        <div class="text-sm font-medium text-ink-500 mt-0.5">${product.price}</div>
+                        <div class="text-sm font-medium text-ink-500 mt-0.5 flex flex-col">
+                            <div class="whitespace-nowrap [&>span]:!font-medium [&>del]:font-normal [&>del]:text-[12px] [&>ins]:no-underline">${product.price.replace(' - ', ' &ndash; ')}</div>
+                            ${product.price_per_unit ? `<span class="text-[10px] text-ink-400 font-medium">` + product.price_per_unit + `</span>` : ""}
+                        </div>
                     </div>
                     <div class="shrink-0 text-brand-600 opacity-0 group-hover:opacity-100 transition-opacity pr-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
