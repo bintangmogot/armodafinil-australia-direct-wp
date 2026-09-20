@@ -737,10 +737,16 @@ acf_add_local_field_group(array(
 					'label' => 'Medical Disclaimer',
 					'name' => 'medical_disclaimer_text',
 					'type' => 'textarea',
-					'default_value' => 'This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer" class="font-semibold text-brand-800 hover:underline">Read our full medical disclaimer.</a>',
-				),
-				array(
-					'key' => 'field_mod_medically_reviewed_by',
+					'default_value' => 'This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer" class="font-semibold text-brand-800 hover:underline">Read our full medical disclaimer.</a>',                ),
+                array(
+                    'key' => 'field_mod_reviewer_url',
+                    'label' => 'Medical Reviewer Link (URL)',
+                    'name' => 'reviewer_url',
+                    'type' => 'url',
+                    'default_value' => 'https://armodafinildirect.com.au/medical-team/dr-ginni-mansberg/',
+                ),
+                array(
+                    'key' => 'field_mod_medically_reviewed_by',
 					'label' => 'Medically Reviewed By',
 					'name' => 'medically_reviewed_by',
 					'type' => 'text',
@@ -900,6 +906,7 @@ acf_add_local_field_group(array(
 ));
 
 });
+
 
 
 

@@ -6,6 +6,7 @@
 $important_note = get_sub_field('important_usage_note');
 $disclaimer = get_sub_field('medical_disclaimer_text');
 $reviewed_by = get_sub_field('medically_reviewed_by');
+$rev_url = get_sub_field('reviewer_url');
 
 if (!$important_note) {
     $important_note = '{product_name} is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor\'s advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href="https://www.tga.gov.au/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Therapeutic Goods Administration (TGA)</a>.';
@@ -54,8 +55,9 @@ $important_note = str_replace('{product_name}', '<span class="font-semibold">' .
         
         <!-- Medically reviewed by -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 px-1">
-            <div>Medically reviewed by: <a href="/medical-team/dr-ginni-mansberg/" class="font-semibold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($reviewed_by); ?></a> (Physician)</div>
+            <div>Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-semibold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($reviewed_by); ?></a> (Physician)</div>
             <div>Last updated: <?php echo date('F Y'); ?></div>
         </div>
     </div>
 </div>
+

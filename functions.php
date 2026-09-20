@@ -547,7 +547,13 @@ function aad_register_product_disclaimer_fields() {
                 'label' => 'Medically Reviewed By Name',
                 'name' => 'reviewer_name',
                 'type' => 'text',
-                'default_value' => 'Dr. Ginni Mansberg',
+                'default_value' => 'Dr. Ginni Mansberg',            ),
+            array(
+                'key' => 'field_reviewer_url',
+                'label' => 'Medical Reviewer Link (URL)',
+                'name' => 'reviewer_url',
+                'type' => 'url',
+                'default_value' => 'https://armodafinildirect.com.au/medical-team/dr-ginni-mansberg/',
             ),
             array(
                 'key' => 'field_reviewer_title',
@@ -659,4 +665,5 @@ function aad_disable_legacy_advanced_editor_tools() {
     }
 }
 add_action( 'admin_init', 'aad_disable_legacy_advanced_editor_tools', 1 );
+
 

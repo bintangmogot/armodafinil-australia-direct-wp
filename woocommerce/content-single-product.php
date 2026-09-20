@@ -393,6 +393,7 @@ foreach ( $attributes as $attribute ) {
               $info_text = get_field('informational_warning_text', get_the_ID()) ?: get_field('informational_warning_text', 'option');
               
               $rev_name = get_field('reviewer_name', get_the_ID()) ?: get_field('reviewer_name', 'option');
+              $rev_url = get_field('reviewer_url', get_the_ID()) ?: get_field('reviewer_url', 'option');
               $rev_title = get_field('reviewer_title', get_the_ID()) ?: get_field('reviewer_title', 'option');
               $last_updated = get_the_modified_date('F Y');
               
@@ -433,7 +434,7 @@ foreach ( $attributes as $attribute ) {
                   <?php if (!empty($rev_name)): ?>
                   <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[13px] text-ink-500 gap-4 w-full mt-2">
                       <div>
-                          Medically reviewed by: <a href="/medical-team/dr-ginni-mansberg/" class="font-bold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($rev_name); ?></a> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
+                          Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-bold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($rev_name); ?></a> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
                       </div>
                       <div>
                           Last updated: <?php echo esc_html($last_updated); ?>
@@ -771,4 +772,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 </div><!-- End product -->
+
 
