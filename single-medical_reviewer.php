@@ -18,7 +18,7 @@ get_header();
                 <h1 class="font-serif text-4xl md:text-6xl font-semibold text-ink-900 leading-tight">
                     <?php the_title(); ?>
                 </h1>
-                <p class="mt-4 text-lg text-ink-600 font-medium">Chief Medical Reviewer</p>
+                <p class="mt-4 text-lg text-ink-600 font-medium"><?php echo esc_html(get_field('medical_title') ?: 'Physician'); ?></p>
             </div>
         </div>
 
@@ -60,3 +60,4 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+

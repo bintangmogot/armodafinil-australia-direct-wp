@@ -23,6 +23,8 @@ function aad_register_medical_reviewer_cpt() {
 add_action('acf/init', 'aad_register_medical_reviewer_fields');
 function aad_register_medical_reviewer_fields() {
     if( function_exists('acf_add_local_field_group') ) {
+        
+        // Field to assign a doctor to a product
         acf_add_local_field_group(array(
             'key' => 'group_medical_reviewer_selection',
             'title' => 'Assigned Medical Reviewer',
@@ -54,12 +56,31 @@ function aad_register_medical_reviewer_fields() {
                     ),
                 ),
             ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
+        ));
+        
+        // Fields FOR the doctor themselves (Title, etc)
+        acf_add_local_field_group(array(
+            'key' => 'group_medical_reviewer_details',
+            'title' => 'Doctor Details',
+            'fields' => array(
+                array(
+                    'key' => 'field_mr_title',
+                    'label' => 'Medical Title / Role',
+                    'name' => 'medical_title',
+                    'type' => 'text',
+                    'default_value' => 'Physician',
+                    'instructions' => 'e.g. Physician, Pharmacist, Chief Medical Officer',
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'medical_reviewer',
+                    ),
+                ),
+            ),
         ));
     }
 }
