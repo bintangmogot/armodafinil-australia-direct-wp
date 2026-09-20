@@ -42,7 +42,8 @@ get_header();
                         </div>
                     </div>
 
-                    <!-- Header Info -->`n                    <div class="flex-1 text-center md:text-left mt-2 md:mt-4">
+                    <!-- Header Info -->
+                    <div class="flex-1 text-center md:text-left mt-2 md:mt-4">
                         <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold bg-brand-100/50 rounded-full px-3 py-1.5 inline-block mb-3 border border-brand-200">
                             Medical Team
                         </div>
@@ -92,6 +93,7 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+
 
 
 
