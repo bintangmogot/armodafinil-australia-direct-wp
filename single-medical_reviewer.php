@@ -12,22 +12,10 @@ get_header();
     <article>
         
         <!-- Breadcrumb & Back Button -->
-        <div class="border-b border-ink-200 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between text-xs text-ink-500">
-                <div class="flex items-center gap-2">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-brand-700">Home</a>
-                    <span>/</span>
-                    <span class="text-ink-900 truncate"><?php the_title(); ?></span>
-                </div>
-                <a href="javascript:history.back()" class="flex items-center gap-1.5 font-medium text-brand-700 hover:text-brand-800 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                    Go Back
-                </a>
-            </div>
-        </div>
+        
 
         <!-- Wash Header Profile -->
-        <div class="section-wash pt-16 pb-16 border-b border-ink-200">
+        <div class="section-wash pt-24 lg:pt-32 pb-16 border-b border-ink-200">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
@@ -42,6 +30,11 @@ get_header();
 
                     <!-- Header Info -->
                     <div class="flex-1 text-center md:text-left mt-2 md:mt-4">
+                        <a href="javascript:history.back()" class="inline-flex items-center gap-1.5 font-medium text-brand-700 hover:text-brand-900 transition-colors mb-6 border border-brand-200 bg-white rounded-full px-4 py-1.5 text-xs shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            Go Back
+                        </a>
+                        <br>
                         <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold bg-brand-100/50 rounded-full px-3 py-1.5 inline-block mb-3 border border-brand-200">
                             Medical Team
                         </div>
@@ -91,3 +84,5 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+
+
