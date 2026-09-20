@@ -396,11 +396,12 @@ foreach ( $attributes as $attribute ) {
                     $rev_name = get_the_title($doctor_id);
                     $rev_url = get_permalink($doctor_id);
                     $rev_title = get_field('medical_title', $doctor_id) ?: 'Physician';
-                } else {
-                    $rev_name = get_field('reviewer_name', get_the_ID()) ?: get_field('reviewer_name', 'option');
-                    $rev_url = get_field('reviewer_url', get_the_ID()) ?: get_field('reviewer_url', 'option');
-                    $rev_title = get_field('reviewer_title', get_the_ID()) ?: get_field('reviewer_title', 'option');
                 }
+                  } else {
+                      $rev_name = '';
+                      $rev_url = '';
+                      $rev_title = '';
+                  }
                 $last_updated = get_the_modified_date('F Y');
               
               if ($usage_text) {
@@ -778,6 +779,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 </div><!-- End product -->
+
+
 
 
 

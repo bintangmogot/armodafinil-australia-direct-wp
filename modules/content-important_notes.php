@@ -21,9 +21,7 @@ if (!$important_note) {
 if (!$disclaimer) {
     $disclaimer = 'This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer" class="font-semibold text-brand-800 hover:underline">Read our full medical disclaimer.</a>';
 }
-if (!$reviewed_by) {
-    $reviewed_by = 'Dr. Ginni Mansberg';
-}
+
 
 $product_name = '';
 if (is_product()) {
@@ -61,12 +59,16 @@ $important_note = str_replace('{product_name}', '<span class="font-semibold">' .
         </div>
         
         <!-- Medically reviewed by -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 px-1">
-            <div>Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-semibold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($reviewed_by); ?></a> (<?php echo esc_html($rev_title); ?>)</div>
-            <div>Last updated: <?php echo date('F Y'); ?></div>
-        </div>
+          <?php if (!empty($reviewed_by)): ?>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 px-1">
+              <div>Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-semibold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($reviewed_by); ?></a> (<?php echo esc_html($rev_title); ?>)</div>
+              <div>Last updated: <?php echo date('F Y'); ?></div>
+          </div>
+          <?php endif; ?>
     </div>
 </div>
+
+
 
 
 
