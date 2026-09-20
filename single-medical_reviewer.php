@@ -116,114 +116,16 @@ get_header();
             </div>
         </div>
 
-        <!-- Published Articles (Dummy Grid) -->
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-[11px] uppercase tracking-widest text-brand-700 font-bold bg-brand-50 rounded-full px-3 py-1.5 inline-block mb-4 border border-brand-100">
-                Published Articles
-            </div>
-            <h2 class="text-3xl font-bold text-ink-900 mb-2">Articles by <?php the_title(); ?></h2>
-            <p class="text-ink-600 mb-10">Browse the latest guidance and updates from this author.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dummy Article 1 -->
-                <div class="group cursor-pointer">
-                    <div class="rounded-2xl overflow-hidden mb-4 bg-slate-100 aspect-[3/2]">
-                        <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Kamagra+Oral+Jelly" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <span class="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-1 rounded-full">erectile dysfunction</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-ink-500 mb-2">
-                        <span><svg class="w-3 h-3 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 27 Aug 2026</span>
-                        <span class="flex items-center gap-1.5"><img src="<?php echo esc_url($image); ?>" class="w-4 h-4 rounded-full" /> <span class="text-brand-700"><?php the_title(); ?></span></span>
-                    </div>
-                    <h3 class="text-lg font-bold text-ink-900 leading-tight group-hover:text-brand-700 transition-colors">Kamagra Oral Jelly: Flavours, How Sildenafil Works and What Australians Should Know</h3>
-                </div>
-
-                <!-- Dummy Article 2 -->
-                <div class="group cursor-pointer">
-                    <div class="rounded-2xl overflow-hidden mb-4 bg-slate-100 aspect-[3/2]">
-                        <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Dementia+VS+Enhancers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <span class="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-1 rounded-full">Armodafinil</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-ink-500 mb-2">
-                        <span><svg class="w-3 h-3 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 28 July 2026</span>
-                        <span class="flex items-center gap-1.5"><img src="<?php echo esc_url($image); ?>" class="w-4 h-4 rounded-full" /> <span class="text-brand-700"><?php the_title(); ?></span></span>
-                    </div>
-                    <h3 class="text-lg font-bold text-ink-900 leading-tight group-hover:text-brand-700 transition-colors">What is dementia mean? Dementia VS Cognitive Enhancers</h3>
-                </div>
-
-                <!-- Dummy Article 3 -->
-                <div class="group cursor-pointer">
-                    <div class="rounded-2xl overflow-hidden mb-4 bg-slate-100 aspect-[3/2]">
-                        <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Armodafinil+Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <span class="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-1 rounded-full">Armodafinil</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-ink-500 mb-2">
-                        <span><svg class="w-3 h-3 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 17 June 2026</span>
-                        <span class="flex items-center gap-1.5"><img src="<?php echo esc_url($image); ?>" class="w-4 h-4 rounded-full" /> <span class="text-brand-700"><?php the_title(); ?></span></span>
-                    </div>
-                    <h3 class="text-lg font-bold text-ink-900 leading-tight group-hover:text-brand-700 transition-colors">What Is Armodafinil? Everything You Need to Know Before Taking It</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call To Action Blocks -->
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                <!-- CTA Left -->
-                <div class="lg:col-span-2 bg-gradient-to-br from-white to-[#f0fcf9] border border-[#ccf2eb] rounded-3xl p-8 sm:p-12 shadow-sm relative overflow-hidden">
-                    <div class="text-[11px] uppercase tracking-widest text-teal-700 font-bold mb-4">GET STARTED</div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-ink-900 mb-4 font-serif leading-tight">Ready to order with confidence?</h2>
-                    <p class="text-ink-600 text-lg mb-8 max-w-xl leading-relaxed">Pick your pack size, complete a secure checkout in minutes, and track your discreet parcel anywhere in Australia.</p>
-                    
-                    <div class="flex flex-wrap gap-4 mb-10">
-                        <a href="/shop/" class="inline-flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-full px-8 py-3.5 transition-colors shadow-sm text-[15px]">
-                            Order now
-                            <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </a>
-                        <a href="#" class="inline-flex items-center justify-center bg-white border border-ink-200 hover:border-ink-300 hover:bg-slate-50 text-ink-900 font-medium rounded-full px-8 py-3.5 transition-colors shadow-sm text-[15px]">
-                            How ordering works
-                        </a>
-                    </div>
-                    
-                    <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-teal-800 font-medium">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> 
-                            Verified pharmacy
-                        </span>
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                            Secure checkout
-                        </span>
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="13" x="4" y="5" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M4 11h16"/></svg>
-                            AU-wide delivery
-                        </span>
-                    </div>
-                </div>
-
-                <!-- CTA Right -->
-                <div class="lg:col-span-1 bg-ink-900 rounded-3xl p-8 sm:p-12 shadow-sm flex flex-col justify-center border border-ink-800 relative overflow-hidden">
-                    <div class="text-[11px] uppercase tracking-widest text-teal-400 font-bold mb-4">SPEAK WITH OUR TEAM</div>
-                    <h3 class="text-3xl font-bold mb-4 font-serif text-white">Australia</h3>
-                    <p class="text-slate-300 text-[15px] leading-relaxed mb-10">Product questions and delivery help &mdash; Mon-Fri, 9am&ndash;5pm AEST.</p>
-                    
-                    <div>
-                        <a href="/contact/" class="inline-flex items-center justify-center bg-white text-ink-900 font-semibold rounded-full px-6 py-3.5 transition-colors hover:bg-slate-100 shadow-sm text-[14px]">
-                            <svg class="mr-2.5 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-                            Contact support
-                        </a>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
+        <!-- Dynamic Page Modules -->
+        <?php 
+        if( have_rows('page_modules') ) {
+            while( have_rows('page_modules') ) {
+                the_row();
+                $layout = get_row_layout();
+                get_template_part('modules/content', $layout);
+            }
+        } 
+        ?>
 
     </article>
     <?php endwhile; ?>
