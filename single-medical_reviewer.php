@@ -29,7 +29,7 @@ get_header();
         
 
         <!-- Wash Header Profile -->
-        <div class="section-wash pt-24 md:pt-32 pb-20 border-b border-ink-200">
+        <div class="section-wash border-b border-ink-200" style="padding-top: 5rem; padding-bottom: 5rem;">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
@@ -93,6 +93,7 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+
 
 
 
