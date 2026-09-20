@@ -5,9 +5,16 @@
 
 $important_note = get_sub_field('important_usage_note');
 $disclaimer = get_sub_field('medical_disclaimer_text');
-$reviewed_by = get_sub_field('medically_reviewed_by');
-$rev_url = get_sub_field('reviewer_url');
-
+$doctor_id = get_sub_field('medical_reviewer_post') ?: get_field('medical_reviewer_post', 'option');
+if ($doctor_id) {
+    $reviewed_by = get_the_title($doctor_id);
+    $rev_url = get_permalink($doctor_id);
+    $rev_title = get_field('medical_title', $doctor_id) ?: 'Physician';
+} else {
+    $reviewed_by = get_sub_field('medically_reviewed_by');
+    $rev_url = get_sub_field('reviewer_url');
+    $rev_title = 'Physician';
+}
 if (!$important_note) {
     $important_note = '{product_name} is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor\'s advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href="https://www.tga.gov.au/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Therapeutic Goods Administration (TGA)</a>.';
 }
@@ -60,6 +67,8 @@ $important_note = str_replace('{product_name}', '<span class="font-semibold">' .
         </div>
     </div>
 </div>
+
+
 
 
 
