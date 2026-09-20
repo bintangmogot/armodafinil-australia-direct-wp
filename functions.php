@@ -59,6 +59,7 @@ require_once get_template_directory() . '/inc/cpt.php';
 require_once get_template_directory() . '/inc/acf-options.php';
 require_once get_template_directory() . '/inc/ajax-reviews.php';
 require_once get_template_directory() . '/inc/ajax-search.php';
+require_once get_template_directory() . '/inc/medical-reviewers.php';
 
 add_filter('nav_menu_css_class', function($classes, $item, $args) {
     if(in_array($args->theme_location, ['footer_1', 'footer_2', 'footer_3'])) {
@@ -665,5 +666,6 @@ function aad_disable_legacy_advanced_editor_tools() {
     }
 }
 add_action( 'admin_init', 'aad_disable_legacy_advanced_editor_tools', 1 );
+
 
 
