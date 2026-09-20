@@ -54,7 +54,7 @@ $important_note = str_replace('{product_name}', '<span class="font-semibold">' .
         
         <!-- Medically reviewed by -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 px-1">
-            <div>Medically reviewed by: <span class="font-semibold text-slate-700"><?php echo esc_html($reviewed_by); ?></span> (Physician)</div>
+            <div>Medically reviewed by: <a href="/medical-team/dr-ginni-mansberg/" class="font-semibold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($reviewed_by); ?></a> (Physician)</div>
             <div>Last updated: <?php echo date('F Y'); ?></div>
         </div>
     </div>

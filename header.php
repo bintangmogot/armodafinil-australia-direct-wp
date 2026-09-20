@@ -31,8 +31,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                 </span>
                 <span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
-                    <span class="block font-serif text-[15px] sm:text-base font-bold text-brand-700 leading-none truncate">Armodafinil</span>
-                    <span class="block text-[8px] uppercase tracking-[0.2em] text-brand-600 mt-[3px] truncate">Australia Direct</span>
+                    <span class="block font-serif text-[15px] sm:text-base font-bold text-brand-700 leading-none truncate">Armodafinil Direct</span>
                 </span>
             </a>
 
@@ -63,8 +62,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
 				</span>
 				<span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
-					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate">Armodafinil</span>
-					<span class="block text-[10px] uppercase tracking-[0.18em] text-brand-700 mt-0.5 truncate">Australia Direct</span>
+					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate">Armodafinil Direct</span>
 				</span>
 			</a>
 
@@ -115,3 +113,4 @@
 		</div>
 		</header>
     <?php endif; ?>
+

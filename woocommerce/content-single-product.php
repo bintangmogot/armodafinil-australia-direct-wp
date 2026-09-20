@@ -433,7 +433,7 @@ foreach ( $attributes as $attribute ) {
                   <?php if (!empty($rev_name)): ?>
                   <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[13px] text-ink-500 gap-4 w-full mt-2">
                       <div>
-                          Medically reviewed by: <span class="font-bold text-ink-900"><?php echo esc_html($rev_name); ?></span> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
+                          Medically reviewed by: <a href="/medical-team/dr-ginni-mansberg/" class="font-bold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($rev_name); ?></a> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
                       </div>
                       <div>
                           Last updated: <?php echo esc_html($last_updated); ?>
