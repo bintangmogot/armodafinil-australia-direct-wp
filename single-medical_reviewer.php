@@ -11,14 +11,14 @@ get_header();
     ?>
     <article>
         <!-- Breadcrumb & Back Button -->
-        <div class="border-b border-ink-200 bg-white">
+        <div class="border-b border-ink-200 bg-white pt-6 md:pt-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between text-xs text-ink-500">
                 <div class="flex items-center gap-2">
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-brand-700">Home</a>
                     <span>/</span>
                     <span class="text-ink-900 truncate"><?php the_title(); ?></span>
                 </div>
-                <a href="javascript:history.back()" class="flex items-center gap-1.5 font-medium text-brand-700 hover:text-brand-800 transition-colors">
+                <a href="<?php echo esc_url( wp_get_referer() ? wp_get_referer() : home_url( '/shop/' ) ); ?>" class="flex items-center gap-1.5 font-medium text-brand-700 hover:text-brand-800 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                     Go Back
                 </a>
@@ -92,6 +92,7 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+
 
 
 
