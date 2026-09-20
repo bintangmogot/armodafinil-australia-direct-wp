@@ -11,7 +11,7 @@ get_header();
     ?>
     <article>
         <!-- Breadcrumb & Back Button -->
-        <div class="border-b border-ink-200 bg-white pt-6 md:pt-10">
+        <div class="border-b border-ink-200 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between text-xs text-ink-500">
                 <div class="flex items-center gap-2">
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-brand-700">Home</a>
@@ -29,7 +29,7 @@ get_header();
         
 
         <!-- Wash Header Profile -->
-        <div class="section-wash pt-16 pb-16 border-b border-ink-200">
+        <div class="section-wash pt-24 md:pt-32 pb-20 border-b border-ink-200">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
@@ -92,6 +92,7 @@ get_header();
 </main>
 
 <?php get_footer(); ?>
+
 
 
 
