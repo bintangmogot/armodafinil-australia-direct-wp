@@ -10,7 +10,7 @@
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<div class="font-serif text-2xl font-semibold text-white">
-					Armodafinil <span class="text-brand-300">Australia Direct</span>
+					Armodafinil <span class="text-brand-300">Direct</span>
 				</div>
 				<p class="mt-3 text-sm text-ink-100/70 max-w-sm"><?php echo esc_html(get_field('footer_description', 'option') ?: 'Steady focus, cleaner clarity, and dependable dispatch &mdash; built for Australian customers who take their day seriously.'); ?></p>
 				<div class="mt-5 flex items-center gap-3 text-brand-300">
