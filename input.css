@@ -392,3 +392,189 @@ body {
 .single-product .tinv-wishlist {
     display: none !important;
 }
+/* TI WooCommerce Wishlist Styling */
+.tinv-wishlist {
+  @apply max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8;
+}
+
+/* Header/Title */
+.tinv-wishlist .tinvwl_added_to_wishlist, .tinv-wishlist h2 {
+  @apply font-serif text-3xl font-bold text-ink-900 mb-8;
+}
+
+/* The Main Table */
+.tinv-wishlist .tinvwl-table-manage-list {
+  @apply w-full border-collapse mb-8 bg-white rounded-2xl shadow-sm border border-ink-200 overflow-hidden;
+}
+
+.tinv-wishlist .tinvwl-table-manage-list thead {
+  @apply bg-slate-50/80 border-b border-ink-200 text-left text-sm font-semibold text-ink-900;
+}
+
+.tinv-wishlist .tinvwl-table-manage-list thead th {
+  @apply p-4 whitespace-nowrap;
+}
+
+.tinv-wishlist .tinvwl-table-manage-list tbody tr {
+  @apply border-b border-ink-100 hover:bg-slate-50/50 transition-colors;
+}
+.tinv-wishlist .tinvwl-table-manage-list tbody tr:last-child {
+  @apply border-b-0;
+}
+
+.tinv-wishlist .tinvwl-table-manage-list tbody td {
+  @apply p-4 align-middle text-sm text-ink-700;
+}
+
+/* Checkbox & Remove */
+.tinv-wishlist .product-cb input[type=""checkbox""] {
+  @apply rounded border-ink-300 text-brand-600 focus:ring-brand-600 w-4 h-4 cursor-pointer;
+}
+
+.tinv-wishlist .product-remove button {
+  @apply w-8 h-8 flex items-center justify-center rounded-full bg-white text-ink-400 hover:bg-red-50 hover:text-red-500 transition-colors border border-ink-200 hover:border-red-200 cursor-pointer p-0;
+}
+
+/* Product Info */
+.tinv-wishlist .product-thumbnail img {
+  @apply w-20 h-20 object-cover rounded-xl border border-ink-100 bg-white;
+}
+
+.tinv-wishlist .product-name a {
+  @apply font-semibold text-ink-900 hover:text-brand-600 transition-colors text-base;
+}
+
+.tinv-wishlist .product-price, .tinv-wishlist .product-price .amount {
+  @apply font-medium text-ink-900;
+}
+
+.tinv-wishlist .product-date {
+  @apply text-ink-500 text-xs;
+}
+
+/* Stock Status */
+.tinv-wishlist .product-stock p {
+  @apply m-0 inline-flex items-center gap-1.5 font-medium text-ink-900;
+}
+.tinv-wishlist .product-stock p i {
+  @apply text-brand-600;
+}
+
+/* Add to Cart Button in Table */
+.tinv-wishlist .product-action .button {
+  @apply inline-flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-full px-6 py-2.5 transition-colors whitespace-nowrap w-full sm:w-auto shadow-sm text-sm;
+}
+
+/* Bottom Actions Row (Bulk actions) */
+.tinv-wishlist .tinvwl-table-manage-list tfoot td {
+  @apply bg-slate-50/50 p-4 border-t border-ink-200;
+}
+
+.tinv-wishlist .tinvwl-to-left {
+  @apply flex flex-wrap items-center gap-3 float-left;
+}
+.tinv-wishlist .tinvwl-to-right {
+  @apply flex flex-wrap items-center gap-3 float-right;
+}
+
+.tinv-wishlist .tinvwl-to-left select {
+  @apply border border-ink-200 rounded-full py-2.5 pl-4 pr-10 text-sm focus:ring-brand-600 focus:border-brand-600 bg-white shadow-sm text-ink-900 font-medium;
+}
+
+.tinv-wishlist .tinvwl-to-left button,
+.tinv-wishlist .tinvwl-to-right button {
+  @apply inline-flex items-center justify-center bg-white border border-ink-200 hover:border-ink-300 hover:bg-slate-50 text-ink-900 font-semibold rounded-full px-6 py-2.5 transition-colors text-sm shadow-sm;
+}
+
+/* Social Share */
+.tinv-wishlist .social-buttons {
+  @apply flex flex-wrap items-center justify-end gap-4 mt-8 pt-6 border-t border-ink-100 clear-both;
+}
+.tinv-wishlist .social-buttons > span {
+  @apply text-sm font-semibold text-ink-900;
+}
+.tinv-wishlist .social-buttons ul {
+  @apply flex items-center gap-2 m-0 p-0 list-none;
+}
+.tinv-wishlist .social-buttons ul li a {
+  @apply w-10 h-10 rounded-full border border-ink-200 bg-white flex items-center justify-center text-ink-600 hover:text-brand-700 hover:border-brand-300 transition-all shadow-sm;
+}
+.tinv-wishlist .social-buttons ul li a i {
+  @apply text-lg;
+}
+
+/* Mobile responsive fixes */
+@media screen and (max-width: 768px) {
+  .tinv-wishlist .tinvwl-table-manage-list thead {
+    @apply hidden;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody tr {
+    @apply flex flex-col p-5 relative border-b border-ink-200;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td {
+    @apply flex items-center justify-between p-2 border-0 w-full;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td::before {
+    @apply content-[attr(data-title)] font-semibold text-ink-900 text-sm;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb,
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove,
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail {
+    @apply justify-center mb-2;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb::before,
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove::before,
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail::before {
+    @apply hidden;
+  }
+
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail img {
+    @apply w-32 h-32;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove {
+    @apply absolute top-4 right-4 w-auto p-0;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb {
+    @apply absolute top-4 left-4 w-auto p-0;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name {
+    @apply justify-center text-center mt-2 mb-2;
+  }
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name::before {
+    @apply hidden;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action {
+    @apply mt-4 justify-center border-t border-ink-100 pt-6;
+  }
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action::before {
+    @apply hidden;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tfoot td {
+    @apply flex flex-col gap-4 p-5;
+  }
+  
+  .tinv-wishlist .tinvwl-to-left, 
+  .tinv-wishlist .tinvwl-to-right {
+    @apply w-full flex flex-col items-stretch text-center float-none;
+  }
+  
+  .tinv-wishlist .tinvwl-to-left button, 
+  .tinv-wishlist .tinvwl-to-right button, 
+  .tinv-wishlist .tinvwl-to-left select {
+    @apply w-full mb-0;
+  }
+  
+  .tinv-wishlist .social-buttons {
+    @apply justify-center mt-4 pt-6;
+  }
+}
