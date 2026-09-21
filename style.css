@@ -5158,7 +5158,7 @@ body {
   max-width: 80rem; /* max-w-7xl */
   margin-left: auto;
   margin-right: auto;
-  padding: 2rem 1rem;
+  padding: 2rem 0;
 }
 @media (min-width: 640px) { .tinv-wishlist { padding-left: 1.5rem; padding-right: 1.5rem; } }
 @media (min-width: 1024px) { .tinv-wishlist { padding-left: 2rem; padding-right: 2rem; } }
@@ -5170,7 +5170,9 @@ body {
   font-weight: 700;
   color: #0f172a; /* text-ink-900 */
   margin-bottom: 2rem;
+  padding: 0 1rem;
 }
+@media (min-width: 640px) { .tinv-wishlist .tinvwl_added_to_wishlist, .tinv-wishlist h2 { padding: 0; } }
 
 .tinv-wishlist .tinvwl-table-manage-list {
   width: 100%;
@@ -5379,9 +5381,15 @@ body {
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-top: 1px solid #f1f5f9;
   clear: both;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
+@media (min-width: 640px) { .tinv-wishlist .social-buttons { padding-left: 0; padding-right: 0; } }
+@media (min-width: 640px) { .tinv-wishlist .social-buttons { padding-left: 0; padding-right: 0; } }
 .tinv-wishlist .social-buttons > span {
   font-size: 0.875rem;
   font-weight: 600;
@@ -5416,6 +5424,11 @@ body {
 
 /* Mobile responsive fixes */
 @media screen and (max-width: 768px) {
+  .tinv-wishlist .tinvwl-table-manage-list {
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+  }
   .tinv-wishlist .tinvwl-table-manage-list thead {
     display: none !important;
   }
@@ -5430,7 +5443,7 @@ body {
       "cb thumb stock  stock"
       "cb thumb action action" !important;
     gap: 0.25rem 0.75rem !important;
-    padding: 1rem 0 !important;
+    padding: 1rem 0.75rem !important;
     position: relative !important;
     border-bottom: 1px solid #e2e8f0 !important;
     align-items: center !important;
@@ -5582,3 +5595,8 @@ body {
 .tinv-wishlist .tinvwl-to-right button:last-child:hover {
   background-color: #1e293b !important;
 }
+
+
+
+
+
