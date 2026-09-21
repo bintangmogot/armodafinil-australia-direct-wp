@@ -57,6 +57,7 @@ add_filter( 'loop_shop_per_page', function() { return 20; }, 20 );
 require get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/cpt.php';
 require_once get_template_directory() . '/inc/acf-options.php';
+require_once get_template_directory() . '/inc/ajax-auth.php';
 require_once get_template_directory() . '/inc/ajax-reviews.php';
 require_once get_template_directory() . '/inc/ajax-search.php';
 require_once get_template_directory() . '/inc/medical-reviewers.php';
@@ -666,6 +667,7 @@ function aad_disable_legacy_advanced_editor_tools() {
     }
 }
 add_action( 'admin_init', 'aad_disable_legacy_advanced_editor_tools', 1 );
+
 
 
 
