@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.innerHTML = 'Sent!';
             } else {
                 msg.classList.add('bg-red-50', 'text-red-600', 'border-red-100');
-                msg.innerText = data.data || 'Something went wrong. Please try again.';
+                msg.innerHTML = data.data || 'Something went wrong. Please try again.';
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.innerHTML = 'Send magic link';

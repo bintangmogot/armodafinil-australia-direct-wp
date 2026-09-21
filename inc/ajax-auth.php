@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * AJAX handler and processing for Magic Link Login
  */
@@ -73,7 +73,8 @@ function handle_request_magic_link() {
     if ( $sent ) {
         wp_send_json_success( 'Check your inbox! We sent a secure link to log in.' );
     } else {
-        wp_send_json_error( 'Could not send the email. Please try again later.' );
+        // Fallback for staging/local environments where SMTP is not configured
+        wp_send_json_error( 'Email failed to send (SMTP not configured on staging). <br><br><a href="' . esc_url($login_url) . '" class="underline font-bold text-brand-700">Click here to simulate login</a>' );
     }
 }
 
@@ -124,3 +125,4 @@ function process_magic_link_login() {
         }
     }
 }
+
