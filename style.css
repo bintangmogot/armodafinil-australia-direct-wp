@@ -5417,30 +5417,32 @@ body {
 /* Mobile responsive fixes */
 @media screen and (max-width: 768px) {
   .tinv-wishlist .tinvwl-table-manage-list thead {
-    display: none;
+    display: none !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody tr {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
+    display: grid !important;
+    grid-template-columns: auto 5.5rem 1fr auto !important;
+    grid-template-rows: auto auto auto auto !important;
     grid-template-areas: 
-      "thumb name"
-      "thumb price"
-      "thumb stock"
-      "thumb action";
-    gap: 0.25rem 1rem;
-    padding: 1rem;
-    position: relative;
-    border-bottom: 1px solid #e2e8f0;
-    align-items: flex-start;
+      "cb thumb name   remove"
+      "cb thumb price  price"
+      "cb thumb stock  stock"
+      "cb thumb action action" !important;
+    gap: 0.25rem 0.75rem !important;
+    padding: 1rem 0 !important;
+    position: relative !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    align-items: center !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td {
-    padding: 0;
-    border: none;
-    width: 100%;
-    display: block;
-    text-align: left;
+    padding: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    display: block !important;
+    text-align: left !important;
+    position: static !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td::before {
@@ -5448,99 +5450,135 @@ body {
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail {
-    grid-area: thumb;
+    grid-area: thumb !important;
+    align-self: start !important;
+    margin-top: 0.25rem !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail img {
-    width: 100%;
-    height: 5.5rem;
-    object-fit: cover;
-    border-radius: 0.75rem;
+    width: 100% !important;
+    height: 5.5rem !important;
+    object-fit: cover !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid #f1f5f9 !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name {
-    grid-area: name;
-    padding-right: 2rem;
-    margin: 0;
+    grid-area: name !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: start !important;
+    margin-top: 0.25rem !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-price {
-    grid-area: price;
+    grid-area: price !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-stock {
-    grid-area: stock;
+    grid-area: stock !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action {
-    grid-area: action;
-    margin-top: 0.5rem;
-    border: none;
-    padding: 0;
+    grid-area: action !important;
+    margin-top: 0.25rem !important;
+    border: none !important;
+    padding: 0 !important;
   }
   
   .tinv-wishlist .product-action .button {
-    width: 100%;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    width: 100% !important;
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-date {
-    display: none;
+    display: none !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    width: auto;
-    padding: 0;
-    z-index: 10;
+    grid-area: remove !important;
+    align-self: start !important;
+    width: auto !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: auto;
-    padding: 0;
-    z-index: 10;
+    grid-area: cb !important;
+    align-self: center !important;
+    width: auto !important;
   }
   
   .tinv-wishlist .product-cb input[type="checkbox"] {
-    background-color: #ffffff;
-    border: 2px solid #e2e8f0;
+    background-color: #ffffff !important;
+    border: 2px solid #cbd5e1 !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    margin: 0 !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tfoot td {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.25rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    padding: 1.25rem !important;
   }
   
   .tinv-wishlist .tinvwl-to-left, 
   .tinv-wishlist .tinvwl-to-right {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    float: none;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
+    float: none !important;
+    gap: 0.75rem !important;
   }
   
   .tinv-wishlist .tinvwl-to-left button, 
   .tinv-wishlist .tinvwl-to-right button, 
   .tinv-wishlist .tinvwl-to-left select {
-    width: 100%;
-    margin-bottom: 0;
-    box-sizing: border-box;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box !important;
   }
   
   .tinv-wishlist .social-buttons {
-    justify-content: center;
-    margin-top: 1rem;
-    padding-top: 1.5rem;
+    justify-content: center !important;
+    margin-top: 1rem !important;
+    padding-top: 1.5rem !important;
   }
 }
 
+
+/* Bulk action buttons colors (Overrides) */
+.tinv-wishlist .tinvwl-to-left button {
+  background-color: #f0fdfa !important;
+  border-color: #99f6e4 !important;
+  color: #0f766e !important;
+}
+.tinv-wishlist .tinvwl-to-left button:hover {
+  background-color: #ccfbf1 !important;
+  border-color: #5eead4 !important;
+}
+
+.tinv-wishlist .tinvwl-to-right button:first-child {
+  background-color: #0d9488 !important;
+  border-color: #0d9488 !important;
+  color: #ffffff !important;
+}
+.tinv-wishlist .tinvwl-to-right button:first-child:hover {
+  background-color: #0f766e !important;
+}
+
+.tinv-wishlist .tinvwl-to-right button:last-child {
+  background-color: #0f172a !important;
+  border-color: #0f172a !important;
+  color: #ffffff !important;
+}
+.tinv-wishlist .tinvwl-to-right button:last-child:hover {
+  background-color: #1e293b !important;
+}

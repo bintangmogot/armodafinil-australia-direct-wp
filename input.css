@@ -510,19 +510,21 @@ body {
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody tr {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
+    display: grid !important;
+    grid-template-columns: auto 5rem 1fr auto !important;
+    grid-template-rows: auto auto auto auto !important;
     grid-template-areas: 
-      "thumb name"
-      "thumb price"
-      "thumb stock"
-      "thumb action";
-    gap: 0.25rem 1rem;
-    @apply p-4 relative border-b border-ink-200 items-start;
+      "cb thumb name   remove"
+      "cb thumb price  price"
+      "cb thumb stock  stock"
+      "cb thumb action action" !important;
+    gap: 0.25rem 0.75rem !important;
+    @apply p-4 relative border-b border-ink-200 items-center;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td {
-    @apply p-0 border-0 w-full block text-left;
+    @apply p-0 border-0 w-full block text-left !important;
+    position: static !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td::before {
@@ -530,64 +532,69 @@ body {
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail {
-    grid-area: thumb;
+    grid-area: thumb !important;
+    @apply self-start mt-1;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail img {
-    @apply w-full h-22 object-cover rounded-xl;
+    @apply w-full h-20 object-cover rounded-xl border border-ink-100 bg-white;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name {
-    grid-area: name;
-    @apply pr-8 mt-0 mb-0;
+    grid-area: name !important;
+    @apply m-0 p-0 text-sm leading-snug self-start pt-1;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-price {
-    grid-area: price;
+    grid-area: price !important;
+    @apply m-0;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-stock {
-    grid-area: stock;
+    grid-area: stock !important;
+    @apply m-0 pb-1;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action {
-    grid-area: action;
-    @apply mt-2 border-0 p-0;
+    grid-area: action !important;
+    @apply mt-1 mb-2 border-0 p-0;
   }
   
   .tinv-wishlist .product-action .button {
-    @apply w-full py-2;
+    @apply w-full py-2.5 shadow-sm text-sm !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-date {
-    @apply hidden;
+    @apply hidden !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove {
-    @apply absolute top-3 right-3 w-auto p-0 z-10;
+    grid-area: remove !important;
+    @apply self-start;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb {
-    @apply absolute top-2 left-2 w-auto p-0 z-10;
+    grid-area: cb !important;
+    @apply self-center;
   }
   
   .tinv-wishlist .product-cb input[type="checkbox"] {
-    @apply bg-white border-2 border-ink-200;
+    @apply bg-white border-2 border-ink-300 w-5 h-5 rounded m-0 !important;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tfoot td {
-    @apply flex flex-col gap-4 p-5;
+    @apply flex flex-col gap-3 p-5;
   }
   
   .tinv-wishlist .tinvwl-to-left, 
   .tinv-wishlist .tinvwl-to-right {
-    @apply w-full flex flex-col items-stretch text-center float-none;
+    @apply w-full flex flex-col items-stretch text-center float-none gap-3;
   }
   
   .tinv-wishlist .tinvwl-to-left button, 
   .tinv-wishlist .tinvwl-to-right button, 
   .tinv-wishlist .tinvwl-to-left select {
-    @apply w-full mb-0;
+    @apply w-full m-0 !important;
   }
   
   .tinv-wishlist .social-buttons {
@@ -595,3 +602,16 @@ body {
   }
 }
 
+
+/* Bulk action buttons colors */
+.tinv-wishlist .tinvwl-to-left button {
+  @apply bg-brand-50 border border-brand-200 text-brand-700 hover:bg-brand-100 hover:border-brand-300 shadow-sm px-6 py-2.5 rounded-full font-semibold transition-colors !important;
+}
+
+.tinv-wishlist .tinvwl-to-right button:first-child {
+  @apply bg-brand-600 border border-brand-600 text-white hover:bg-brand-700 shadow-sm px-6 py-2.5 rounded-full font-semibold transition-colors !important;
+}
+
+.tinv-wishlist .tinvwl-to-right button:last-child {
+  @apply bg-ink-900 border border-ink-900 text-white hover:bg-ink-800 shadow-sm px-6 py-2.5 rounded-full font-semibold transition-colors !important;
+}
