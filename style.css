@@ -5421,82 +5421,95 @@ body {
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody tr {
-    display: flex;
-    flex-direction: column;
-    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    grid-template-areas: 
+      "thumb name"
+      "thumb price"
+      "thumb stock"
+      "thumb action";
+    gap: 0.25rem 1rem;
+    padding: 1rem;
     position: relative;
     border-bottom: 1px solid #e2e8f0;
+    align-items: flex-start;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0;
     border: none;
     width: 100%;
-    box-sizing: border-box;
+    display: block;
+    text-align: left;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td::before {
-    content: attr(data-title);
-    font-weight: 600;
-    color: #0f172a;
-    font-size: 0.875rem;
+    display: none !important;
   }
   
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb,
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove,
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail {
-    justify-content: center;
-    margin-bottom: 0.5rem;
+    grid-area: thumb;
   }
   
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb::before,
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove::before,
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail::before {
-    display: none;
-  }
-
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-thumbnail img {
-    width: 8rem;
-    height: 8rem;
+    width: 100%;
+    height: 5.5rem;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name {
+    grid-area: name;
+    padding-right: 2rem;
+    margin: 0;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-price {
+    grid-area: price;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-stock {
+    grid-area: stock;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action {
+    grid-area: action;
+    margin-top: 0.5rem;
+    border: none;
+    padding: 0;
+  }
+  
+  .tinv-wishlist .product-action .button {
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-date {
+    display: none;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-remove {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
     width: auto;
     padding: 0;
+    z-index: 10;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tbody td.product-cb {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 0.5rem;
+    left: 0.5rem;
     width: auto;
     padding: 0;
+    z-index: 10;
   }
   
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name {
-    justify-content: center;
-    text-align: center;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-name::before {
-    display: none;
-  }
-  
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action {
-    margin-top: 1rem;
-    justify-content: center;
-    border-top: 1px solid #f1f5f9;
-    padding-top: 1.5rem;
-  }
-  .tinv-wishlist .tinvwl-table-manage-list tbody td.product-action::before {
-    display: none;
+  .tinv-wishlist .product-cb input[type="checkbox"] {
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
   }
   
   .tinv-wishlist .tinvwl-table-manage-list tfoot td {
@@ -5518,8 +5531,7 @@ body {
   
   .tinv-wishlist .tinvwl-to-left button, 
   .tinv-wishlist .tinvwl-to-right button, 
-  .tinv-wishlist .tinvwl-to-left select,
-  .tinv-wishlist .product-action .button {
+  .tinv-wishlist .tinvwl-to-left select {
     width: 100%;
     margin-bottom: 0;
     box-sizing: border-box;
@@ -5531,3 +5543,4 @@ body {
     padding-top: 1.5rem;
   }
 }
+
