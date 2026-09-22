@@ -12,7 +12,9 @@
 				<div class="font-serif text-2xl font-semibold text-white">
 					Armodafinil <span class="text-brand-300">Direct</span>
 				</div>
-				<p class="mt-3 text-sm text-ink-100/70 max-w-sm"><?php echo esc_html(get_field('footer_description', 'option') ?: 'Steady focus, cleaner clarity, and dependable dispatch &mdash; built for Australian customers who take their day seriously.'); ?></p>
+				<?php if ( $footer_desc = get_field('footer_description', 'option') ) : ?>
+				<p class="mt-3 text-sm text-ink-100/70 max-w-sm"><?php echo wp_kses_post($footer_desc); ?></p>
+				<?php endif; ?>
 				<div class="mt-5 flex items-center gap-3 text-brand-300">
 					<?php if(get_field('facebook_link', 'option')): ?>
 					<a href="<?php echo esc_url(get_field('facebook_link', 'option')); ?>" aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-9 h-9 grid place-items-center rounded-full bg-white/5 hover:bg-white/10">
@@ -52,10 +54,18 @@
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between text-xs text-ink-100/60">
 				<div class="flex flex-wrap items-center gap-4">
 					<!-- Trust Badges with simple SVGs -->
-					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <?php echo esc_html(get_field('ssl_text', 'option') ?: 'SSL secured'); ?></span>
-					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="16" height="8" x="2" y="10" rx="2"/><path d="M2 14h16"/><path d="M22 14v-4l-4-4H6"/><path d="M6 6v4"/></svg> <?php echo esc_html(get_field('dispatch_text', 'option') ?: 'AU-wide dispatch'); ?></span>
-					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> <?php echo esc_html(get_field('checkout_text', 'option') ?: 'Encrypted checkout'); ?></span>
-					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> <?php echo esc_html(get_field('location_text', 'option') ?: 'Sydney, AU'); ?></span>
+					<?php if ( $ssl_text = get_field('ssl_text', 'option') ) : ?>
+					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <?php echo esc_html($ssl_text); ?></span>
+					<?php endif; ?>
+					<?php if ( $dispatch_text = get_field('dispatch_text', 'option') ) : ?>
+					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="16" height="8" x="2" y="10" rx="2"/><path d="M2 14h16"/><path d="M22 14v-4l-4-4H6"/><path d="M6 6v4"/></svg> <?php echo esc_html($dispatch_text); ?></span>
+					<?php endif; ?>
+					<?php if ( $checkout_text = get_field('checkout_text', 'option') ) : ?>
+					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> <?php echo esc_html($checkout_text); ?></span>
+					<?php endif; ?>
+					<?php if ( $location_text = get_field('location_text', 'option') ) : ?>
+					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> <?php echo esc_html($location_text); ?></span>
+					<?php endif; ?>
 					<?php if ( $support_email = get_field('support_email', 'option') ) : ?>
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> <?php echo esc_html($support_email); ?></span>
 					<?php endif; ?>
@@ -63,7 +73,9 @@
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <?php echo esc_html($support_phone); ?></span>
 					<?php endif; ?>
 				</div>
-				<div><?php echo esc_html(get_field('copyright_text', 'option') ?: '&copy; 2026 Armodafinil. Information only &mdash; not medical advice.'); ?></div>
+				<?php if ( $copyright_text = get_field('copyright_text', 'option') ) : ?>
+				<div><?php echo wp_kses_post($copyright_text); ?></div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</footer>
