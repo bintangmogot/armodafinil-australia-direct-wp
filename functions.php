@@ -705,10 +705,7 @@ remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_
 
 
 // Make phone field mandatory on checkout
-add_filter( 'woocommerce_billing_fields', function( $fields ) {
-    $fields['billing_phone']['required'] = true;
-    return $fields;
-} );
+
 
 
 // Auto-select Priority Shipping by sorting it to the top
@@ -730,3 +727,17 @@ function sort_shipping_methods_priority_first( $rates, $package ) {
     return $rates;
 }
 
+
+// Make phone field mandatory on checkout (high priority to override plugins)
+add_filter( 'woocommerce_billing_fields', function( $fields ) {
+    if ( isset($fields['billing_phone']) ) {
+        $fields['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 9999 );
+add_filter( 'woocommerce_checkout_fields', function( $fields ) {
+    if ( isset($fields['billing']['billing_phone']) ) {
+        $fields['billing']['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 9999 );

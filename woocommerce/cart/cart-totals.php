@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
         $needed = 299 - $subtotal;
         ?>
         <p class="mt-4 text-xs text-brand-700 bg-brand-50 border border-brand-100 rounded-lg p-3 leading-relaxed">
-            Add <?php echo wc_price($needed); ?> more to unlock free shipping + 10% off.
+            Add <?php echo wc_price($needed); ?> more to unlock free shipping.
         </p>
         <?php
     }
