@@ -50,12 +50,22 @@ $sections = get_sub_field('sections');
                         <?php endforeach; ?>
                     </ol>
 
+                    <?php
+                    $support_email = get_field('support_email', 'option');
+                    $whatsapp_number = get_field('whatsapp_number', 'option');
+                    if ( $support_email || $whatsapp_number ) :
+                    ?>
                     <div class="mt-8 p-5 rounded-2xl bg-white border border-ink-200">
                         <div class="text-xs uppercase tracking-widest text-ink-500 font-semibold mb-2">Need help?</div>
                         <p class="text-sm text-ink-700">Our team usually replies within one business day.</p>
-                        <a href="mailto:support@armodafinilaustralia.com.au" class="mt-3 inline-flex items-center gap-2 h-9 px-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email support</a>
-                        <a href="#" class="mt-2 inline-flex items-center gap-2 h-9 px-3 rounded-full border border-ink-200 hover:border-brand-500 text-ink-900 text-xs font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> WhatsApp</a>
+                        <?php if ( $support_email ) : ?>
+                        <a href="mailto:<?php echo esc_attr($support_email); ?>" class="mt-3 inline-flex items-center gap-2 h-9 px-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email support</a>
+                        <?php endif; ?>
+                        <?php if ( $whatsapp_number ) : ?>
+                        <a href="https://wa.me/<?php echo esc_attr(preg_replace('/[^0-9]/', '', $whatsapp_number)); ?>" class="mt-2 inline-flex items-center gap-2 h-9 px-3 rounded-full border border-ink-200 hover:border-brand-500 text-ink-900 text-xs font-semibold transition-colors" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> WhatsApp</a>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                 </div>
             </aside>
 
