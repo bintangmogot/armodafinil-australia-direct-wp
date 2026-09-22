@@ -160,7 +160,7 @@ $wrapper_classes = $has_text_content
                 <!-- Promo Code Box -->
                 <div class="mt-5 p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 shrink-0"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
-                    <div class="text-sm font-bold text-ink-900">Free shipping on orders above 9</div>
+                    <div class="text-sm font-bold text-ink-900">Free shipping on orders above $299</div>
                 </div>
 
                 <div class="mt-4 p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-xs font-medium text-amber-900 flex items-start gap-2.5">
