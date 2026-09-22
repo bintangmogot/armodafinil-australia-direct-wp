@@ -17,7 +17,7 @@ function handle_submit_product_review() {
     $title = isset($_POST['review_title']) ? sanitize_text_field($_POST['review_title']) : '';
     $content = isset($_POST['review_content']) ? sanitize_textarea_field($_POST['review_content']) : '';
 
-    if ( ! $product_id || ! $name || ! $email || ! $content ) {
+    if ( ! $name || ! $email || ! $content ) {
         wp_send_json_error(array('message' => 'Please fill in all required fields.'));
     }
 
@@ -40,7 +40,11 @@ function handle_submit_product_review() {
         update_field('rating', $rating, $post_id);
         update_field('name', $name, $post_id);
         update_field('reviewer_meta', 'Verified Buyer', $post_id); // Set default meta
-        update_field('linked_product', $product_id, $post_id);
+        if ( $product_id > 0 ) {
+            update_field('linked_product', $product_id, $post_id);
+        } else {
+            update_field('linked_product', '', $post_id);
+        }
     }
 
     // Optional: save email as post meta so admin can see who submitted
