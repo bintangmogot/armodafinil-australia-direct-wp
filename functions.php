@@ -703,3 +703,10 @@ add_action('admin_print_footer_scripts', function() {
 // Remove coupon form from checkout page
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 
+
+// Make phone field mandatory on checkout
+add_filter( 'woocommerce_billing_fields', function( $fields ) {
+    $fields['billing_phone']['required'] = true;
+    return $fields;
+} );
+
