@@ -3594,6 +3594,126 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_68b05b3e3b9e4": {
+                    "key": "layout_68b05b3e3b9e4",
+                    "name": "review_page",
+                    "label": "Review page",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_review_page_heading",
+                            "label": "Heading",
+                            "name": "heading",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Customer Reviews",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_reviews_carousel_layout": {
+                    "key": "layout_reviews_carousel_layout",
+                    "name": "reviews_carousel",
+                    "label": "Reviews Carousel",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_reviews_carousel_heading",
+                            "label": "Heading",
+                            "name": "heading",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "What Our Customers Say",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_review_form_layout": {
+                    "key": "layout_review_form_layout",
+                    "name": "review_form",
+                    "label": "Review Form",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_review_form_heading",
+                            "label": "Heading",
+                            "name": "heading",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Leave us a review \ud83d\ude4f",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_reviews_carousel_grid_layout": {
+                    "key": "layout_reviews_carousel_grid_layout",
+                    "name": "reviews_carousel_grid",
+                    "label": "Reviews Carousel Grid (3 Col)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_reviews_carousel_grid_heading",
+                            "label": "Heading",
+                            "name": "heading",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Trusted by Everyday Australian's",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Module",
@@ -3657,5 +3777,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790076303
+    "modified": 1790079185
 }
