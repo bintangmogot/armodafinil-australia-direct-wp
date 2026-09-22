@@ -497,33 +497,29 @@ function aad_clean_acf_wysiwyg_bookmarks($value, $post_id = null, $field = null)
     }
     return $value;
 }
-// Underscore.js polyfill — must run BEFORE wp-tinymce and mce-view which use
-// _.pluck / _.contains / _.object (removed in modern Underscore/Lodash).
-// Using admin_head at priority 1 so it fires before any editor scripts load.
-add_action('admin_head', function() {
-?>
-<script>
-(function(){
-    if (typeof _ === 'undefined') return;
-    if (typeof _.pluck !== 'function') {
-        _.pluck = function(obj, key) { return _.map(obj, _.property(key)); };
+// Underscore.js polyfill — injected directly into the script dependency tree
+// to guarantee it runs exactly after underscore but before wp-backbone / mce-view.
+add_action('wp_default_scripts', function($scripts) {
+    if (is_admin()) {
+        // Register our compat file
+        $scripts->add(
+            'underscore-compat', 
+            get_template_directory_uri() . '/assets/js/underscore-compat.js', 
+            ['underscore'], 
+            '1.0.0'
+        );
+        
+        // Force backbone (which is used by wp-backbone, mce-view, etc) to wait for our compat script
+        if (isset($scripts->registered['backbone'])) {
+            $scripts->registered['backbone']->deps[] = 'underscore-compat';
+        }
+        
+        // Also add it directly to wp-util just in case
+        if (isset($scripts->registered['wp-util'])) {
+            $scripts->registered['wp-util']->deps[] = 'underscore-compat';
+        }
     }
-    if (typeof _.contains !== 'function') {
-        _.contains = _.includes || function(obj, item) { return _.indexOf(obj, item) >= 0; };
-    }
-    if (typeof _.object !== 'function') {
-        _.object = function(keys, vals) {
-            var result = {};
-            for (var i = 0, l = keys.length; i < l; i++) {
-                if (vals) { result[keys[i]] = vals[i]; } else { result[keys[i][0]] = keys[i][1]; }
-            }
-            return result;
-        };
-    }
-})();
-</script>
-<?php
-}, 1);
+});
 // Register ACF fields for Product Medical Disclaimers
 add_action('acf/init', 'aad_register_product_disclaimer_fields');
 function aad_register_product_disclaimer_fields() {
