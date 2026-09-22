@@ -33,6 +33,17 @@ if ( $is_variable ) {
             'attributes_raw' => $var['attributes']
         );
     }
+    // Naturally sort variations numerically by pack size/quantity
+    usort( $variations, function( $a, $b ) {
+        preg_match( '/\d+/', (string)$a['qty'], $mA );
+        preg_match( '/\d+/', (string)$b['qty'], $mB );
+        $numA = isset( $mA[0] ) ? (int)$mA[0] : null;
+        $numB = isset( $mB[0] ) ? (int)$mB[0] : null;
+        if ( $numA !== null && $numB !== null && $numA !== $numB ) {
+            return $numA <=> $numB;
+        }
+        return strnatcasecmp( (string)$a['qty'], (string)$b['qty'] );
+    });
 } else {
     $variations[] = array(
         'id' => 0,

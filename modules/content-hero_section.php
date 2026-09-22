@@ -44,6 +44,26 @@ if ( $product_obj ) {
             $available_variations = $product->get_available_variations();
             $variations_json = wp_json_encode( $available_variations );
             $attributes = $product->get_variation_attributes();
+
+            // Naturally sort attribute options numerically (e.g., 50, 100, 200, 300, 400, 500, 900)
+            if ( is_array( $attributes ) ) {
+                foreach ( $attributes as $attr_name => &$options_list ) {
+                    if ( is_array( $options_list ) ) {
+                        usort( $options_list, function( $a, $b ) {
+                            preg_match( '/\d+/', (string)$a, $mA );
+                            preg_match( '/\d+/', (string)$b, $mB );
+                            $numA = isset( $mA[0] ) ? (int)$mA[0] : null;
+                            $numB = isset( $mB[0] ) ? (int)$mB[0] : null;
+                            if ( $numA !== null && $numB !== null && $numA !== $numB ) {
+                                return $numA <=> $numB;
+                            }
+                            return strnatcasecmp( (string)$a, (string)$b );
+                        });
+                    }
+                }
+                unset( $options_list );
+            }
+
             $default_price = $product->get_variation_price( 'min', true );
             $p_price_html = wc_price( $default_price ); // initial price
         }
