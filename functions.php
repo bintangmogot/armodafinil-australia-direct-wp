@@ -577,6 +577,15 @@ add_action('wp_head', function() {
 
 
 
+// AIOSEO Writing Assistant's watchClassicEditor() crashes on ACF's dynamically-
+// created TinyMCE instances with "Cannot read properties of null (reading 'on')".
+// This prevents every Visual editor tab from initialising properly.
+// Dequeue the script; the SEO meta-box itself still works without it.
+add_action('admin_enqueue_scripts', function() {
+    wp_dequeue_script('aioseo/js/src/vue/standalone/writing-assistant/main.js');
+    wp_deregister_script('aioseo/js/src/vue/standalone/writing-assistant/main.js');
+}, 999);
+
 // Editor colours and typography are provided safely by editor-style.css.
 // Do not inject quoted CSS through tiny_mce_before_init: WordPress prints that
 // value inside an inline JavaScript string, where unescaped font-family quotes
