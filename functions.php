@@ -735,30 +735,6 @@ add_filter( 'woocommerce_billing_fields', function( $fields ) {
     return $fields;
 }, 9999 );
 
-// Tidy up Shipping Insurance Layout via CSS (Hide duplicate TH title)
-add_action( 'wp_head', function() {
-    if ( is_checkout() || is_cart() ) {
-        echo '<style>
-        .shipping-insurance {
-            display: block !important;
-            padding-top: 0.25rem !important;
-        }
-        .shipping-insurance th {
-            display: none !important; /* Hide the duplicate "Shipping Insurance" title */
-        }
-        .shipping-insurance td {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 0.375rem !important;
-            color: #4b5563 !important;
-            font-size: 0.875rem !important;
-        }
-        .shipping-insurance td br {
-            display: none !important;
-        }
-        </style>';
-    }
-} );
 
 // Fix Duplicate "Shipping Insurance (Shipping Insurance)" Fee Name
 add_filter( 'gettext', function( $translated_text, $text, $domain ) {
@@ -790,5 +766,78 @@ add_filter( 'woocommerce_form_field_args', function( $args, $key, $value ) {
 add_action( 'woocommerce_checkout_process', function() {
     if ( empty( $_POST['billing_phone'] ) ) {
         wc_add_notice( __( 'Phone number is a required field.', 'woocommerce' ), 'error' );
+    }
+} );
+
+// Aggressive Visual Fixes for Phone Optional and Double Insurance Text
+add_action( 'wp_head', function() {
+    if ( is_checkout() || is_cart() ) {
+        echo '<style>
+        /* Hide the duplicate h2 title in the WooCommerce Block for Shipping Insurance */
+        .wc-block-components-shipping-rates-control h2.wc-block-components-title {
+            display: none !important;
+        }
+        /* Hide the duplicate TH title in the standard WooCommerce layout for Shipping Insurance */
+        .shipping-insurance th {
+            display: none !important;
+        }
+        .shipping-insurance {
+            display: block !important;
+            padding-top: 0.25rem !important;
+        }
+        .shipping-insurance td {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.375rem !important;
+            color: #4b5563 !important;
+            font-size: 0.875rem !important;
+        }
+        .shipping-insurance td br {
+            display: none !important;
+        }
+        
+        /* Visually force Phone to look required (Hide "optional", add red asterisk) */
+        label[for="billing_phone"] .optional {
+            display: none !important;
+        }
+        label[for="billing_phone"]::after {
+            content: " *" !important;
+            color: #e24c4b !important; /* Theme red or standard red */
+        }
+        </style>';
+    }
+} );
+
+// Force Phone label to remove (optional) via JS for React Blocks
+add_action( 'wp_footer', function() {
+    if ( is_checkout() || is_cart() ) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to strip (optional) and add *
+            function fixPhoneLabel() {
+                var labels = document.querySelectorAll('label');
+                labels.forEach(function(label) {
+                    if (label.innerText.toLowerCase().includes('phone (optional)')) {
+                        label.innerHTML = label.innerHTML.replace(/\(optional\)/i, '<span style="color:#e24c4b;">*</span>');
+                    }
+                });
+                
+                var inputs = document.querySelectorAll('input[type="tel"], input[name="billing_phone"]');
+                inputs.forEach(function(input) {
+                    input.required = true;
+                });
+            }
+            
+            fixPhoneLabel();
+            
+            // Re-run on DOM mutations because WooCommerce Blocks render via React!
+            var observer = new MutationObserver(function(mutations) {
+                fixPhoneLabel();
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+        </script>
+        <?php
     }
 } );
