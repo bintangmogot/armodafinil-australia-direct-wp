@@ -374,6 +374,11 @@ acf_add_local_field_group(array(
 						),
 					),
 				),
+				array('key' => 'field_faq_support_title', 'label' => 'Support Box Title', 'name' => 'support_title', 'type' => 'text', 'default_value' => 'Still need help?'),
+				array('key' => 'field_faq_support_subtitle', 'label' => 'Support Box Subtitle', 'name' => 'support_subtitle', 'type' => 'text', 'default_value' => 'Our pharmacy support team typically responds within one business day.'),
+				array('key' => 'field_faq_support_email', 'label' => 'Support Email', 'name' => 'support_email', 'type' => 'email', 'default_value' => 'support@armodafinilaustralia.com.au'),
+				array('key' => 'field_faq_support_btn_text', 'label' => 'Contact Button Text', 'name' => 'support_btn_text', 'type' => 'text', 'default_value' => 'Contact us'),
+				array('key' => 'field_faq_support_btn_url', 'label' => 'Contact Button URL', 'name' => 'support_btn_url', 'type' => 'text', 'default_value' => '/contact'),
 			),
 		),
 		'layout_faq_simple' => array(

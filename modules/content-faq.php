@@ -9,6 +9,13 @@ $raw_categories = get_sub_field('faq_categories');
 $categories = array('All topics');
 $faqs = array();
 
+// Support Block Fields
+$support_title    = get_sub_field('support_title') ?: 'Still need help?';
+$support_subtitle = get_sub_field('support_subtitle') ?: 'Our pharmacy support team typically responds within one business day.';
+$support_email    = get_sub_field('support_email');
+$support_btn_text = get_sub_field('support_btn_text') ?: 'Contact us';
+$support_btn_url  = get_sub_field('support_btn_url') ?: '/contact';
+
 // Default icons mapping for fallback
 $icons = array(
     'All topics' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
@@ -105,17 +112,21 @@ if ( !empty( $raw_categories ) ) {
 
     <!-- Support Block -->
     <div class="mt-14 bg-white border border-ink-200 rounded-2xl p-8 text-center shadow-soft">
-        <h2 class="font-serif text-2xl font-semibold text-ink-900">Still need help?</h2>
-        <p class="mt-2 text-ink-700">Our pharmacy support team typically responds within one business day.</p>
+        <h2 class="font-serif text-2xl font-semibold text-ink-900"><?php echo esc_html($support_title); ?></h2>
+        <p class="mt-2 text-ink-700"><?php echo esc_html($support_subtitle); ?></p>
         <div class="mt-5 flex flex-wrap gap-3 justify-center">
-            <a href="mailto:support@armodafinilaustralia.com.au" class="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                support@armodafinilaustralia.com.au
-            </a>
-            <a href="<?php echo esc_url(site_url('/contact')); ?>" class="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors">
-                Contact us
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
+            <?php if ( $support_email ) : ?>
+                <a href="mailto:<?php echo esc_attr($support_email); ?>" class="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <?php echo esc_html($support_email); ?>
+                </a>
+            <?php endif; ?>
+            <?php if ( $support_btn_text && $support_btn_url ) : ?>
+                <a href="<?php echo esc_url($support_btn_url); ?>" class="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors">
+                    <?php echo esc_html($support_btn_text); ?>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+            <?php endif; ?>
         </div>
         <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 justify-center text-xs text-ink-500">
             <span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-3.5 h-3.5 text-brand-600"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Verified pharmacy</span>
