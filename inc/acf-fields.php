@@ -1,6 +1,9 @@
 <?php
 add_action('acf/init', function() {
 
+// Page Modules now lives in acf-json/group_page_modules.json so it can be
+// synchronized and edited from ACF. Keep this definition as a fallback only.
+if ( ! acf_get_local_field_group('group_page_modules') ) {
 acf_add_local_field_group(array(
 	'key' => 'group_page_modules',
 	'title' => 'Page Modules',
@@ -535,7 +538,7 @@ acf_add_local_field_group(array(
 					'button_label' => 'Add Section',
 					'sub_fields' => array(
 						array('key' => 'field_pps_title', 'label' => 'Section Title', 'name' => 'title', 'type' => 'text'),
-						array('key' => 'field_pps_content', 'label' => 'Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'full'),
+						array('key' => 'field_pps_content', 'label' => 'Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'full', 'delay' => 1),
 					),
 				),
 			),
@@ -579,7 +582,7 @@ acf_add_local_field_group(array(
 			'sub_fields' => array(
 				array('key' => 'field_ss_badge', 'label' => 'Left Badge', 'name' => 'badge', 'type' => 'text'),
 				array('key' => 'field_ss_title', 'label' => 'Left Title', 'name' => 'title', 'type' => 'text'),
-				array('key' => 'field_ss_desc', 'label' => 'Left Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'basic'),
+				array('key' => 'field_ss_desc', 'label' => 'Left Content', 'name' => 'content', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'all', 'toolbar' => 'basic', 'delay' => 1),
 				array(
 					'key' => 'field_ss_buttons',
 					'label' => 'Left Buttons',
@@ -726,7 +729,7 @@ acf_add_local_field_group(array(
 		'layout_important_notes' => array(
 			'key' => 'layout_important_notes',
 			'name' => 'important_notes',
-			'label' => 'Important Usage & Disclaimer',
+			'label' => 'Important Usage and Disclaimer',
 			'display' => 'block',
 			'sub_fields' => array(
 				array(
@@ -770,6 +773,7 @@ acf_add_local_field_group(array(
 					'label' => 'Content',
 					'name' => 'content',
 					'type' => 'wysiwyg',
+					'delay' => 1,
 				),
 				array(
 					'key' => 'field_rt_width',
@@ -877,6 +881,7 @@ acf_add_local_field_group(array(
 		),
 	),
 ));
+}
 
 acf_add_local_field_group(array(
 	'key' => 'group_product_specs',
