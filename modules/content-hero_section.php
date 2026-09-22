@@ -74,7 +74,7 @@ if ( $product_obj ) {
 <?php
 $has_text_content = $eyebrow || $title || $subtitle || $cta_label || $cta_url;
 $wrapper_classes = $has_text_content 
-    ? 'max-w-7xl grid lg:grid-cols-2 gap-10 items-center' 
+    ? 'max-w-7xl grid lg:grid-cols-2 gap-10 items-start' 
     : 'max-w-3xl flex flex-col items-center justify-center';
 ?>
 <section class="section-wash">
