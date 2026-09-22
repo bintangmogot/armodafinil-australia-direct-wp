@@ -50,12 +50,13 @@
             <?php if ( $topbar_center = get_field('topbar_center', 'option') ) : ?>
             <p class="opacity-90 hidden md:block"><?php echo esc_html($topbar_center); ?></p>
             <?php endif; ?>
-            <?php if ( $support_email = get_field('support_email', 'option') ) : ?>
-            <a href="mailto:<?php echo esc_attr($support_email); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-3.5 h-3.5"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
-                <?php echo esc_html(get_field('topbar_right', 'option') ?: 'Support'); ?>
+            <?php 
+            $support_phone = get_field('whatsapp_number', 'option') ?: '0488 841 833';
+            $clean_phone = preg_replace('/[^0-9+]/', '', $support_phone);
+            ?>
+            <a href="tel:<?php echo esc_attr($clean_phone); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
+                Call📞 : <?php echo esc_html($support_phone); ?>
             </a>
-            <?php endif; ?>
         </div>
     </div>
 
