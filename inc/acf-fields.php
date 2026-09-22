@@ -917,18 +917,43 @@ acf_add_local_field_group(array(
 	),
 ));
 
+    acf_add_local_field_group(array(
+        "key" => "group_review_linked_product",
+        "title" => "Additional Review Settings",
+        "fields" => array(
+            array(
+                "key" => "field_review_linked_product",
+                "label" => "Linked Product",
+                "name" => "linked_product",
+                "type" => "post_object",
+                "instructions" => "Select a product if this is a Product Review. Leave empty for General Reviews.",
+                "required" => 0,
+                "post_type" => array(
+                    0 => "product",
+                ),
+                "taxonomy" => "",
+                "allow_null" => 1,
+                "multiple" => 0,
+                "return_format" => "id",
+                "ui" => 1,
+            ),
+        ),
+        "location" => array(
+            array(
+                array(
+                    "param" => "post_type",
+                    "operator" => "==",
+                    "value" => "review",
+                ),
+            ),
+        ),
+        "menu_order" => 0,
+        "position" => "side",
+        "style" => "default",
+        "label_placement" => "top",
+        "instruction_placement" => "label",
+        "hide_on_screen" => "",
+        "active" => true,
+        "description" => "",
+    ));
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
