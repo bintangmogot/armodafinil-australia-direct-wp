@@ -596,6 +596,13 @@ add_action('admin_enqueue_scripts', function() {
 // Do not inject quoted CSS through tiny_mce_before_init: WordPress prints that
 // value inside an inline JavaScript string, where unescaped font-family quotes
 // can prevent tinyMCEPreInit from being created and break every Visual editor.
+add_filter('tiny_mce_before_init', function($init) {
+    $readable_editor_style = 'body#tinymce,body.mce-content-body{color:#334155 !important;background-color:#ffffff !important;}';
+    $init['content_style'] = !empty($init['content_style'])
+        ? $init['content_style'] . ' ' . $readable_editor_style
+        : $readable_editor_style;
+    return $init;
+}, 20);
 
 
 

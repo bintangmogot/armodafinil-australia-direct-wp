@@ -1,10 +1,16 @@
 
-body#tinymce.wp-editor {
+/* ACF's iframe body is not always given WordPress's `wp-editor` class. */
+body#tinymce,
+body.mce-content-body {
+    color: #334155 !important;
+    background-color: #ffffff !important;
+}
+
+body#tinymce.wp-editor,
+body#tinymce.mce-content-body {
     
     font-size: 16px !important;
     line-height: 1.75 !important;
-    color: #334155 !important;
-    background-color: #ffffff !important;
     padding: 24px !important;
     max-width: 800px;
     margin: 0 auto;
