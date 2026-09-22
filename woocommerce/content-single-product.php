@@ -391,7 +391,7 @@ foreach ( $attributes as $attribute ) {
               $usage_title = get_field('usage_note_title', get_the_ID()) ?: (get_field('usage_note_title', 'option') ?: 'Important Usage Note');
               $usage_text = get_field('usage_note_text', get_the_ID()) ?: get_field('usage_note_text', 'option');
               $info_text = get_field('informational_warning_text', get_the_ID()) ?: get_field('informational_warning_text', 'option');
-                $doctor_id = get_field('medical_reviewer_post', get_the_ID()) ?: get_field('medical_reviewer_post', 'option');
+                $doctor_id = get_field('medical_reviewer_post', get_the_ID());
                 if ($doctor_id) {
                     $rev_name = get_the_title($doctor_id);
                     $rev_url = get_permalink($doctor_id);

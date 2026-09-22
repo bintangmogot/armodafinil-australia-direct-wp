@@ -48,13 +48,6 @@ function aad_register_medical_reviewer_fields() {
                         'value' => 'product',
                     ),
                 ),
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'theme-general-settings',
-                    ),
-                ),
             ),
         ));
         

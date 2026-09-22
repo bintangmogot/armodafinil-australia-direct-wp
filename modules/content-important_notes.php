@@ -5,7 +5,7 @@
 
 $important_note = get_sub_field('important_usage_note');
 $disclaimer = get_sub_field('medical_disclaimer_text');
-$doctor_id = get_sub_field('medical_reviewer_post') ?: get_field('medical_reviewer_post', get_the_ID()) ?: get_field('medical_reviewer_post', 'option');
+$doctor_id = get_sub_field('medical_reviewer_post') ?: get_field('medical_reviewer_post', get_the_ID());
 if ($doctor_id) {
     $reviewed_by = get_the_title($doctor_id);
     $rev_url = get_permalink($doctor_id);

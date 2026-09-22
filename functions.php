@@ -544,26 +544,6 @@ function aad_register_product_disclaimer_fields() {
                 'default_value' => 'This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href="/medical-disclaimer/">Read our full medical disclaimer</a>.',
                 'new_lines' => 'br',
             ),
-            array(
-                'key' => 'field_reviewer_name',
-                'label' => 'Medically Reviewed By Name',
-                'name' => 'reviewer_name',
-                'type' => 'text',
-                'default_value' => 'Dr. Ginni Mansberg',            ),
-            array(
-                'key' => 'field_reviewer_url',
-                'label' => 'Medical Reviewer Link (URL)',
-                'name' => 'reviewer_url',
-                'type' => 'url',
-                'default_value' => 'https://armodafinildirect.com.au/medical-team/dr-ginni-mansberg/',
-            ),
-            array(
-                'key' => 'field_reviewer_title',
-                'label' => 'Medically Reviewed By Title',
-                'name' => 'reviewer_title',
-                'type' => 'text',
-                'default_value' => 'Physician',
-            ),
         ),
         'location' => array(
             array(
