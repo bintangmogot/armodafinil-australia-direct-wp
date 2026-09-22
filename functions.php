@@ -575,61 +575,6 @@ add_action('wp_head', function() {
 });
 
 
-// Safe Underscore Polyfill for Media Uploader
-add_action('admin_enqueue_scripts', function() {
-    $script = "
-        if (typeof window._ !== 'undefined') {
-            window._.pluck = window._.pluck || function(obj, key) {
-                return window._.map(obj, function(val) { return val[key]; });
-            };
-            window._.contains = window._.contains || window._.includes || function(obj, item) {
-                return window._.indexOf(obj, item) >= 0;
-            };
-        }
-    ";
-    wp_add_inline_script('underscore', $script, 'after');
-});
-
-/**
- * Advanced Editor Tools 5.x registers TinyMCE 4-era integrations globally.
- * WordPress 7 ships a newer TinyMCE build, so those integrations can race
- * ACF's dynamically-created editors and require repeated page refreshes.
- * Keep the plugin installed, but remove its editor hooks on admin screens;
- * the native WordPress toolbar remains available and version-compatible.
- */
-add_action('admin_init', function() {
-    if ( ! class_exists('Advanced_Editor_Tools') ) {
-        return;
-    }
-
-    global $wp_filter;
-    $hooks = array(
-        'wp_editor_settings',
-        'mce_buttons',
-        'mce_buttons_2',
-        'mce_buttons_3',
-        'mce_buttons_4',
-        'tiny_mce_before_init',
-        'mce_external_plugins',
-        'tiny_mce_plugins',
-    );
-
-    foreach ( $hooks as $hook_name ) {
-        if ( empty($wp_filter[$hook_name]) || empty($wp_filter[$hook_name]->callbacks) ) {
-            continue;
-        }
-
-        foreach ( $wp_filter[$hook_name]->callbacks as $priority => $callbacks ) {
-            foreach ( $callbacks as $callback ) {
-                $function = $callback['function'];
-                if ( is_array($function) && isset($function[0]) && $function[0] instanceof Advanced_Editor_Tools ) {
-                    remove_filter($hook_name, $function, $priority);
-                }
-            }
-        }
-    }
-}, 1000);
-
 
 
 // Editor colours and typography are provided safely by editor-style.css.
