@@ -36,11 +36,13 @@ $review_count = count($reviews);
             </h2>
             <?php if ($review_count > 0): ?>
                 <div class="inline-flex items-center justify-center gap-3 bg-brand-50 rounded-full px-5 py-2">
-                    <div class="flex items-center gap-1 text-brand-600">
+                    <div class="flex items-center gap-1">
                         <?php for ($i = 0; $i < 5; $i++): ?>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                            </svg>
+                            <div class="w-6 h-6 flex items-center justify-center rounded-[3px] bg-[#00B67A] text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
                         <?php endfor; ?>
                     </div>
                     <span class="text-sm font-semibold text-brand-900">
@@ -62,11 +64,13 @@ $review_count = count($reviews);
                     $rating_val = get_field("rating", $post_id) ?: 5;
                     ?>
                     <div class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8 flex flex-col hover-lift transition-shadow shadow-soft">
-                        <div class="flex items-center gap-1 text-brand-600 mb-5">
+                        <div class="flex items-center gap-1 mb-5">
                             <?php for ($stars = 0; $stars < 5; $stars++): ?>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 <?php echo ($stars < $rating_val) ? 'text-brand-600' : 'text-ink-200'; ?>" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                                </svg>
+                                <div class="w-7 h-7 flex items-center justify-center rounded-[3px] <?php echo ($stars < $rating_val) ? 'bg-[#00B67A]' : 'bg-[#E5E7EB]'; ?> text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </div>
                             <?php endfor; ?>
                         </div>
                         
@@ -78,21 +82,29 @@ $review_count = count($reviews);
                             <?php echo wp_kses_post(wpautop($body)); ?>
                         </div>
                         
-                        <div class="mt-8 pt-6 border-t border-ink-200 flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-lg uppercase shrink-0">
-                                <?php echo esc_html(substr($reviewer, 0, 1)); ?>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-ink-900">
-                                    <?php echo esc_html($reviewer); ?>
+                        <div class="mt-8 pt-5 border-t border-ink-100 flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-[#00B67A] text-white flex items-center justify-center font-bold text-[15px] uppercase shrink-0">
+                                    <?php echo esc_html(substr($reviewer, 0, 1)); ?>
                                 </div>
-                                <div class="flex items-center gap-1 text-xs font-medium text-emerald-600 mt-0.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <?php echo esc_html($meta); ?>
+                                <div>
+                                    <div class="font-bold text-ink-900 text-[15px] leading-tight">
+                                        <?php echo esc_html($reviewer); ?>
+                                    </div>
+                                    <div class="text-xs text-ink-400 mt-1">
+                                        <?php echo get_the_date('j F Y', $post_id); ?>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <?php if (stripos($meta, 'verified') !== false || stripos($meta, 'buyer') !== false): ?>
+                            <div class="flex items-center gap-1 px-2 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded uppercase tracking-wide shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                VERIFIED
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php
