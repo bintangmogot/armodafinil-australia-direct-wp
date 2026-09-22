@@ -727,13 +727,7 @@ function sort_shipping_methods_priority_first( $rates, $package ) {
     return $rates;
 }
 
-// Force Phone to be Required (Overrides WooCommerce Customizer & Plugins)
-add_filter( 'woocommerce_checkout_fields', function( $fields ) {
-    if ( isset($fields['billing']['billing_phone']) ) {
-        $fields['billing']['billing_phone']['required'] = true;
-    }
-    return $fields;
-}, 9999 );
+
 add_filter( 'woocommerce_billing_fields', function( $fields ) {
     if ( isset($fields['billing_phone']) ) {
         $fields['billing_phone']['required'] = true;
@@ -741,22 +735,16 @@ add_filter( 'woocommerce_billing_fields', function( $fields ) {
     return $fields;
 }, 9999 );
 
-// Tidy up Shipping Insurance Layout via CSS
+// Tidy up Shipping Insurance Layout via CSS (Hide duplicate TH title)
 add_action( 'wp_head', function() {
     if ( is_checkout() || is_cart() ) {
         echo '<style>
         .shipping-insurance {
             display: block !important;
-            padding-top: 0.75rem !important;
-            border-top: 1px solid #e5e7eb !important;
-            margin-top: 0.75rem !important;
+            padding-top: 0.25rem !important;
         }
         .shipping-insurance th {
-            display: block !important;
-            font-weight: 600 !important;
-            color: #111827 !important;
-            margin-bottom: 0.5rem !important;
-            text-align: left !important;
+            display: none !important; /* Hide the duplicate "Shipping Insurance" title */
         }
         .shipping-insurance td {
             display: flex !important;
@@ -779,3 +767,28 @@ add_filter( 'gettext', function( $translated_text, $text, $domain ) {
     }
     return $translated_text;
 }, 10, 3 );
+
+// Ultra-aggressive Phone Required Enforcement
+add_filter( 'woocommerce_checkout_fields', function( $fields ) {
+    if ( isset($fields['billing']['billing_phone']) ) {
+        $fields['billing']['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 99999 );
+add_filter( 'woocommerce_billing_fields', function( $fields ) {
+    if ( isset($fields['billing_phone']) ) {
+        $fields['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 99999 );
+add_filter( 'woocommerce_form_field_args', function( $args, $key, $value ) {
+    if ( $key === 'billing_phone' ) {
+        $args['required'] = true;
+    }
+    return $args;
+}, 99999, 3 );
+add_action( 'woocommerce_checkout_process', function() {
+    if ( empty( $_POST['billing_phone'] ) ) {
+        wc_add_notice( __( 'Phone number is a required field.', 'woocommerce' ), 'error' );
+    }
+} );
