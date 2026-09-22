@@ -158,18 +158,9 @@ $wrapper_classes = $has_text_content
                 <?php endif; ?>
 
                 <!-- Promo Code Box -->
-                <div class="mt-5 p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="flex items-start gap-2.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 mt-0.5 shrink-0"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
-                        <div>
-                            <div class="text-xs font-bold text-ink-900">Free Standard Shipping + 10% Off</div>
-                            <div class="text-[11px] text-ink-500 font-medium mt-0.5">On all orders over A$299.00</div>
-                        </div>
-                    </div>
-                    <button type="button" id="promo-copy-btn" class="shrink-0 group flex items-center justify-center gap-1.5 bg-white border border-slate-200 border-dashed hover:border-brand-600 hover:bg-brand-50 transition-all text-xs font-bold text-ink-900 px-3 py-1.5 rounded-lg shadow-sm w-full sm:w-auto cursor-pointer" title="Click to copy code">
-                        <span class="text-brand-600 tracking-wider promo-code-text">ARM10</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-ink-400 group-hover:text-brand-600 promo-copy-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                    </button>
+                <div class="mt-5 p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 shrink-0"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                    <div class="text-sm font-bold text-ink-900">Free shipping on orders above 9</div>
                 </div>
 
                 <div class="mt-4 p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-xs font-medium text-amber-900 flex items-start gap-2.5">
