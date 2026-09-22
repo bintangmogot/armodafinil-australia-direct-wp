@@ -141,10 +141,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-        // Move Sidebar Summary
+    // Copy the live WooCommerce review into the sidebar. The sidebar controls
+    // are display proxies only; the inputs inside #order_review remain the
+    // canonical checkout fields that WooCommerce submits and replaces via AJAX.
     function updateSidebar() {
-        var $wrapper = $('#order_review .review-order-summary-wrapper').clone();
+        var $source = $('#order_review .review-order-summary-wrapper').first();
+        if (!$source.length) {
+            return;
+        }
+
+        var $sourceInputs = $source.find('input, select, textarea');
+        var $wrapper = $source.clone();
         $wrapper.removeClass('hidden'); // Ensure it shows in sidebar
+
+        // jQuery/browser cloning is not consistent for live radio/checkbox
+        // properties. Copy those properties explicitly from the refreshed
+        // WooCommerce controls, then remove names so the visual proxy cannot
+        // create duplicate checkout values during form serialization.
+        $wrapper.find('input, select, textarea').each(function(index) {
+            var $proxy = $(this);
+            var $sourceInput = $sourceInputs.eq(index);
+            var originalName = $sourceInput.attr('name');
+
+            if (originalName) {
+                $proxy.attr('data-checkout-input-name', originalName);
+                $proxy.removeAttr('name');
+            }
+
+            if ($proxy.is(':radio, :checkbox')) {
+                $proxy.prop('checked', $sourceInput.prop('checked'));
+            } else {
+                $proxy.val($sourceInput.val());
+            }
+        });
         
         // Fix duplicate IDs in the cloned sidebar so labels work correctly
         $wrapper.find('[id]').each(function() {
@@ -159,15 +188,21 @@ document.addEventListener('DOMContentLoaded', function() {
         $('.sidebar-summary-container').html($wrapper).css({opacity: 1, transition: 'opacity 0.2s'});
     }
     
+    var sidebarRefreshTimer = null;
     $(document.body).on('updated_checkout', function() {
-        updateSidebar();
+        window.clearTimeout(sidebarRefreshTimer);
+        sidebarRefreshTimer = window.setTimeout(updateSidebar, 0);
     });
     
             // Sync sidebar input changes back to the real hidden form
     $(document.body).on('change', '.sidebar-summary-container input', function() {
         var $this = $(this);
         var type = $this.attr('type');
-        var name = $this.attr('name');
+        var name = $this.attr('data-checkout-input-name');
+
+        if (!name) {
+            return;
+        }
         
         // Add a visual loading state to the sidebar
         $('.sidebar-summary-container').css('opacity', '0.6');
@@ -175,18 +210,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (type === 'radio') {
             var val = $this.val();
             // Find the real radio in the form and trigger change
-            var $realInput = $('form.checkout input[name="' + name + '"][value="' + val + '"]');
+            var $realInput = $('#order_review input[name="' + name + '"][value="' + val + '"]');
             if ($realInput.length) {
                 $realInput.addClass('update_totals_on_change').prop('checked', true).trigger('change');
             }
         } else if (type === 'checkbox') {
             var isChecked = $this.prop('checked');
-            var $realInput = $('form.checkout input[name="' + name + '"]');
+            var $realInput = $('#order_review input[name="' + name + '"]');
             if ($realInput.length) {
                 $realInput.addClass('update_totals_on_change').prop('checked', isChecked).trigger('change');
             }
         } else {
-            var $realInput = $('form.checkout input[name="' + name + '"]');
+            var $realInput = $('#order_review input[name="' + name + '"]');
             if ($realInput.length) {
                 $realInput.addClass('update_totals_on_change').val($this.val()).trigger('change');
             }
