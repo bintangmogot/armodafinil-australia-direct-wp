@@ -52,6 +52,30 @@ function armodafinil_australia_setup() {
 }
 add_action( 'after_setup_theme', 'armodafinil_australia_setup' );
 
+// TinyMCE loads editor styles inside its iframe and browsers cache that file
+// independently from the WordPress admin page. Version the URL with the file's
+// modification time so a normal refresh receives the current styles.
+add_filter('mce_css', function($stylesheets) {
+    $editor_style_path = get_template_directory() . '/editor-style.css';
+    if (!file_exists($editor_style_path)) {
+        return $stylesheets;
+    }
+
+    $editor_style_url = add_query_arg(
+        'ver',
+        (string) filemtime($editor_style_path),
+        get_template_directory_uri() . '/editor-style.css'
+    );
+
+    $items = array_filter(array_map('trim', explode(',', (string) $stylesheets)));
+    $items = array_values(array_filter($items, function($url) {
+        return strpos($url, '/editor-style.css') === false;
+    }));
+    $items[] = $editor_style_url;
+
+    return implode(',', array_unique($items));
+}, 20);
+
 add_filter( 'loop_shop_per_page', function() { return 20; }, 20 );
 
 require get_template_directory() . '/inc/acf-fields.php';
