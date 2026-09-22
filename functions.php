@@ -710,3 +710,23 @@ add_filter( 'woocommerce_billing_fields', function( $fields ) {
     return $fields;
 } );
 
+
+// Auto-select Priority Shipping by sorting it to the top
+add_filter( 'woocommerce_package_rates', 'sort_shipping_methods_priority_first', 10, 2 );
+function sort_shipping_methods_priority_first( $rates, $package ) {
+    if ( ! $rates ) return $rates;
+    $priority_rate = null;
+    $other_rates = array();
+    foreach ( $rates as $rate_id => $rate ) {
+        if ( stripos( $rate->label, 'priority' ) !== false ) {
+            $priority_rate = array( $rate_id => $rate );
+        } else {
+            $other_rates[ $rate_id ] = $rate;
+        }
+    }
+    if ( $priority_rate ) {
+        return $priority_rate + $other_rates;
+    }
+    return $rates;
+}
+
