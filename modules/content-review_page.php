@@ -30,13 +30,13 @@ $review_count = count($reviews);
 
 <section class="py-16 md:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+        <div class="text-center mb-14">
             <h2 class="font-serif text-3xl md:text-5xl font-semibold text-ink-900 mb-6">
                 <?php echo esc_html($heading); ?>
             </h2>
             <?php if ($review_count > 0): ?>
                 <div class="inline-flex items-center justify-center gap-3 bg-brand-50 rounded-full px-5 py-2">
-                    <div class="flex items-center gap-1 text-amber-500">
+                    <div class="flex items-center gap-1 text-brand-600">
                         <?php for ($i = 0; $i < 5; $i++): ?>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -62,9 +62,9 @@ $review_count = count($reviews);
                     $rating_val = get_field("rating", $post_id) ?: 5;
                     ?>
                     <div class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8 flex flex-col hover-lift transition-shadow shadow-soft">
-                        <div class="flex items-center gap-1 text-amber-500 mb-5">
+                        <div class="flex items-center gap-1 text-brand-600 mb-5">
                             <?php for ($stars = 0; $stars < 5; $stars++): ?>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 <?php echo ($stars < $rating_val) ? 'text-amber-500' : 'text-ink-200'; ?>" fill="currentColor" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 <?php echo ($stars < $rating_val) ? 'text-brand-600' : 'text-ink-200'; ?>" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                                 </svg>
                             <?php endfor; ?>

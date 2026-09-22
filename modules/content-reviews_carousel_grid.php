@@ -30,13 +30,13 @@ $review_count = count($reviews);
 
 <section class="py-16 md:py-20 bg-ink-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
+        <div class="text-center mb-10">
             <h2 class="font-serif text-3xl font-semibold text-ink-900 mb-4">
                 <?php echo esc_html($heading); ?>
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             <?php
             if ($reviews):
                 foreach ($reviews as $r):
@@ -48,9 +48,9 @@ $review_count = count($reviews);
                     $rating_val = get_field("rating", $post_id) ?: 5;
                     ?>
                     <div class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8 flex flex-col hover:-translate-y-1 transition-transform shadow-sm">
-                        <div class="flex items-center gap-1 text-amber-500 mb-4">
+                        <div class="flex items-center gap-1 text-brand-600 mb-4">
                             <?php for ($stars = 0; $stars < 5; $stars++): ?>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 <?php echo ($stars < $rating_val) ? 'text-amber-500' : 'text-ink-200'; ?>" fill="currentColor" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 <?php echo ($stars < $rating_val) ? 'text-brand-600' : 'text-ink-200'; ?>" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                                 </svg>
                             <?php endfor; ?>

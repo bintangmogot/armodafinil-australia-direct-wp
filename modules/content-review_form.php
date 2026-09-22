@@ -45,7 +45,7 @@ $heading = get_sub_field('heading') ?: 'Leave us a review ✍️';
                     <label class="block text-sm font-medium text-ink-900 mb-2">Rating <span class="text-red-500">*</span></label>
                     <div class="flex items-center gap-2 star-rating-input cursor-pointer" id="form-star-rating">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <svg xmlns="http://www.w3.org/2000/svg" data-rating="<?php echo $i; ?>" class="w-8 h-8 text-ink-300 hover:text-amber-500 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" data-rating="<?php echo $i; ?>" class="w-8 h-8 text-ink-300 hover:text-brand-600 transition-colors" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                             </svg>
                         <?php endfor; ?>
@@ -122,10 +122,10 @@ document.addEventListener('DOMContentLoaded', function() {
         stars.forEach(s => {
             if (parseInt(s.getAttribute('data-rating')) <= val) {
                 s.classList.remove('text-ink-300');
-                s.classList.add('text-amber-500');
+                s.classList.add('text-brand-600');
             } else {
                 s.classList.add('text-ink-300');
-                s.classList.remove('text-amber-500');
+                s.classList.remove('text-brand-600');
             }
         });
     }
