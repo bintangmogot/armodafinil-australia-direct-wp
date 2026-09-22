@@ -726,3 +726,56 @@ function sort_shipping_methods_priority_first( $rates, $package ) {
     }
     return $rates;
 }
+
+// Force Phone to be Required (Overrides WooCommerce Customizer & Plugins)
+add_filter( 'woocommerce_checkout_fields', function( $fields ) {
+    if ( isset($fields['billing']['billing_phone']) ) {
+        $fields['billing']['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 9999 );
+add_filter( 'woocommerce_billing_fields', function( $fields ) {
+    if ( isset($fields['billing_phone']) ) {
+        $fields['billing_phone']['required'] = true;
+    }
+    return $fields;
+}, 9999 );
+
+// Tidy up Shipping Insurance Layout via CSS
+add_action( 'wp_head', function() {
+    if ( is_checkout() || is_cart() ) {
+        echo '<style>
+        .shipping-insurance {
+            display: block !important;
+            padding-top: 0.75rem !important;
+            border-top: 1px solid #e5e7eb !important;
+            margin-top: 0.75rem !important;
+        }
+        .shipping-insurance th {
+            display: block !important;
+            font-weight: 600 !important;
+            color: #111827 !important;
+            margin-bottom: 0.5rem !important;
+            text-align: left !important;
+        }
+        .shipping-insurance td {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.375rem !important;
+            color: #4b5563 !important;
+            font-size: 0.875rem !important;
+        }
+        .shipping-insurance td br {
+            display: none !important;
+        }
+        </style>';
+    }
+} );
+
+// Fix Duplicate "Shipping Insurance (Shipping Insurance)" Fee Name
+add_filter( 'gettext', function( $translated_text, $text, $domain ) {
+    if ( 'shipping-insurance-manager' === $domain && 'Shipping Insurance (%s)' === $text ) {
+        return '%s';
+    }
+    return $translated_text;
+}, 10, 3 );
