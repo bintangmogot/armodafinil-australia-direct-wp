@@ -46,10 +46,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
             <p class="hidden sm:block opacity-90"><?php echo esc_html(get_field('topbar_left', 'option') ?: 'Premium cognitive support &ndash; Australia-wide dispatch'); ?></p>
             <p class="opacity-90 hidden md:block"><?php echo esc_html(get_field('topbar_center', 'option') ?: '6 &ndash; 12 business days &ndash; discreet packaging'); ?></p>
-            <a href="mailto:<?php echo esc_attr(get_field('support_email', 'option') ?: 'support@armodafinil-australia-direct.com'); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
+            <?php if ( $support_email = get_field('support_email', 'option') ) : ?>
+            <a href="mailto:<?php echo esc_attr($support_email); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-3.5 h-3.5"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
                 <?php echo esc_html(get_field('topbar_right', 'option') ?: 'Support'); ?>
             </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -113,4 +115,5 @@
 		</div>
 		</header>
     <?php endif; ?>
+
 

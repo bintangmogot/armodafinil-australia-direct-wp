@@ -36,21 +36,6 @@ add_action('acf/init', function() {
                 'default_value' => 'Support',
             ),
             array(
-                'key' => 'field_support_email',
-                'label' => 'Support Email',
-                'name' => 'support_email',
-                'type' => 'email',
-                'default_value' => 'support@armodafinil-australia-direct.com',
-            ),
-            array(
-                'key' => 'field_whatsapp_number',
-                'label' => 'WhatsApp Number',
-                'name' => 'whatsapp_number',
-                'type' => 'text',
-                'default_value' => '+61 4 8999 5839',
-                'instructions' => 'Include country code, e.g. +61 4 8999 5839',
-            ),
-            array(
                 'key' => 'field_promo_code',
                 'label' => 'Promo Code',
                 'name' => 'promo_code',
@@ -85,6 +70,31 @@ add_action('acf/init', function() {
                 'name' => 'twitter_link',
                 'type' => 'url',
             ),
+            array(
+                'key' => 'field_tab_contact',
+                'label' => 'Contact Info',
+                'name' => '',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ),
+            array(
+                'key' => 'field_support_email',
+                'label' => 'Support Email',
+                'name' => 'support_email',
+                'type' => 'email',
+                'default_value' => 'support@armodafinil-australia-direct.com',
+                'instructions' => 'Used in the top bar and footer. Leave blank to hide from the footer.',
+            ),
+            array(
+                'key' => 'field_whatsapp_number',
+                'label' => 'Support Phone Number',
+                'name' => 'whatsapp_number',
+                'type' => 'text',
+                'default_value' => '+61 4 8999 5839',
+                'instructions' => 'Leave blank to hide from the footer.',
+            ),
+
 
             array(
                 'key' => 'field_tab_footer',
@@ -151,3 +161,4 @@ add_action('acf/init', function() {
 
     endif;
 });
+
