@@ -804,6 +804,66 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+				'layout_review_page' => array(
+			'key' => 'layout_review_page',
+			'name' => 'review_page',
+			'label' => 'Review Page',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_review_page_heading',
+					'label' => 'Heading',
+					'name' => 'heading',
+					'type' => 'text',
+					'default_value' => 'Customer Reviews',
+				),
+			),
+		),
+		'layout_review_form' => array(
+			'key' => 'layout_review_form_layout',
+			'name' => 'review_form',
+			'label' => 'Review Form',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_review_form_heading',
+					'label' => 'Heading',
+					'name' => 'heading',
+					'type' => 'text',
+					'default_value' => 'Leave us a review ✍️',
+				),
+			),
+		),
+		'layout_reviews_carousel' => array(
+			'key' => 'layout_reviews_carousel_layout',
+			'name' => 'reviews_carousel',
+			'label' => 'Reviews Carousel',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_reviews_carousel_heading',
+					'label' => 'Heading',
+					'name' => 'heading',
+					'type' => 'text',
+					'default_value' => 'Reviews Carousel',
+				),
+			),
+		),
+		'layout_reviews_carousel_grid' => array(
+			'key' => 'layout_reviews_carousel_grid_layout',
+			'name' => 'reviews_carousel_grid',
+			'label' => 'Reviews Carousel Grid',
+			'display' => 'block',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_reviews_carousel_grid_heading',
+					'label' => 'Heading',
+					'name' => 'heading',
+					'type' => 'text',
+					'default_value' => 'Reviews Carousel Grid',
+				),
+			),
+		),
 		'layout_category_showcase' => array(
 			'key' => 'layout_category_showcase',
 			'name' => 'category_showcase',
