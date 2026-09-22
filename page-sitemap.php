@@ -4,39 +4,96 @@
  */
 
 get_header();
+
+// Fetch all pages and categorize them
+$all_pages = get_pages();
+$legal_keywords = ['privacy', 'terms', 'conditions', 'policy', 'refund', 'shipping', 'disclaimer'];
+$support_keywords = ['contact', 'faq', 'support', 'help', 'track', 'about'];
+
+$legal_pages = [];
+$support_pages = [];
+$main_pages = [];
+
+foreach ($all_pages as $p) {
+    $title = strtolower($p->post_title);
+    $is_legal = false;
+    $is_support = false;
+    
+    foreach ($legal_keywords as $kw) {
+        if (strpos($title, $kw) !== false) {
+            $is_legal = true; break;
+        }
+    }
+    if (!$is_legal) {
+        foreach ($support_keywords as $kw) {
+            if (strpos($title, $kw) !== false) {
+                $is_support = true; break;
+            }
+        }
+    }
+    
+    if ($is_legal) {
+        $legal_pages[] = $p;
+    } elseif ($is_support) {
+        $support_pages[] = $p;
+    } else {
+        $main_pages[] = $p;
+    }
+}
 ?>
 
+<style>
+.sitemap-list ul { list-style: none; padding: 0; margin: 0; }
+.sitemap-list li { margin-bottom: 0.85rem; }
+.sitemap-list a { 
+    color: #475569; 
+    text-decoration: none; 
+    transition: all 0.2s ease-in-out; 
+    font-weight: 500; 
+    display: inline-block; 
+}
+.sitemap-list a:hover { 
+    color: #00B67A; 
+    text-decoration: underline; 
+    text-underline-offset: 4px; 
+    transform: translateX(4px); 
+}
+.sitemap-list h2 {
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #0F172A;
+    font-size: 1.125rem;
+}
+</style>
+
 <div class="bg-ink-50 py-16 md:py-24 min-h-screen">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-serif text-4xl md:text-5xl font-semibold text-ink-900 mb-10 text-center">Site Map</h1>
         
         <div class="bg-white border border-ink-200 rounded-2xl p-8 md:p-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 sitemap-list">
                 
-                <!-- Pages -->
+                <!-- Main Pages -->
                 <div>
-                    <h2 class="text-xl font-semibold text-ink-900 mb-6 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                        Main Pages
-                    </h2>
-                    <ul class="space-y-3 text-ink-700">
-                        <?php
-                        wp_list_pages(array(
-                            'exclude' => '',
-                            'title_li' => '',
-                            'depth' => 1,
-                        ));
+                    <h2>Main Pages</h2>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop">Shop</a></li>
+                        <?php foreach($main_pages as $p): 
+                            // Skip if it's the sitemap itself or front page
+                            if ($p->ID == get_option('page_on_front') || strpos(strtolower($p->post_title), 'sitemap') !== false) continue;
                         ?>
+                            <li><a href="<?php echo get_permalink($p->ID); ?>"><?php echo esc_html($p->post_title); ?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
 
                 <!-- Shop Categories -->
                 <div>
-                    <h2 class="text-xl font-semibold text-ink-900 mb-6 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-                        Shop Categories
-                    </h2>
-                    <ul class="space-y-3 text-ink-700">
+                    <h2>Shop Categories</h2>
+                    <ul>
                         <?php
                         wp_list_categories(array(
                             'taxonomy' => 'product_cat',
@@ -47,6 +104,39 @@ get_header();
                         ?>
                     </ul>
                 </div>
+
+                <!-- Support & Help -->
+                <div>
+                    <h2>Help & Support</h2>
+                    <ul>
+                        <?php if(empty($support_pages)): ?>
+                            <li><a href="/contact">Contact Us</a></li>
+                            <li><a href="/faq">FAQ</a></li>
+                            <li><a href="/about">About Us</a></li>
+                        <?php else: ?>
+                            <?php foreach($support_pages as $p): ?>
+                                <li><a href="<?php echo get_permalink($p->ID); ?>"><?php echo esc_html($p->post_title); ?></a></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
+                <!-- Legal & Policies -->
+                <div>
+                    <h2>Legal & Policies</h2>
+                    <ul>
+                        <?php if(empty($legal_pages)): ?>
+                            <li><a href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a href="/terms-and-conditions">Terms & Conditions</a></li>
+                            <li><a href="/refund-policy">Refund Policy</a></li>
+                        <?php else: ?>
+                            <?php foreach($legal_pages as $p): ?>
+                                <li><a href="<?php echo get_permalink($p->ID); ?>"><?php echo esc_html($p->post_title); ?></a></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
