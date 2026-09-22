@@ -38,7 +38,7 @@ $review_count = count($reviews);
                 <div class="inline-flex items-center justify-center gap-3 bg-brand-50 rounded-full px-5 py-2">
                     <div class="flex items-center gap-1">
                         <?php for ($i = 0; $i < 5; $i++): ?>
-                            <div class="w-6 h-6 flex items-center justify-center rounded-[3px] bg-[#00B67A] text-white">
+                            <div class="w-6 h-6 flex items-center justify-center rounded-[3px] text-white" style="background-color: #00B67A;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
@@ -66,7 +66,7 @@ $review_count = count($reviews);
                     <div class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8 flex flex-col hover-lift transition-shadow shadow-soft">
                         <div class="flex items-center gap-1 mb-5">
                             <?php for ($stars = 0; $stars < 5; $stars++): ?>
-                                <div class="w-7 h-7 flex items-center justify-center rounded-[3px] <?php echo ($stars < $rating_val) ? 'bg-[#00B67A]' : 'bg-[#E5E7EB]'; ?> text-white">
+                                <div class="w-7 h-7 flex items-center justify-center rounded-[3px] text-white" style="background-color: <?php echo ($stars < $rating_val) ? '#00B67A' : '#E5E7EB'; ?>;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                     </svg>
@@ -84,13 +84,15 @@ $review_count = count($reviews);
                         
                         <div class="mt-8 pt-5 border-t border-ink-100 flex flex-wrap items-center justify-between gap-3">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-[#00B67A] text-white flex items-center justify-center font-bold text-[15px] uppercase shrink-0">
-                                    <?php echo esc_html(substr($reviewer, 0, 1)); ?>
-                                </div>
                                 <div>
                                     <div class="font-bold text-ink-900 text-[15px] leading-tight">
                                         <?php echo esc_html($reviewer); ?>
                                     </div>
+                                    <?php if ($meta && stripos($meta, 'verified') === false && stripos($meta, 'buyer') === false): ?>
+                                    <div class="text-xs text-ink-600 mt-0.5">
+                                        <?php echo esc_html($meta); ?>
+                                    </div>
+                                    <?php endif; ?>
                                     <div class="text-xs text-ink-400 mt-1">
                                         <?php echo get_the_date('j F Y', $post_id); ?>
                                     </div>
