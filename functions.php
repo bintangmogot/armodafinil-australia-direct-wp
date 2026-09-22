@@ -478,7 +478,8 @@ function aad_change_currency_symbol( $currency_symbol, $currency ) {
 
 // Clean them out just in case before saving to DB
 add_filter('acf/update_value/type=wysiwyg', 'aad_clean_acf_wysiwyg_bookmarks', 10, 3);
-// add_filter('content_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
+add_filter('content_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
+add_filter('excerpt_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
 function aad_clean_acf_wysiwyg_bookmarks($value, $post_id = null, $field = null) {
     if (!empty($value) && is_string($value)) {
         // Selection bookmarks are TinyMCE's temporary cursor markers. They must
@@ -589,64 +590,10 @@ add_action('admin_enqueue_scripts', function() {
 
 
 
-// Fix white text in ACF WYSIWYG editors by injecting inline body styles
-add_filter('tiny_mce_before_init', 'aad_fix_tinymce_text_color');
-function aad_fix_tinymce_text_color($init) {
-    $styles = 'body { color: #334155 !important; background: #fff !important; font-size: 14px; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 10px !important; }';
-    if (isset($init['content_style'])) {
-        $init['content_style'] .= ' ' . $styles;
-    } else {
-        $init['content_style'] = $styles;
-    }
-    return $init;
-}
-
-/**
- * Keep the native editor stable while this site has Advanced Editor Tools 5.x
- * installed.
- *
- * Version 5.9.2 ships TinyMCE 4-era plugins (including its table and code
- * extensions). WordPress 7.1 loads a newer TinyMCE API, so those extensions
- * throw a JavaScript error as soon as an editor switches to Visual mode. ACF
- * WYSIWYG fields and WooCommerce's product description both use that same
- * editor instance, which is why they fail together.
- *
- * This is deliberately conditional: once Advanced Editor Tools is upgraded to
- * a compatible 6.x release, its integration is left alone. Until then,
- * WordPress's own maintained editor handles rich text, pasted HTML, lists,
- * links, and tables without the incompatible add-ons.
- */
-function aad_disable_legacy_advanced_editor_tools() {
-    if ( ! class_exists( 'Advanced_Editor_Tools' ) ) {
-        return;
-    }
-
-    $plugin_file = WP_PLUGIN_DIR . '/tinymce-advanced/tinymce-advanced.php';
-    $plugin_data = get_file_data( $plugin_file, array( 'Version' => 'Version' ) );
-
-    if ( empty( $plugin_data['Version'] ) || ! version_compare( $plugin_data['Version'], '6.0.0', '<' ) ) {
-        return;
-    }
-
-    global $wp_filter;
-
-    foreach ( array( 'wp_editor_settings', 'mce_buttons', 'mce_buttons_2', 'mce_buttons_3', 'mce_buttons_4', 'tiny_mce_before_init', 'mce_external_plugins', 'tiny_mce_plugins' ) as $hook_name ) {
-        if ( empty( $wp_filter[ $hook_name ] ) || empty( $wp_filter[ $hook_name ]->callbacks ) ) {
-            continue;
-        }
-
-        foreach ( $wp_filter[ $hook_name ]->callbacks as $priority => $callbacks ) {
-            foreach ( $callbacks as $callback ) {
-                $function = $callback['function'];
-
-                if ( is_array( $function ) && isset( $function[0] ) && $function[0] instanceof Advanced_Editor_Tools ) {
-                    remove_filter( $hook_name, $function, $priority );
-                }
-            }
-        }
-    }
-}
-add_action( 'admin_init', 'aad_disable_legacy_advanced_editor_tools', 1 );
+// Editor colours and typography are provided safely by editor-style.css.
+// Do not inject quoted CSS through tiny_mce_before_init: WordPress prints that
+// value inside an inline JavaScript string, where unescaped font-family quotes
+// can prevent tinyMCEPreInit from being created and break every Visual editor.
 
 
 
