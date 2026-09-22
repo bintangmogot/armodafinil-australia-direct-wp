@@ -52,9 +52,11 @@
             <?php endif; ?>
             <?php 
             $support_phone = get_field('whatsapp_number', 'option') ?: '0488 841 833';
-            $clean_phone = preg_replace('/[^0-9+]/', '', $support_phone);
+            $clean_phone = preg_replace('/[^0-9]/', '', $support_phone);
+            // Convert Australian 04... format to 614... for WhatsApp
+            $wa_phone = (strpos($clean_phone, '0') === 0) ? '61' . substr($clean_phone, 1) : $clean_phone;
             ?>
-            <a href="tel:<?php echo esc_attr($clean_phone); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
+            <a href="https://wa.me/<?php echo esc_attr($wa_phone); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
                 Call📞 : <?php echo esc_html($support_phone); ?>
             </a>
         </div>
