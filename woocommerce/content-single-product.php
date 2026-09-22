@@ -175,13 +175,9 @@ foreach ( $attributes as $attribute ) {
                       <?php endif; ?>
 
                     <!-- Promo strip -->
-                    <div class="mt-5 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3 flex-wrap">
+                    <div class="mt-5 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-5 h-5 text-amber-600 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                        <p class="text-sm text-amber-900 flex-1 min-w-[200px]">Free shipping + 10% off on orders above <b>$299</b>. Use code:</p>
-                        <button type="button" class="promo-copy-btn inline-flex items-center gap-2 h-9 px-3 rounded-lg border border-dashed border-amber-500 bg-white text-amber-800 font-mono font-semibold text-sm hover:bg-amber-100 transition-colors" data-code="<?php echo esc_attr(get_field('promo_code', 'option') ?: 'ARMD10'); ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy w-4 h-4"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> 
-                            <span><?php echo esc_html(get_field('promo_code', 'option') ?: 'ARMD10'); ?></span>
-                        </button>
+                        <p class="text-sm text-amber-900 font-medium">Free shipping on orders above <b>$299</b></p>
                     </div>
 
                     <!-- Add to Cart Form -->
