@@ -43,7 +43,13 @@ else :
 
         <!-- Shop / Search Header -->
             <div class="text-center mb-10">
-                <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5">Full catalogue</span>
+                <?php 
+                $badge_text = 'Full catalogue';
+                if ( is_shop() && ! is_search() ) {
+                    $badge_text = get_field('shop_badge_text', $shop_page_id) ?: 'Full catalogue';
+                }
+                ?>
+                <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5"><?php echo esc_html($badge_text); ?></span>
                 <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900">
                     <?php 
                     if ( is_search() ) {
@@ -64,6 +70,13 @@ else :
                         $desc = term_description();
                         if ( ! empty( $desc ) ) {
                             echo wp_kses_post( $desc );
+                        } else {
+                            echo 'Compare prescription and OTC medicines by category, check ratings and prices in AUD, and add to cart in a few taps &mdash; shipped discreetly across Australia.';
+                        }
+                    } else if ( is_shop() && ! is_search() ) {
+                        $shop_desc = get_field('shop_description', $shop_page_id);
+                        if ($shop_desc) {
+                            echo wp_kses_post( wpautop($shop_desc) );
                         } else {
                             echo 'Compare prescription and OTC medicines by category, check ratings and prices in AUD, and add to cart in a few taps &mdash; shipped discreetly across Australia.';
                         }
