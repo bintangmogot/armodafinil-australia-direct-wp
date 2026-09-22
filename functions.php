@@ -497,29 +497,33 @@ function aad_clean_acf_wysiwyg_bookmarks($value, $post_id = null, $field = null)
     }
     return $value;
 }
-// Robust Underscore.js Polyfill for older plugins causing Media Uploader / Editor crashes
-add_action('admin_enqueue_scripts', function() {
-    $script = "
-        if (typeof _ !== 'undefined') {
-            if (typeof _.pluck !== 'function') {
-                _.pluck = function(obj, key) { return _.map(obj, _.property(key)); };
+// Underscore.js polyfill — must run BEFORE wp-tinymce and mce-view which use
+// _.pluck / _.contains / _.object (removed in modern Underscore/Lodash).
+// Using admin_head at priority 1 so it fires before any editor scripts load.
+add_action('admin_head', function() {
+?>
+<script>
+(function(){
+    if (typeof _ === 'undefined') return;
+    if (typeof _.pluck !== 'function') {
+        _.pluck = function(obj, key) { return _.map(obj, _.property(key)); };
+    }
+    if (typeof _.contains !== 'function') {
+        _.contains = _.includes || function(obj, item) { return _.indexOf(obj, item) >= 0; };
+    }
+    if (typeof _.object !== 'function') {
+        _.object = function(keys, vals) {
+            var result = {};
+            for (var i = 0, l = keys.length; i < l; i++) {
+                if (vals) { result[keys[i]] = vals[i]; } else { result[keys[i][0]] = keys[i][1]; }
             }
-            if (typeof _.contains !== 'function') {
-                _.contains = _.includes || function(obj, item) { return _.indexOf(obj, item) >= 0; };
-            }
-            if (typeof _.object !== 'function') {
-                _.object = function(keys, vals) {
-                    var result = {};
-                    for (var i = 0, l = keys.length; i < l; i++) {
-                        if (vals) { result[keys[i]] = vals[i]; } else { result[keys[i][0]] = keys[i][1]; }
-                    }
-                    return result;
-                };
-            }
-        }
-    ";
-    wp_add_inline_script('underscore', $script, 'after');
-});
+            return result;
+        };
+    }
+})();
+</script>
+<?php
+}, 1);
 // Register ACF fields for Product Medical Disclaimers
 add_action('acf/init', 'aad_register_product_disclaimer_fields');
 function aad_register_product_disclaimer_fields() {
