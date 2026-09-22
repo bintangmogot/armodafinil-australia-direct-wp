@@ -73,9 +73,13 @@
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <?php echo esc_html($support_phone); ?></span>
 					<?php endif; ?>
 				</div>
-				<?php if ( $copyright_text = get_field('copyright_text', 'option') ) : ?>
-				<div><?php echo wp_kses_post($copyright_text); ?></div>
-				<?php endif; ?>
+				<div class="flex flex-wrap items-center gap-4 mt-4 md:mt-0">
+					<?php if ( $copyright_text = get_field('copyright_text', 'option') ) : ?>
+					<div><?php echo wp_kses_post($copyright_text); ?></div>
+					<?php endif; ?>
+					<span class="hidden md:inline text-white/20">|</span>
+					<a href="/sitemap.xml" class="hover:text-white transition-colors underline underline-offset-2 decoration-white/20">Sitemap</a>
+				</div>
 			</div>
 		</div>
 	</footer>
