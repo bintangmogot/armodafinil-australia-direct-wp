@@ -34,7 +34,13 @@ $heading = get_sub_field('heading') ?: 'Leave us a review ✍️';
                     </div>
                 </div>
 
-                <!-- Rating -->
+                <!-- Job / Location -->
+                <div>
+                    <label for="review_meta" class="block text-sm font-medium text-ink-900 mb-2">Job / Location <span class="text-ink-400 font-normal">(Optional)</span></label>
+                    <input type="text" id="review_meta" name="reviewer_meta"
+                        class="w-full px-4 py-3 rounded-lg border border-ink-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors"
+                        placeholder="e.g. Verified Buyer, Developer from Sydney">
+                </div>
                 <div>
                     <label class="block text-sm font-medium text-ink-900 mb-2">Rating <span class="text-red-500">*</span></label>
                     <div class="flex items-center gap-2 star-rating-input cursor-pointer" id="form-star-rating">

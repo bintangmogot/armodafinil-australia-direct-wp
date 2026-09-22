@@ -14,6 +14,7 @@ function handle_submit_product_review() {
     $rating = isset($_POST['rating']) ? intval($_POST['rating']) : 5;
     $name = isset($_POST['reviewer_name']) ? sanitize_text_field($_POST['reviewer_name']) : '';
     $email = isset($_POST['reviewer_email']) ? sanitize_email($_POST['reviewer_email']) : '';
+    $meta = isset($_POST['reviewer_meta']) && !empty($_POST['reviewer_meta']) ? sanitize_text_field($_POST['reviewer_meta']) : 'Verified Buyer';
     $title = isset($_POST['review_title']) ? sanitize_text_field($_POST['review_title']) : '';
     $content = isset($_POST['review_content']) ? sanitize_textarea_field($_POST['review_content']) : '';
 
@@ -39,7 +40,8 @@ function handle_submit_product_review() {
     if ( function_exists('update_field') ) {
         update_field('rating', $rating, $post_id);
         update_field('name', $name, $post_id);
-        update_field('reviewer_meta', 'Verified Buyer', $post_id); // Set default meta
+        update_field('email', $email, $post_id);
+        update_field('reviewer_meta', $meta, $post_id);
         if ( $product_id > 0 ) {
             update_field('linked_product', $product_id, $post_id);
         } else {
