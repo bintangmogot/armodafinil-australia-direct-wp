@@ -478,6 +478,7 @@ function aad_change_currency_symbol( $currency_symbol, $currency ) {
 
 
 // Clean them out just in case before saving to DB
+add_filter('acf/load_value/type=wysiwyg', 'aad_clean_acf_wysiwyg_bookmarks', 10, 3);
 add_filter('acf/update_value/type=wysiwyg', 'aad_clean_acf_wysiwyg_bookmarks', 10, 3);
 add_filter('content_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
 add_filter('excerpt_save_pre', 'aad_clean_acf_wysiwyg_bookmarks', 10, 1);
