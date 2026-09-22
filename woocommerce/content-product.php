@@ -54,15 +54,6 @@ if ($review_count > 0) {
             echo strip_tags($cats) ?: 'Medicine';
             ?>
         </span>
-        
-        <button type="button" class="loop-wishlist-btn absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/90 backdrop-blur shadow-sm text-ink-400 hover:text-brand-600 transition-colors" data-product-id="<?php echo $product->get_id(); ?>" aria-label="Add to Wishlist">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart transition-colors"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-        </button>
-    </div>
-    
-    <div class="hidden loop-wishlist-plugin-container" data-product-id="<?php echo $product->get_id(); ?>">
-        <?php echo do_shortcode('[ti_wishlists_addtowishlist product_id="'.$product->get_id().'"]'); ?>
-        <?php echo do_shortcode('[yith_wcwl_add_to_wishlist product_id="'.$product->get_id().'"]'); ?>
     </div>
     
     <a href="<?php echo esc_url( $link ); ?>" class="p-5 border-t border-ink-100 flex flex-col flex-1 hover:no-underline">
