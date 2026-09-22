@@ -628,6 +628,74 @@ add_filter('tiny_mce_before_init', function($init) {
     return $init;
 }, 20);
 
+// InstaWP/browser caches can retain TinyMCE's iframe stylesheet even when the
+// surrounding admin page is refreshed. Inject the readability rules into each
+// editor document after TinyMCE initialises so they never depend on a cached
+// external CSS response. This only affects the editing view; it is not saved
+// into post or ACF content.
+add_action('admin_print_footer_scripts', function() {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!$screen || !in_array($screen->base, ['post', 'term'], true)) {
+        return;
+    }
+    ?>
+    <script id="aad-tinymce-readable-content">
+    (function () {
+        var css = [
+            'html body.mce-content-body{color:#334155!important;background:#fff!important;}',
+            'html body.mce-content-body p,html body.mce-content-body div,html body.mce-content-body span,html body.mce-content-body li,html body.mce-content-body td,html body.mce-content-body strong,html body.mce-content-body em{color:#334155!important;}',
+            'html body.mce-content-body h1,html body.mce-content-body h2,html body.mce-content-body h3,html body.mce-content-body h4,html body.mce-content-body h5,html body.mce-content-body h6{color:#09152b!important;}',
+            'html body.mce-content-body a{color:#0f766e!important;}',
+            'html body.mce-content-body th{color:#fff!important;}'
+        ].join('');
+
+        function applyReadableStyle(editor) {
+            if (!editor || !editor.getDoc) {
+                return;
+            }
+
+            var doc = editor.getDoc();
+            if (!doc || !doc.head || doc.getElementById('aad-tinymce-readable-style')) {
+                return;
+            }
+
+            var style = doc.createElement('style');
+            style.id = 'aad-tinymce-readable-style';
+            style.textContent = css;
+            doc.head.appendChild(style);
+        }
+
+        function watchEditor(editor) {
+            if (!editor || !editor.on) {
+                return;
+            }
+            editor.on('init', function () {
+                applyReadableStyle(editor);
+            });
+            if (editor.initialized) {
+                applyReadableStyle(editor);
+            }
+        }
+
+        function connect() {
+            if (!window.tinymce || !window.tinymce.on) {
+                window.setTimeout(connect, 50);
+                return;
+            }
+
+            window.tinymce.on('AddEditor', function (event) {
+                watchEditor(event.editor);
+            });
+
+            (window.tinymce.editors || []).forEach(watchEditor);
+        }
+
+        connect();
+    }());
+    </script>
+    <?php
+}, 100);
+
 
 
 
