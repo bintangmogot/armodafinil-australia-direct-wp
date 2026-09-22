@@ -94,14 +94,12 @@ $review_count = count($reviews);
                                 </div>
                             </div>
                             
-                            <?php if (stripos($meta, 'verified') !== false || stripos($meta, 'buyer') !== false): ?>
                             <div class="flex items-center gap-1 px-2 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded uppercase tracking-wide shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
                                 </svg>
                                 VERIFIED
                             </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
