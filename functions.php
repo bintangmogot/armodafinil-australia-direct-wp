@@ -841,3 +841,23 @@ add_action( 'wp_footer', function() {
         <?php
     }
 } );
+
+// Tidy up Shipping Insurance Layout by buffering and rewriting the HTML
+add_action( 'woocommerce_review_order_before_order_total', function() {
+    ob_start();
+}, -9999 );
+
+add_action( 'woocommerce_review_order_before_order_total', function() {
+    $html = ob_get_clean();
+    if ( $html ) {
+        // Rewrite the invalid table rows to theme-compatible divs
+        $html = str_replace( '<tr class="shipping-insurance">', '<div class="shipping-insurance pt-2">', $html );
+        // Completely remove the TH block so it doesn't show the duplicate text
+        $html = preg_replace( '/<th>.*?<\/th>/is', '', $html );
+        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600">', $html );
+        $html = str_replace( '</td>', '</div>', $html );
+        $html = str_replace( '</tr>', '</div>', $html );
+        $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
+        echo $html;
+    }
+}, 9999 );
