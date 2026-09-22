@@ -71,9 +71,16 @@ if ( $product_obj ) {
 }
 ?>
 
+<?php
+$has_text_content = $eyebrow || $title || $subtitle || $cta_label || $cta_url;
+$wrapper_classes = $has_text_content 
+    ? 'max-w-7xl grid lg:grid-cols-2 gap-10 items-center' 
+    : 'max-w-3xl flex flex-col items-center justify-center';
+?>
 <section class="section-wash">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 md:pt-10 md:pb-20 grid lg:grid-cols-2 gap-10 items-center">
-        <div class="animate-fadeup">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 md:pt-10 md:pb-20 <?php echo esc_attr($wrapper_classes); ?>">
+        <?php if ( $has_text_content ) : ?>
+        <div class="animate-fadeup w-full">
             <?php if ( $eyebrow ) : ?>
             <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
@@ -105,8 +112,9 @@ if ( $product_obj ) {
                 </a>
             </div>
         </div>
+        <?php endif; ?>
 
-        <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4" id="hero-product-<?php echo esc_attr($p_id); ?>">
+        <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4 w-full" id="hero-product-<?php echo esc_attr($p_id); ?>">
             <!-- Image Box with border instead of full bleed -->
             <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
                 <!-- Most Popular Badge -->
