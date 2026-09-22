@@ -6,6 +6,23 @@ body.mce-content-body {
     background-color: #ffffff !important;
 }
 
+/* Pasted content can contain inline colours (commonly white text copied from
+   styled blocks). Keep every editable element readable inside TinyMCE. */
+body#tinymce :where(p, div, span, li, td, strong, em),
+body.mce-content-body :where(p, div, span, li, td, strong, em) {
+    color: #334155 !important;
+}
+
+body#tinymce :where(h1, h2, h3, h4, h5, h6),
+body.mce-content-body :where(h1, h2, h3, h4, h5, h6) {
+    color: #09152b !important;
+}
+
+body#tinymce a,
+body.mce-content-body a {
+    color: #0f766e !important;
+}
+
 body#tinymce.wp-editor,
 body#tinymce.mce-content-body {
     

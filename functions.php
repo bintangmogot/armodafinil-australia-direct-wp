@@ -597,7 +597,7 @@ add_action('admin_enqueue_scripts', function() {
 // value inside an inline JavaScript string, where unescaped font-family quotes
 // can prevent tinyMCEPreInit from being created and break every Visual editor.
 add_filter('tiny_mce_before_init', function($init) {
-    $readable_editor_style = 'body#tinymce,body.mce-content-body{color:#334155 !important;background-color:#ffffff !important;}';
+    $readable_editor_style = 'body#tinymce,body.mce-content-body{color:#334155!important;background:#fff!important;}body#tinymce p,body#tinymce div,body#tinymce span,body#tinymce li,body#tinymce td,body#tinymce strong,body#tinymce em,body.mce-content-body p,body.mce-content-body div,body.mce-content-body span,body.mce-content-body li,body.mce-content-body td,body.mce-content-body strong,body.mce-content-body em{color:#334155!important;}body#tinymce h1,body#tinymce h2,body#tinymce h3,body#tinymce h4,body#tinymce h5,body#tinymce h6,body.mce-content-body h1,body.mce-content-body h2,body.mce-content-body h3,body.mce-content-body h4,body.mce-content-body h5,body.mce-content-body h6{color:#09152b!important;}body#tinymce a,body.mce-content-body a{color:#0f766e!important;}';
     $init['content_style'] = !empty($init['content_style'])
         ? $init['content_style'] . ' ' . $readable_editor_style
         : $readable_editor_style;
