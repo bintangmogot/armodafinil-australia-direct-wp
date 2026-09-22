@@ -78,7 +78,7 @@
 					<div><?php echo wp_kses_post($copyright_text); ?></div>
 					<?php endif; ?>
 					<span class="hidden md:inline text-white/20">|</span>
-					<a href="/sitemap.xml" class="hover:text-white transition-colors underline underline-offset-2 decoration-white/20">Sitemap</a>
+					<a href="/sitemap/" class="hover:text-white transition-colors underline underline-offset-2 decoration-white/20">Sitemap</a>
 				</div>
 			</div>
 		</div>
