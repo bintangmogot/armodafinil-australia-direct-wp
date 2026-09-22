@@ -592,6 +592,30 @@ add_action('admin_enqueue_scripts', function() {
     wp_deregister_script('aioseo/js/src/vue/standalone/writing-assistant/main.js');
 }, 999);
 
+// ACF can create many delayed TinyMCE instances inside flexible-content and
+// repeater rows. Initialising all of them at once is unreliable after a save or
+// reload, so initialise visible editors in sequence and recover their textarea
+// content if TinyMCE starts with an empty iframe.
+add_action('admin_enqueue_scripts', function($hook_suffix) {
+    $editor_screens = ['post.php', 'post-new.php', 'term.php', 'edit-tags.php'];
+    if (!in_array($hook_suffix, $editor_screens, true)) {
+        return;
+    }
+
+    $script_path = get_template_directory() . '/assets/js/admin-acf-wysiwyg.js';
+    if (!file_exists($script_path)) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'aad-admin-acf-wysiwyg',
+        get_template_directory_uri() . '/assets/js/admin-acf-wysiwyg.js',
+        ['jquery', 'acf-input'],
+        (string) filemtime($script_path),
+        true
+    );
+}, 20);
+
 // Editor colours and typography are provided safely by editor-style.css.
 // Do not inject quoted CSS through tiny_mce_before_init: WordPress prints that
 // value inside an inline JavaScript string, where unescaped font-family quotes
