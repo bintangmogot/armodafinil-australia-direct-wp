@@ -840,14 +840,22 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
     }
 }, 9999 );
 
-// Native Underscore.js Polyfill via wp_add_inline_script to guarantee execution order
-function aad_add_underscore_polyfill() {
-    $script = "(function(){
-        if (typeof _ !== 'undefined') {
-            if (typeof _.pluck === 'undefined') { _.pluck = function(obj, key) { return _.map(obj, _.property(key)); }; }
-            if (typeof _.contains === 'undefined') { _.contains = _.includes || function(obj, item) { return _.indexOf(obj, item) >= 0; }; }
-            if (typeof _.object === 'undefined') {
-                _.object = function(keys, vals) {
+// INVINCIBLE Underscore.js Polyfill for WP Admin
+// Fixes race conditions where normal refresh (disk cache) causes plugins to overwrite window._
+add_action('admin_print_scripts', function() {
+    ?>
+    <script>
+    (function() {
+        function applyPolyfill(underscoreObj) {
+            if (!underscoreObj) return;
+            if (typeof underscoreObj.pluck === 'undefined') {
+                underscoreObj.pluck = function(obj, key) { return underscoreObj.map(obj, underscoreObj.property(key)); };
+            }
+            if (typeof underscoreObj.contains === 'undefined') {
+                underscoreObj.contains = underscoreObj.includes || function(obj, item) { return underscoreObj.indexOf(obj, item) >= 0; };
+            }
+            if (typeof underscoreObj.object === 'undefined') {
+                underscoreObj.object = function(keys, vals) {
                     var result = {};
                     for (var i = 0, l = keys.length; i < l; i++) {
                         if (vals) result[keys[i]] = vals[i];
@@ -857,8 +865,32 @@ function aad_add_underscore_polyfill() {
                 };
             }
         }
-    })();";
-    wp_add_inline_script( 'underscore', $script, 'after' );
-}
-add_action( 'wp_enqueue_scripts', 'aad_add_underscore_polyfill' );
-add_action( 'admin_enqueue_scripts', 'aad_add_underscore_polyfill' );
+
+        // 1. Patch immediately if _ exists
+        if (typeof window._ !== 'undefined') {
+            applyPolyfill(window._);
+        }
+
+        // 2. Intercept ANY future assignments to window._ (this catches plugins loading Lodash asynchronously)
+        var originalUnderscore = window._;
+        Object.defineProperty(window, '_', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+                return originalUnderscore;
+            },
+            set: function(newValue) {
+                originalUnderscore = newValue;
+                applyPolyfill(originalUnderscore);
+            }
+        });
+
+        // 3. Keep checking just in case
+        var interval = setInterval(function() {
+            if (typeof window._ !== 'undefined') applyPolyfill(window._);
+        }, 50);
+        setTimeout(function() { clearInterval(interval); }, 5000);
+    })();
+    </script>
+    <?php
+}, -9999);
