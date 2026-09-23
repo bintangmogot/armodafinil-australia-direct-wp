@@ -844,93 +844,7 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
 
 
 
-// INVINCIBLE Underscore.js Polyfill for WP Admin
-// Fixes race conditions where normal refresh (disk cache) causes plugins to overwrite window._
-add_action('admin_print_scripts', function() {
-    ?>
-    <script>
-    (function() {
-        function applyPolyfill(underscoreObj) {
-            if (!underscoreObj) return;
-            
-            // Re-add removed Underscore 1.8+ methods that Lodash 4+ lacks, 
-            // but wp-backbone.js, media-views.js, and media-models.js STILL rely on.
-            
-            if (typeof underscoreObj.pluck === 'undefined') {
-                underscoreObj.pluck = function(obj, key) { return underscoreObj.map(obj, underscoreObj.property(key)); };
-            }
-            if (typeof underscoreObj.contains === 'undefined') {
-                underscoreObj.contains = underscoreObj.includes || function(obj, item) { return underscoreObj.indexOf(obj, item) >= 0; };
-            }
-            if (typeof underscoreObj.object === 'undefined') {
-                underscoreObj.object = function(keys, vals) {
-                    var result = {};
-                    for (var i = 0, l = keys.length; i < l; i++) {
-                        if (vals) result[keys[i]] = vals[i];
-                        else result[keys[i][0]] = keys[i][1];
-                    }
-                    return result;
-                };
-            }
-            if (typeof underscoreObj.any === 'undefined') {
-                underscoreObj.any = underscoreObj.some;
-            }
-            if (typeof underscoreObj.all === 'undefined') {
-                underscoreObj.all = underscoreObj.every;
-            }
-            if (typeof underscoreObj.invoke === 'undefined') {
-                underscoreObj.invoke = function(obj, method) {
-                    var args = Array.prototype.slice.call(arguments, 2);
-                    var isFunc = typeof method === 'function';
-                    return underscoreObj.map(obj, function(value) {
-                        var func = isFunc ? method : value[method];
-                        return func == null ? func : func.apply(value, args);
-                    });
-                };
-            }
-            if (typeof underscoreObj.first === 'undefined') {
-                underscoreObj.first = underscoreObj.head;
-            }
-            if (typeof underscoreObj.findWhere === 'undefined') {
-                underscoreObj.findWhere = function(obj, attrs) {
-                    return underscoreObj.find(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
-                };
-            }
-            if (typeof underscoreObj.where === 'undefined') {
-                underscoreObj.where = function(obj, attrs) {
-                    return underscoreObj.filter(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
-                };
-            }
-        }
 
-        // 1. Patch immediately if _ exists
-        if (typeof window._ !== 'undefined') {
-            applyPolyfill(window._);
-        }
-
-        // 2. Intercept ANY future assignments to window._ (this catches plugins loading Lodash asynchronously)
-        var originalUnderscore = window._;
-        Object.defineProperty(window, '_', {
-            configurable: true,
-            enumerable: true,
-            get: function() {
-                return originalUnderscore;
-            },
-            set: function(newValue) {
-                originalUnderscore = newValue;
-                applyPolyfill(originalUnderscore);
-            }
-        });
-
-        // 3. Keep checking just in case
-        var interval = setInterval(function() {
-            if (typeof window._ !== 'undefined') applyPolyfill(window._);
-        }, 50);
-        setTimeout(function() { clearInterval(interval); }, 5000);
-    })();
-    </script>
-    <?php
-}, -9999);
 
 // Absolute Click Interceptor for Media Uploader to prevent full-page navigation
 add_action('admin_print_footer_scripts', function() {
@@ -981,3 +895,102 @@ add_action('admin_print_footer_scripts', function() {
     </script>
     <?php
 }, 9999);
+
+// INVINCIBLE Underscore.js Polyfill for WP Admin (With Chaining Support)
+// Fixes race conditions and adds Lodash prototype mixins for _.chain().any()
+add_action('admin_print_scripts', function() {
+    ?>
+    <script>
+    (function() {
+        function applyPolyfill(underscoreObj) {
+            if (!underscoreObj) return;
+            
+            var mixins = {};
+            
+            if (typeof underscoreObj.pluck === 'undefined') {
+                mixins.pluck = function(obj, key) { return underscoreObj.map(obj, underscoreObj.property(key)); };
+            }
+            if (typeof underscoreObj.contains === 'undefined') {
+                mixins.contains = underscoreObj.includes || function(obj, item) { return underscoreObj.indexOf(obj, item) >= 0; };
+            }
+            if (typeof underscoreObj.object === 'undefined') {
+                mixins.object = function(keys, vals) {
+                    var result = {};
+                    for (var i = 0, l = keys.length; i < l; i++) {
+                        if (vals) result[keys[i]] = vals[i];
+                        else result[keys[i][0]] = keys[i][1];
+                    }
+                    return result;
+                };
+            }
+            if (typeof underscoreObj.any === 'undefined' && typeof underscoreObj.some !== 'undefined') {
+                mixins.any = underscoreObj.some;
+            }
+            if (typeof underscoreObj.all === 'undefined' && typeof underscoreObj.every !== 'undefined') {
+                mixins.all = underscoreObj.every;
+            }
+            if (typeof underscoreObj.invoke === 'undefined') {
+                mixins.invoke = function(obj, method) {
+                    var args = Array.prototype.slice.call(arguments, 2);
+                    var isFunc = typeof method === 'function';
+                    return underscoreObj.map(obj, function(value) {
+                        var func = isFunc ? method : value[method];
+                        return func == null ? func : func.apply(value, args);
+                    });
+                };
+            }
+            if (typeof underscoreObj.first === 'undefined' && typeof underscoreObj.head !== 'undefined') {
+                mixins.first = underscoreObj.head;
+            }
+            if (typeof underscoreObj.findWhere === 'undefined') {
+                mixins.findWhere = function(obj, attrs) {
+                    return underscoreObj.find(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
+                };
+            }
+            if (typeof underscoreObj.where === 'undefined') {
+                mixins.where = function(obj, attrs) {
+                    return underscoreObj.filter(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
+                };
+            }
+
+            if (Object.keys(mixins).length > 0) {
+                // Apply via _.mixin so that it attaches to the prototype for _.chain() support!
+                if (typeof underscoreObj.mixin === 'function') {
+                    underscoreObj.mixin(mixins);
+                } else {
+                    // Manual fallback if mixin isn't available
+                    for (var key in mixins) {
+                        underscoreObj[key] = mixins[key];
+                    }
+                }
+            }
+        }
+
+        // 1. Patch immediately if _ exists
+        if (typeof window._ !== 'undefined') {
+            applyPolyfill(window._);
+        }
+
+        // 2. Intercept ANY future assignments to window._ (this catches plugins loading Lodash asynchronously)
+        var originalUnderscore = window._;
+        Object.defineProperty(window, '_', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+                return originalUnderscore;
+            },
+            set: function(newValue) {
+                originalUnderscore = newValue;
+                applyPolyfill(originalUnderscore);
+            }
+        });
+
+        // 3. Keep checking just in case
+        var interval = setInterval(function() {
+            if (typeof window._ !== 'undefined') applyPolyfill(window._);
+        }, 50);
+        setTimeout(function() { clearInterval(interval); }, 5000);
+    })();
+    </script>
+    <?php
+}, -9999);
