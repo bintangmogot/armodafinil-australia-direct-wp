@@ -896,8 +896,8 @@ add_action('admin_print_footer_scripts', function() {
     <?php
 }, 9999);
 
-// INVINCIBLE Underscore.js Polyfill for WP Admin (With Chaining Support)
-// Fixes race conditions and adds Lodash prototype mixins for _.chain().any()
+// INVINCIBLE Underscore.js Polyfill for WP Admin (With Chaining & thisArg Support)
+// Fixes Lodash 4+ incompatibilities where 'thisArg' was removed from iterators (causing "reading 'type'" errors)
 add_action('admin_print_scripts', function() {
     ?>
     <script>
@@ -907,6 +907,7 @@ add_action('admin_print_scripts', function() {
             
             var mixins = {};
             
+            // 1. Missing Methods Polyfills
             if (typeof underscoreObj.pluck === 'undefined') {
                 mixins.pluck = function(obj, key) { return underscoreObj.map(obj, underscoreObj.property(key)); };
             }
@@ -953,12 +954,33 @@ add_action('admin_print_scripts', function() {
                 };
             }
 
+            // 2. Wrap Iterators to support `thisArg` (Context) which Lodash 4 removed!
+            // WP Core extensively uses _.map(arr, fn, this), which crashes if `this` is ignored.
+            var iterators = ['map', 'each', 'forEach', 'filter', 'reject', 'every', 'some', 'any', 'all', 'find'];
+            for (var i = 0; i < iterators.length; i++) {
+                var methodName = iterators[i];
+                var originalMethod = underscoreObj[methodName];
+                
+                // Only wrap if the original method exists and we haven't wrapped it yet
+                if (originalMethod && !originalMethod._isAadWrapped) {
+                    (function(name, orig) {
+                        mixins[name] = function(collection, callback, thisArg) {
+                            // If a thisArg is provided, bind the callback to it!
+                            if (typeof thisArg !== 'undefined' && typeof callback === 'function') {
+                                callback = callback.bind(thisArg);
+                            }
+                            return orig.call(underscoreObj, collection, callback);
+                        };
+                        mixins[name]._isAadWrapped = true;
+                    })(methodName, originalMethod);
+                }
+            }
+
+            // Apply all mixins
             if (Object.keys(mixins).length > 0) {
-                // Apply via _.mixin so that it attaches to the prototype for _.chain() support!
                 if (typeof underscoreObj.mixin === 'function') {
                     underscoreObj.mixin(mixins);
                 } else {
-                    // Manual fallback if mixin isn't available
                     for (var key in mixins) {
                         underscoreObj[key] = mixins[key];
                     }
@@ -966,12 +988,10 @@ add_action('admin_print_scripts', function() {
             }
         }
 
-        // 1. Patch immediately if _ exists
         if (typeof window._ !== 'undefined') {
             applyPolyfill(window._);
         }
 
-        // 2. Intercept ANY future assignments to window._ (this catches plugins loading Lodash asynchronously)
         var originalUnderscore = window._;
         Object.defineProperty(window, '_', {
             configurable: true,
@@ -985,7 +1005,6 @@ add_action('admin_print_scripts', function() {
             }
         });
 
-        // 3. Keep checking just in case
         var interval = setInterval(function() {
             if (typeof window._ !== 'undefined') applyPolyfill(window._);
         }, 50);
