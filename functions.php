@@ -842,65 +842,7 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
 
 
 
-// Aggressive Fallback for Media Uploader (Product Image & Featured Image)
-add_action('admin_print_footer_scripts', function() {
-    ?>
-    <script>
-    jQuery(document).ready(function($) {
-        // Run continuously to ensure the click listener is bound even after AJAX DOM replacements
-        setInterval(function() {
-            var $thumbBtn = $('#set-post-thumbnail');
-            var $galleryBtn = $('.add_product_images a');
-            
-            // Attach to Featured Image / Product Image
-            if ($thumbBtn.length && !$thumbBtn.data('aad-bound')) {
-                $thumbBtn.data('aad-bound', true);
-                $thumbBtn.on('click', function(e) {
-                    // Let standard handler run first if it works
-                    setTimeout(function() {
-                        // If standard handler failed to add the generic wp-media class or open the modal
-                        if (!$('.media-modal').is(':visible')) {
-                            console.log('AAD Fallback: Opening Featured Image modal');
-                            if (wp && wp.media && wp.media.featuredImage && wp.media.featuredImage.frame) {
-                                wp.media.featuredImage.frame().open();
-                            }
-                        }
-                    }, 100);
-                });
-            }
-            
-            // Attach to WooCommerce Product Gallery
-            if ($galleryBtn.length && !$galleryBtn.data('aad-bound')) {
-                $galleryBtn.data('aad-bound', true);
-                $galleryBtn.on('click', function(e) {
-                    setTimeout(function() {
-                        if (!$('.media-modal').is(':visible') && typeof product_gallery_frame !== 'undefined') {
-                            console.log('AAD Fallback: Opening Product Gallery modal');
-                            product_gallery_frame.open();
-                        }
-                    }, 100);
-                });
-            }
-            
-            // Fix Media Library removing images / unclickable items
-            // Sometimes wp.media silently crashes on "Refresh" because Backbone views are detached.
-            // A hard reset of wp.media.featuredImage can fix it:
-            if ($thumbBtn.length) {
-                $thumbBtn.off('click.aad-hard-reset').on('click.aad-hard-reset', function() {
-                    if (wp && wp.media && wp.media.featuredImage) {
-                         // Force initialization if missing
-                         if (!wp.media.featuredImage.get()) {
-                             wp.media.featuredImage.init();
-                         }
-                    }
-                });
-            }
-            
-        }, 1000);
-    });
-    </script>
-    <?php
-}, 9999);
+
 
 // INVINCIBLE Underscore.js Polyfill for WP Admin
 // Fixes race conditions where normal refresh (disk cache) causes plugins to overwrite window._
@@ -989,3 +931,53 @@ add_action('admin_print_scripts', function() {
     </script>
     <?php
 }, -9999);
+
+// Absolute Click Interceptor for Media Uploader to prevent full-page navigation
+add_action('admin_print_footer_scripts', function() {
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        // We use event delegation on document so it always fires, even after AJAX
+        $(document).on('click', '#set-post-thumbnail, .add_product_images a', function(e) {
+            // ALWAYS prevent the default navigation (which causes the full-page legacy uploader)
+            e.preventDefault();
+            
+            var $el = $(this);
+            var url = $el.attr('href');
+            
+            // Attempt 1: Modern wp.media popup
+            try {
+                if (typeof wp !== 'undefined' && wp.media) {
+                    if ($el.attr('id') === 'set-post-thumbnail' && wp.media.featuredImage) {
+                        var frame = wp.media.featuredImage.get();
+                        if (!frame) {
+                            wp.media.featuredImage.init();
+                            frame = wp.media.featuredImage.get();
+                        }
+                        if (frame) {
+                            frame.open();
+                            return; // Success
+                        }
+                    } else if (typeof product_gallery_frame !== 'undefined') {
+                        product_gallery_frame.open();
+                        return; // Success
+                    }
+                }
+            } catch (err) {
+                console.error("wp.media failed, falling back to thickbox: ", err);
+            }
+            
+            // Attempt 2: ThickBox popup (Legacy WordPress overlay)
+            // If we reached here, wp.media crashed or wasn't available.
+            // Rather than letting the browser navigate away, we force the ThickBox modal.
+            if (typeof tb_show === 'function') {
+                tb_show('Select Image', url);
+            } else {
+                // Absolute worst case: open in a new popup window so they don't lose their post edits
+                window.open(url, 'WP_Media', 'width=800,height=600,resizable=yes,scrollbars=yes');
+            }
+        });
+    });
+    </script>
+    <?php
+}, 9999);
