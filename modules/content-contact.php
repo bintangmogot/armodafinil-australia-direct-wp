@@ -29,6 +29,14 @@ $icons = array(
 <div class="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
     
     <!-- Contact Information Cards -->
+    <?php
+    // Force Address to be the first row (first line)
+usort($methods, function($a, $b) {
+    $is_a_address = (stripos($a['label'], 'address') !== false) ? 1 : 0;
+    $is_b_address = (stripos($b['label'], 'address') !== false) ? 1 : 0;
+    return $is_b_address - $is_a_address;
+});
+    ?>
     <div class="lg:col-span-1 space-y-4 min-w-0">
         <?php foreach ($methods as $method) : 
             if (empty($method['label']) && empty($method['value'])) continue; // Skip empty rows
@@ -47,7 +55,7 @@ $icons = array(
                 </div>
                 <div class="min-w-0 flex-1">
                     <div class="text-xs uppercase tracking-widest text-ink-500 font-semibold"><?php echo esc_html($method['label']); ?></div>
-                    <div class="mt-0.5 font-medium text-ink-900 break-words"><?php echo esc_html($method['value']); ?></div>
+                    <div class="mt-0.5 font-medium text-ink-900 break-words text-sm sm:text-[15px] tracking-tight leading-tight"><?php echo esc_html($method['value']); ?></div>
                 </div>
                 
             <?php if (!empty($method['link'])) : ?>
