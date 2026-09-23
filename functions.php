@@ -840,6 +840,68 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
     }
 }, 9999 );
 
+
+
+// Aggressive Fallback for Media Uploader (Product Image & Featured Image)
+add_action('admin_print_footer_scripts', function() {
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        // Run continuously to ensure the click listener is bound even after AJAX DOM replacements
+        setInterval(function() {
+            var $thumbBtn = $('#set-post-thumbnail');
+            var $galleryBtn = $('.add_product_images a');
+            
+            // Attach to Featured Image / Product Image
+            if ($thumbBtn.length && !$thumbBtn.data('aad-bound')) {
+                $thumbBtn.data('aad-bound', true);
+                $thumbBtn.on('click', function(e) {
+                    // Let standard handler run first if it works
+                    setTimeout(function() {
+                        // If standard handler failed to add the generic wp-media class or open the modal
+                        if (!$('.media-modal').is(':visible')) {
+                            console.log('AAD Fallback: Opening Featured Image modal');
+                            if (wp && wp.media && wp.media.featuredImage && wp.media.featuredImage.frame) {
+                                wp.media.featuredImage.frame().open();
+                            }
+                        }
+                    }, 100);
+                });
+            }
+            
+            // Attach to WooCommerce Product Gallery
+            if ($galleryBtn.length && !$galleryBtn.data('aad-bound')) {
+                $galleryBtn.data('aad-bound', true);
+                $galleryBtn.on('click', function(e) {
+                    setTimeout(function() {
+                        if (!$('.media-modal').is(':visible') && typeof product_gallery_frame !== 'undefined') {
+                            console.log('AAD Fallback: Opening Product Gallery modal');
+                            product_gallery_frame.open();
+                        }
+                    }, 100);
+                });
+            }
+            
+            // Fix Media Library removing images / unclickable items
+            // Sometimes wp.media silently crashes on "Refresh" because Backbone views are detached.
+            // A hard reset of wp.media.featuredImage can fix it:
+            if ($thumbBtn.length) {
+                $thumbBtn.off('click.aad-hard-reset').on('click.aad-hard-reset', function() {
+                    if (wp && wp.media && wp.media.featuredImage) {
+                         // Force initialization if missing
+                         if (!wp.media.featuredImage.get()) {
+                             wp.media.featuredImage.init();
+                         }
+                    }
+                });
+            }
+            
+        }, 1000);
+    });
+    </script>
+    <?php
+}, 9999);
+
 // INVINCIBLE Underscore.js Polyfill for WP Admin
 // Fixes race conditions where normal refresh (disk cache) causes plugins to overwrite window._
 add_action('admin_print_scripts', function() {
@@ -848,6 +910,10 @@ add_action('admin_print_scripts', function() {
     (function() {
         function applyPolyfill(underscoreObj) {
             if (!underscoreObj) return;
+            
+            // Re-add removed Underscore 1.8+ methods that Lodash 4+ lacks, 
+            // but wp-backbone.js, media-views.js, and media-models.js STILL rely on.
+            
             if (typeof underscoreObj.pluck === 'undefined') {
                 underscoreObj.pluck = function(obj, key) { return underscoreObj.map(obj, underscoreObj.property(key)); };
             }
@@ -862,6 +928,35 @@ add_action('admin_print_scripts', function() {
                         else result[keys[i][0]] = keys[i][1];
                     }
                     return result;
+                };
+            }
+            if (typeof underscoreObj.any === 'undefined') {
+                underscoreObj.any = underscoreObj.some;
+            }
+            if (typeof underscoreObj.all === 'undefined') {
+                underscoreObj.all = underscoreObj.every;
+            }
+            if (typeof underscoreObj.invoke === 'undefined') {
+                underscoreObj.invoke = function(obj, method) {
+                    var args = Array.prototype.slice.call(arguments, 2);
+                    var isFunc = typeof method === 'function';
+                    return underscoreObj.map(obj, function(value) {
+                        var func = isFunc ? method : value[method];
+                        return func == null ? func : func.apply(value, args);
+                    });
+                };
+            }
+            if (typeof underscoreObj.first === 'undefined') {
+                underscoreObj.first = underscoreObj.head;
+            }
+            if (typeof underscoreObj.findWhere === 'undefined') {
+                underscoreObj.findWhere = function(obj, attrs) {
+                    return underscoreObj.find(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
+                };
+            }
+            if (typeof underscoreObj.where === 'undefined') {
+                underscoreObj.where = function(obj, attrs) {
+                    return underscoreObj.filter(obj, (underscoreObj.matcher || underscoreObj.matches)(attrs));
                 };
             }
         }
