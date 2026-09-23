@@ -43,9 +43,30 @@ $products = get_sub_field('products');
                         $p_image = wp_get_attachment_image_url( $product->get_image_id(), 'medium' );
                     }
                     
-                    // True dynamic rating from WooCommerce
-                    $rating = (float) $product->get_average_rating();
-                    $review_count = (int) $product->get_review_count();
+                                        // Fetch rating from custom 'review' CPT
+                    $reviews = get_posts([
+                        'post_type' => 'review',
+                        'posts_per_page' => -1,
+                        'fields' => 'ids',
+                        'meta_query' => array(
+                            array(
+                                'key' => 'linked_product',
+                                'value' => $product->get_id(),
+                                'compare' => '='
+                            )
+                        )
+                    ]);
+                    $review_count = count($reviews);
+                    $total_rating = 0;
+                    if ($review_count > 0) {
+                        foreach ($reviews as $r_id) {
+                            $val = (float)(get_field('rating', $r_id) ?: 5.0);
+                            $total_rating += $val;
+                        }
+                        $rating = round($total_rating / $review_count, 1);
+                    } else {
+                        $rating = 5.0; // Default fake average if 0
+                    }
             ?>
             <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2.5">
                 <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
