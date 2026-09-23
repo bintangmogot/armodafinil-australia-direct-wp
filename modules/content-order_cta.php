@@ -39,7 +39,7 @@ $desc = get_sub_field('desc') ?: 'Pick your pack size, complete a secure checkou
                 <div class="relative">
                     <span class="text-xs uppercase tracking-widest text-brand-300 font-semibold">Speak with our team</span>
                     <h3 class="mt-2 font-serif text-2xl font-semibold">Australian support</h3>
-                    <p class="mt-2 text-ink-100/70 text-sm leading-relaxed">Product questions and delivery help — Mon–Fri, 9am–5pm AEST.</p>
+                    <p class="mt-2 text-ink-100/70 text-sm leading-relaxed">Need help with your order or product? We're here 24/7.</p>
                     <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="mt-5 inline-flex items-center gap-2 h-10 px-5 rounded-full bg-white text-ink-900 text-sm font-semibold hover:bg-brand-100 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-4 h-4"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg> 
                         Contact support
