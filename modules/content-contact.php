@@ -11,7 +11,6 @@ $methods = get_sub_field('methods');
 
 if ( empty($methods) ) {
     $methods = array(
-        array('icon' => 'message-circle', 'label' => 'WhatsApp', 'value' => '+61 4 8999 5839', 'link' => '#'),
         array('icon' => 'mail', 'label' => 'Email', 'value' => 'support@armodafinilaustralia.com.au', 'link' => 'mailto:support@armodafinilaustralia.com.au'),
         array('icon' => 'phone', 'label' => 'Phone', 'value' => '+61 4 8999 5839', 'link' => 'tel:+61489995839'),
         array('icon' => 'map-pin', 'label' => 'Address', 'value' => 'Sydney, NSW, Australia', 'link' => ''),
@@ -32,6 +31,8 @@ $icons = array(
     <!-- Contact Information Cards -->
     <div class="lg:col-span-1 space-y-4 min-w-0">
         <?php foreach ($methods as $method) : 
+            if (empty($method['label']) && empty($method['value'])) continue; // Skip empty rows
+            
             $icon_name = strtolower(trim($method['icon']));
             $icon_svg = isset($icons[$icon_name]) ? $icons[$icon_name] : $icons['mail'];
         ?>
@@ -46,7 +47,7 @@ $icons = array(
                 </div>
                 <div class="min-w-0 flex-1">
                     <div class="text-xs uppercase tracking-widest text-ink-500 font-semibold"><?php echo esc_html($method['label']); ?></div>
-                    <div class="mt-0.5 font-medium text-ink-900 break-all"><?php echo esc_html($method['value']); ?></div>
+                    <div class="mt-0.5 font-medium text-ink-900 break-words"><?php echo esc_html($method['value']); ?></div>
                 </div>
                 
             <?php if (!empty($method['link'])) : ?>
