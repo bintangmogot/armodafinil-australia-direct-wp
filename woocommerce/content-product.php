@@ -75,6 +75,7 @@ if ($review_count > 0) {
             <div class="flex items-center gap-1 self-start sm:self-auto shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star text-amber-500 sm:w-[14px] sm:h-[14px]"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <span class="text-xs sm:text-sm font-medium text-ink-700"><?php echo number_format($rating, 1); ?></span>
+                <span class="text-[11px] sm:text-xs text-ink-500 ml-0.5">(<?php echo $review_count; ?>)</span>
             </div>
             <div class="flex flex-col items-start sm:items-end w-full sm:w-auto min-w-0">
                 <div class="text-[15px] sm:text-base font-semibold text-ink-900 leading-tight [&>span.amount]:!font-semibold [&>del]:text-ink-400 [&>del]:font-normal [&>del]:text-[13px] [&>ins]:no-underline whitespace-nowrap overflow-hidden text-ellipsis w-full max-w-full">
