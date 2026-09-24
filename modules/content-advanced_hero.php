@@ -10,7 +10,7 @@ $buttons = get_sub_field('buttons');
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center text-xs text-ink-500 gap-2">
             <a href="<?php echo esc_url(site_url('/')); ?>" class="hover:text-brand-700">Home</a>
             <span>/</span>
-            <?php if (is_singular('post')) : 
+            <?php if (is_single()) : 
                 $blog_page = get_option('page_for_posts');
                 $blog_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
             ?>
@@ -25,7 +25,7 @@ $buttons = get_sub_field('buttons');
         <?php
         $back_url = site_url('/');
         $back_text = 'Back to home';
-        if (is_singular('post')) {
+        if (is_single()) {
             $blog_page = get_option('page_for_posts');
             $back_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
             $back_text = 'Back to blog';
