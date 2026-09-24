@@ -85,8 +85,8 @@ usort($methods, function($a, $b) {
                     }
                     .gform_wrapper input[type="submit"]:hover { background-color: #0f766e; }
                     .gform_wrapper .gfield_label { font-size: 0.875rem; color: #334155; margin-bottom: 0.25rem; display: block; }
-                    .gform_wrapper .gfield { margin-bottom: 1.25rem !important; }
-                    .gform_wrapper .gform_fields { row-gap: 1.25rem !important; }
+                    .gform_wrapper .gfield { margin-bottom: 0 !important; }
+                    .gform_wrapper .gform_fields { row-gap: 1rem !important; margin-bottom: 1rem !important; }
                 </style>
                 <?php echo do_shortcode($form_shortcode); ?>
             </div>
