@@ -163,10 +163,7 @@ $wrapper_classes = $has_text_content
                     <div class="text-sm font-bold text-ink-900">Free shipping on orders above $299</div>
                 </div>
 
-                <div class="mt-4 p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-xs font-medium text-amber-900 flex items-start gap-2.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert mt-0.5 shrink-0 text-amber-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> 
-                    <?php echo esc_html($p_note); ?>
-                </div>
+                <!-- Removed limit notification -->
 
                 <div class="mt-5 pt-5 border-t border-ink-100 flex flex-wrap items-end justify-between gap-4">
                     <div>
