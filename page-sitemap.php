@@ -10,12 +10,22 @@ $all_pages = get_pages();
 $legal_keywords = ['privacy', 'terms', 'conditions', 'policy', 'refund', 'shipping', 'disclaimer'];
 $support_keywords = ['contact', 'faq', 'support', 'help', 'track', 'about'];
 
+$exclude_keywords = ['dr. hamish', 'my account', 'wishlist'];
 $legal_pages = [];
 $support_pages = [];
 $main_pages = [];
 
 foreach ($all_pages as $p) {
     $title = strtolower($p->post_title);
+    // Skip unwanted pages
+    $skip = false;
+    foreach ($exclude_keywords as $ex) {
+        if (strpos($title, $ex) !== false) {
+            $skip = true; break;
+        }
+    }
+    if ($skip) continue;
+
     $is_legal = false;
     $is_support = false;
     
