@@ -5,10 +5,24 @@ $desc = get_sub_field('desc');
 $buttons = get_sub_field('buttons');
 ?>
 <div class="section-wash border-b border-ink-200">
-    <!-- Breadcrumb (Optional, but hardcoded matching design for now) -->
+    <!-- Breadcrumb -->
     <div class="border-b border-ink-200 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center text-xs text-ink-500 gap-2">
-            <?php
+            <a href="<?php echo esc_url(site_url('/')); ?>" class="hover:text-brand-700">Home</a>
+            <span>/</span>
+            <?php if (get_post_type() === 'post') : 
+                $blog_page = get_option('page_for_posts');
+                $blog_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
+            ?>
+                <a href="<?php echo esc_url($blog_url); ?>" class="hover:text-brand-700">Blog</a>
+                <span>/</span>
+            <?php endif; ?>
+            <span class="text-ink-900"><?php echo esc_html($title); ?></span>
+        </div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 py-14 md:py-20">
+        <?php
         $back_url = site_url('/');
         $back_text = 'Back to home';
         if (get_post_type() === 'post') {
