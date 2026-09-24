@@ -8,16 +8,18 @@ $buttons = get_sub_field('buttons');
     <!-- Breadcrumb (Optional, but hardcoded matching design for now) -->
     <div class="border-b border-ink-200 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center text-xs text-ink-500 gap-2">
-            <a href="<?php echo esc_url(site_url('/')); ?>" class="hover:text-brand-700">Home</a>
-            <span>/</span>
-            <span class="text-ink-900"><?php echo esc_html($title); ?></span>
-        </div>
-    </div>
-    
-    <div class="max-w-4xl mx-auto px-4 py-14 md:py-20">
-        <a href="<?php echo esc_url(site_url('/')); ?>" class="inline-flex items-center gap-1.5 text-sm text-ink-700 hover:text-brand-700">
+            <?php
+        $back_url = site_url('/');
+        $back_text = 'Back to home';
+        if (get_post_type() === 'post') {
+            $blog_page = get_option('page_for_posts');
+            $back_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
+            $back_text = 'Back to blog';
+        }
+        ?>
+        <a href="<?php echo esc_url($back_url); ?>" class="inline-flex items-center gap-1.5 text-sm text-ink-700 hover:text-brand-700">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-            Back to home
+            <?php echo esc_html($back_text); ?>
         </a>
         
         <?php if ($badge) : ?>
