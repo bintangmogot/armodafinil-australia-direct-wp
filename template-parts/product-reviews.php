@@ -161,7 +161,7 @@ foreach($counts as $star => $count) {
         <?php endif; ?>
 
         <!-- Form -->
-        <div class="bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 mt-4 shadow-sm relative overflow-hidden">
+        <div class="max-w-2xl mx-auto bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 mt-8 shadow-sm relative overflow-hidden">
             <div class="flex items-center gap-3 mb-6 pb-6 border-b border-slate-100">
                 <div class="w-10 h-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
