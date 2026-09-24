@@ -26,7 +26,7 @@ $icons = array(
 );
 ?>
 
-<div class="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8">
+<div class="max-w-6xl mx-auto px-4 py-12 grid lg:grid-cols-3 gap-8 lg:gap-6">
     
     <!-- Contact Information Cards -->
     <?php
@@ -74,10 +74,10 @@ usort($methods, function($a, $b) {
             <div class="gf_browser_chrome gform_wrapper">
                 <!-- Apply some structural tailwind styles to standard Gravity Form elements if needed -->
                 <style>
-                    .gform_wrapper input[type="text"], .gform_wrapper input[type="email"], .gform_wrapper textarea {
+                    .gform_wrapper input[type="text"], .gform_wrapper input[type="email"], .gform_wrapper input[type="tel"], .gform_wrapper textarea {
                         width: 100% !important; border-radius: 0.5rem !important; border: 1px solid #e2e8f0 !important; padding: 0.5rem 0.75rem !important; outline: none !important; transition: border-color 0.2s !important; box-shadow: none !important;
                     }
-                    .gform_wrapper input[type="text"]:focus, .gform_wrapper input[type="email"]:focus, .gform_wrapper textarea:focus {
+                    .gform_wrapper input[type="text"]:focus, .gform_wrapper input[type="email"]:focus, .gform_wrapper input[type="tel"]:focus, .gform_wrapper textarea:focus {
                         border-color: #0d9488;
                     }
                     .gform_wrapper input[type="submit"] {
@@ -85,7 +85,8 @@ usort($methods, function($a, $b) {
                     }
                     .gform_wrapper input[type="submit"]:hover { background-color: #0f766e; }
                     .gform_wrapper .gfield_label { font-size: 0.875rem; color: #334155; margin-bottom: 0.25rem; display: block; }
-                    .gform_wrapper .gfield { margin-bottom: 1rem; }
+                    .gform_wrapper .gfield { margin-bottom: 1.25rem !important; }
+                    .gform_wrapper .gform_fields { row-gap: 1.25rem !important; }
                 </style>
                 <?php echo do_shortcode($form_shortcode); ?>
             </div>
