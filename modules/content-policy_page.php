@@ -11,6 +11,13 @@ $sections = get_sub_field('sections');
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center text-xs text-ink-500 gap-2">
             <a href="<?php echo esc_url(site_url('/')); ?>" class="hover:text-brand-700">Home</a>
             <span>/</span>
+            <?php if (is_single()) : 
+                $blog_page = get_option('page_for_posts');
+                $blog_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
+            ?>
+                <a href="<?php echo esc_url($blog_url); ?>" class="hover:text-brand-700">Blog</a>
+                <span>/</span>
+            <?php endif; ?>
             <span class="text-ink-900 truncate"><?php echo esc_html($title); ?></span>
         </div>
     </div>
@@ -18,9 +25,18 @@ $sections = get_sub_field('sections');
     <!-- Hero -->
     <div class="section-wash">
         <div class="max-w-4xl mx-auto px-4 py-14 md:py-20">
-            <a href="<?php echo esc_url(site_url('/')); ?>" class="inline-flex items-center gap-1.5 text-sm text-ink-700 hover:text-brand-700">
+            <?php
+            $back_url = site_url('/');
+            $back_text = 'Back to home';
+            if (is_single()) {
+                $blog_page = get_option('page_for_posts');
+                $back_url = $blog_page ? get_permalink($blog_page) : site_url('/blog/');
+                $back_text = 'Back to blog';
+            }
+            ?>
+            <a href="<?php echo esc_url($back_url); ?>" class="inline-flex items-center gap-1.5 text-sm text-ink-700 hover:text-brand-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-                Back to home
+                <?php echo esc_html($back_text); ?>
             </a>
             <div class="mt-6 text-[11px] uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5 inline-block"><?php echo esc_html($eyebrow); ?></div>
             <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($title); ?></h1>
