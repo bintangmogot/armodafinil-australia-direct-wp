@@ -12,7 +12,9 @@
 				<div class="font-serif text-2xl font-semibold text-white">
 					Armodafinil <span class="text-brand-300">Direct</span>
 				</div>
-				<?php if ( $footer_desc = get_field('footer_description', 'option') ) : ?>
+				<?php if ( $footer_desc = get_field('footer_description', 'option') ) : 
+					$footer_desc = str_replace('Legal Disclaimer:', '<br><br><span class="opacity-50 uppercase tracking-widest text-[10px] font-bold block mb-1">Legal Disclaimer:</span>', $footer_desc);
+				?>
 				<p class="mt-3 text-sm text-ink-100/70 max-w-sm"><?php echo wp_kses_post($footer_desc); ?></p>
 				<?php endif; ?>
 				<div class="mt-5 flex items-center gap-3 text-brand-300">
