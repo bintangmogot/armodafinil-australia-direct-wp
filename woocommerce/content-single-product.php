@@ -336,48 +336,21 @@ foreach ( $attributes as $attribute ) {
     </div>
     
     <div class="bg-white">
-        <!-- Tabs and Description -->
-<div class="bg-white">
-              <?php
-              $extra_tabs = get_field('extra_tabs', get_the_ID());
-              $has_tabs = !empty($extra_tabs);
-              $has_desc = !empty(trim(wp_strip_all_tags($full_description)));
-              ?>
-              <?php if($has_desc || $has_tabs): ?>
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-tabs-section">
-                  <div class="mt-8 sm:mt-12">
-                      <div class="border-b border-ink-200">
-                          <nav class="-mb-px flex space-x-8 overflow-x-auto tab-navs" aria-label="Tabs">
-                              <?php if($has_desc): ?>
-                              <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-brand-600 text-brand-700" data-target="tab-description">
-                                  Description
-                              </button>
-                              <?php endif; ?>
-                              <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
-                              <button class="tab-btn <?php echo (!$has_desc && $i===0) ? 'active border-brand-600 text-brand-700' : 'border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" data-target="tab-extra-<?php echo $i; ?>">
-                                  <?php echo esc_html($tab['tab_title']); ?>
-                              </button>
-                              <?php endforeach; endif; ?>
-                          </nav>
-                      </div>
-  
-                      <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
-                          <?php if($has_desc): ?>
-                          <div id="tab-description" class="tab-content block">
-                              <?php echo $full_description; ?>
-                          </div>
-                          <?php endif; ?>
-                          <?php if($has_tabs): foreach($extra_tabs as $i => $tab): ?>
-                          <div id="tab-extra-<?php echo $i; ?>" class="tab-content <?php echo (!$has_desc && $i===0) ? 'block' : 'hidden'; ?>">
-                              <?php echo $tab['tab_content']; ?>
-                          </div>
-                          <?php endforeach; endif; ?>
-                      </div>
-                  </div>
-              </div>
-              <?php endif; ?>
-              </div>
-              </div>
+        <!-- Single Description Block -->
+    <div class="bg-white">
+        <?php $has_desc = !empty(trim(wp_strip_all_tags($full_description))); ?>
+        <?php if($has_desc): ?>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-description-section">
+            <div class="mt-8 sm:mt-12">
+                <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
+                    <div class="block">
+                        <?php echo $full_description; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
 <?php if( have_rows('page_modules', get_the_ID()) ): ?>
               <div class="bg-slate-50 py-8">
               <?php
