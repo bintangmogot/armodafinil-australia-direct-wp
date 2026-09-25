@@ -612,32 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tabs Logic
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active classes
-            tabBtns.forEach(b => {
-                b.classList.remove('border-brand-600', 'text-brand-700', 'active');
-                b.classList.add('border-transparent', 'text-ink-500');
-            });
-            tabContents.forEach(c => {
-                c.classList.remove('block');
-                c.classList.add('hidden');
-            });
-
-            // Add active classes
-            btn.classList.add('border-brand-600', 'text-brand-700', 'active');
-            btn.classList.remove('border-transparent', 'text-ink-500');
-            const target = document.getElementById(btn.dataset.target);
-            if (target) {
-                target.classList.remove('hidden');
-                target.classList.add('block');
-            }
-        });
-    });
+    // Tabs logic removed
     // Share Integration
     const shareBtn = document.querySelector('button[aria-label="Share"]');
     if (shareBtn) {

@@ -64,7 +64,7 @@ else :
                     }
                     ?>
                 </h1>
-                <div class="mt-3 text-ink-700 max-w-2xl mx-auto text-base">
+                <div class="mt-3 text-ink-700 max-w-none w-full mx-auto text-base">
                     <?php 
                     if ( is_product_category() || is_product_tag() ) {
                         $desc = term_description();
