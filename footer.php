@@ -57,15 +57,7 @@
 			</div>
 			<div>
 				<div class="text-white font-semibold mb-3 text-sm uppercase tracking-widest">Areas Delivered in Australia</div>
-				<ul class="space-y-2 text-sm text-ink-100/80">
-					<li><a href="/sydney/" class="hover:text-white transition-colors">Sydney</a></li>
-					<li><a href="/melbourne/" class="hover:text-white transition-colors">Melbourne</a></li>
-					<li><a href="/perth/" class="hover:text-white transition-colors">Perth</a></li>
-					<li><a href="/adelaide/" class="hover:text-white transition-colors">Adelaide</a></li>
-					<li><a href="/brisbane/" class="hover:text-white transition-colors">Brisbane</a></li>
-					<li><a href="/canberra/" class="hover:text-white transition-colors">Canberra</a></li>
-					<li><a href="/darwin/" class="hover:text-white transition-colors">Darwin</a></li>
-				</ul>
+				<?php wp_nav_menu(array('theme_location' => 'footer_4', 'menu_class' => 'space-y-2 text-sm text-ink-100/80', 'fallback_cb' => false)); ?>
 			</div>
 		</div>
 

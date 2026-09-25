@@ -42,6 +42,7 @@ function armodafinil_australia_setup() {
         'footer_1'  => __('Footer Column 1', 'armodafinil-australia-direct'),
         'footer_2'  => __('Footer Column 2', 'armodafinil-australia-direct'),
         'footer_3'  => __('Footer Column 3', 'armodafinil-australia-direct'),
+        'footer_4'  => __('Footer Column 4', 'armodafinil-australia-direct'),
     ));
 
     add_theme_support( 'title-tag' );
