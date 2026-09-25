@@ -632,15 +632,19 @@ add_action('admin_print_footer_scripts', function() {
                 return;
             }
 
-            var doc = editor.getDoc();
+            try {
+                var doc = editor.getDoc();
             if (!doc || !doc.head || doc.getElementById('aad-tinymce-readable-style')) {
                 return;
             }
 
             var style = doc.createElement('style');
-            style.id = 'aad-tinymce-readable-style';
-            style.textContent = css;
-            doc.head.appendChild(style);
+                style.id = 'aad-tinymce-readable-style';
+                style.textContent = css;
+                doc.head.appendChild(style);
+            } catch (e) {
+                // Ignore iframe access errors
+            }
         }
 
         function watchEditor(editor) {
