@@ -340,15 +340,13 @@ foreach ( $attributes as $attribute ) {
     <div class="bg-white">
         <?php $has_desc = !empty(trim(wp_strip_all_tags($full_description))); ?>
         <?php if($has_desc): ?>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="product-description-section">
-            <div class="mt-8 sm:mt-12">
-                <div class="py-8 max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12" id="product-description-section">
+              <div class="max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
                     <div class="block">
                         <?php echo $full_description; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+                  </div>
+              </div>
+          </div>
         <?php endif; ?>
     </div>
 <?php if( have_rows('page_modules', get_the_ID()) ): ?>
