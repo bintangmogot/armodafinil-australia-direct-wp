@@ -7,7 +7,7 @@
 ?>
 
 	<footer class="mt-24 bg-ink-900 text-ink-100">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<div class="font-serif text-2xl font-semibold text-white">
 					Armodafinil <span class="text-brand-300">Direct</span>
@@ -49,6 +49,18 @@
 			<div>
 				<div class="text-white font-semibold mb-3 text-sm uppercase tracking-widest">Company</div>
 				<?php wp_nav_menu(array('theme_location' => 'footer_3', 'menu_class' => 'space-y-2 text-sm text-ink-100/80', 'fallback_cb' => false)); ?>
+			</div>
+			<div>
+				<div class="text-white font-semibold mb-3 text-sm uppercase tracking-widest">Areas Delivered in Australia</div>
+				<ul class="space-y-2 text-sm text-ink-100/80">
+					<li><a href="/sydney/" class="hover:text-white transition-colors">Sydney</a></li>
+					<li><a href="/melbourne/" class="hover:text-white transition-colors">Melbourne</a></li>
+					<li><a href="/perth/" class="hover:text-white transition-colors">Perth</a></li>
+					<li><a href="/adelaide/" class="hover:text-white transition-colors">Adelaide</a></li>
+					<li><a href="/brisbane/" class="hover:text-white transition-colors">Brisbane</a></li>
+					<li><a href="/canberra/" class="hover:text-white transition-colors">Canberra</a></li>
+					<li><a href="/darwin/" class="hover:text-white transition-colors">Darwin</a></li>
+				</ul>
 			</div>
 		</div>
 
