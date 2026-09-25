@@ -24,7 +24,32 @@ add_action('acf/init', 'aad_register_medical_reviewer_fields');
 function aad_register_medical_reviewer_fields() {
     if( function_exists('acf_add_local_field_group') ) {
         
-        // Removed Assigned Medical Reviewer field group as per request
+        // Field to assign a doctor to a product
+        acf_add_local_field_group(array(
+            'key' => 'group_medical_reviewer_selection',
+            'title' => 'Assigned Medical Reviewer',
+            'fields' => array(
+                array(
+                    'key' => 'field_medical_reviewer_post',
+                    'label' => 'Select Doctor',
+                    'name' => 'medical_reviewer_post',
+                    'type' => 'post_object',
+                    'post_type' => array('medical_reviewer'),
+                    'return_format' => 'id',
+                    'allow_null' => 1,
+                    'instructions' => 'Select the doctor who medically reviewed this product.',
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'product',
+                    ),
+                ),
+            ),
+        ));
         
         // Fields FOR the doctor themselves (Title, etc)
         acf_add_local_field_group(array(

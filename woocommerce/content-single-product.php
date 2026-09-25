@@ -412,7 +412,16 @@ foreach ( $attributes as $attribute ) {
                   </div>
                   <?php endif; ?>
   
-                  <!-- Medically Reviewed Section Removed per Request -->
+                  <?php if (!empty($rev_name)): ?>
+                  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[13px] text-ink-500 gap-4 w-full mt-2">
+                      <div>
+                          Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-bold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($rev_name); ?></a> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
+                      </div>
+                      <div>
+                          Last updated: <?php echo esc_html($last_updated); ?>
+                      </div>
+                  </div>
+                  <?php endif; ?>
               </div>
               </div>
               <?php endif; ?>
