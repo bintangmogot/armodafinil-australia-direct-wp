@@ -590,9 +590,18 @@ add_action('wp_head', function() {
 // This prevents every Visual editor tab from initialising properly.
 // Dequeue the script; the SEO meta-box itself still works without it.
 add_action('admin_enqueue_scripts', function() {
-    wp_dequeue_script('aioseo/js/src/vue/standalone/writing-assistant/main.js');
-    wp_deregister_script('aioseo/js/src/vue/standalone/writing-assistant/main.js');
-}, 999);
+    // Attempt all known handles for the AIOSEO writing assistant to prevent TinyMCE crashes
+    $handles = [
+        'aioseo/js/src/vue/standalone/writing-assistant/main.js',
+        'aioseoWritingAssistant',
+        'aioseo-writing-assistant',
+        'aioseo-src-vue-standalone-writing-assistant-main'
+    ];
+    foreach ($handles as $handle) {
+        wp_dequeue_script($handle);
+        wp_deregister_script($handle);
+    }
+}, 9999);
 
 // Editor colours and typography are provided safely by editor-style.css.
 // Do not inject quoted CSS through tiny_mce_before_init: WordPress prints that
@@ -1017,3 +1026,19 @@ add_action('admin_print_scripts', function() {
     </script>
     <?php
 }, -9999);
+
+// FORCE CLEAN AJAX RESPONSES
+// This prevents ANY stray whitespace from plugins or config files from corrupting XML AJAX responses (like adding categories).
+add_action('admin_init', function() {
+    if ( defined('DOING_AJAX') && DOING_AJAX ) {
+        $cleaner = function() {
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+        };
+        add_action('wp_ajax_add-meta', $cleaner, -9999);
+        add_action('wp_ajax_add-category', $cleaner, -9999);
+        add_action('wp_ajax_add-tag', $cleaner, -9999);
+    }
+});
+
