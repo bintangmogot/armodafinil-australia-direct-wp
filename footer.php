@@ -7,7 +7,12 @@
 ?>
 
 	<footer class="mt-24 bg-ink-900 text-ink-100">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+		<style>
+	@media (min-width: 1024px) {
+		.lg-grid-cols-6-fix { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+	}
+</style>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg-grid-cols-6-fix gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<div class="font-serif text-2xl font-semibold text-white">
 					Armodafinil <span class="text-brand-300">Direct</span>
