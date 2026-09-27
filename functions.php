@@ -1047,9 +1047,11 @@ add_action('admin_init', function() {
 
 // Smart ACF Excerpt Generator
 add_filter('get_the_excerpt', function($excerpt, $post) {
-    // 1. If user typed a manual excerpt, respect it.
+    // 1. If user typed a manual excerpt, respect it, BUT still strip 1. Introduction in case AIOSEO auto-filled it
     if ( has_excerpt($post->ID) ) {
-        return $excerpt;
+        $excerpt = preg_replace('/1\.[^a-z]*Introduction[^a-z]*/i', '', $excerpt);
+        // We still return early so we don't overwrite manual excerpts with ACF intro
+        return trim($excerpt);
     }
     
     // 2. Try to pull from ACF page_modules if it exists
@@ -1064,10 +1066,10 @@ add_filter('get_the_excerpt', function($excerpt, $post) {
         }
     }
 
-    // 3. Fallback: Aggressively strip '1. Introduction' by stripping tags first
+    // 3. Fallback: Super aggressive strip of '1. Introduction' 
     $excerpt = wp_strip_all_tags($excerpt);
-    $excerpt = preg_replace('/^\s*\d+\.\s+Introduction\s*/i', '', $excerpt);
-    $excerpt = str_ireplace('1. Introduction', '', $excerpt); // Final safety net
+    $excerpt = html_entity_decode($excerpt);
+    $excerpt = preg_replace('/1\.[^a-z]*Introduction[^a-z]*/i', '', $excerpt);
     $excerpt = trim($excerpt);
     return $excerpt;
 }, 99, 2);
