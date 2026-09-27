@@ -1064,9 +1064,10 @@ add_filter('get_the_excerpt', function($excerpt, $post) {
         }
     }
 
-    // 3. Fallback: Aggressively strip '1. Introduction' and variations
-    $excerpt = preg_replace('/^(?:\s*<[^>]+>\s*)*\d+\.\s*Introduction\s*/i', '', $excerpt);
-    $excerpt = str_ireplace('1. Introduction', '', $excerpt);
+    // 3. Fallback: Aggressively strip '1. Introduction' by stripping tags first
+    $excerpt = wp_strip_all_tags($excerpt);
+    $excerpt = preg_replace('/^\s*\d+\.\s+Introduction\s*/i', '', $excerpt);
+    $excerpt = str_ireplace('1. Introduction', '', $excerpt); // Final safety net
     $excerpt = trim($excerpt);
     return $excerpt;
 }, 99, 2);
