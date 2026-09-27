@@ -81,7 +81,10 @@ if ($review_count > 0) {
 
 $full_description = apply_filters( 'the_content', $product->get_description() );
 // Fix accidental copy-pasted layout wrappers from visual editor
-$full_description = str_replace(array('woocommerce-product-gallery', 'summary entry-summary'), array('stripped-gallery-wrapper', 'stripped-summary-wrapper'), $full_description);
+$full_description = preg_replace('/<div class="woocommerce-product-gallery[^"]*"[^>]*>/i', '<div>', $full_description);
+$full_description = preg_replace('/<div class="summary entry-summary"[^>]*>/i', '<div>', $full_description);
+// Fallback for already processed ones
+$full_description = preg_replace('/<div class="stripped-gallery-wrapper[^"]*"[^>]*>/i', '<div>', $full_description);
 
 // Specs
 $specs = array();
