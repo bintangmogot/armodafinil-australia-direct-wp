@@ -80,6 +80,8 @@ if ($review_count > 0) {
 }
 
 $full_description = apply_filters( 'the_content', $product->get_description() );
+// Fix accidental copy-pasted layout wrappers from visual editor
+$full_description = str_replace(array('woocommerce-product-gallery', 'summary entry-summary'), array('stripped-gallery-wrapper', 'stripped-summary-wrapper'), $full_description);
 
 // Specs
 $specs = array();
@@ -342,7 +344,7 @@ foreach ( $attributes as $attribute ) {
         <?php if($has_desc): ?>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12" id="product-description-section">
               <div class="max-w-3xl prose prose-ink prose-headings:font-serif prose-headings:text-ink-900 prose-a:text-brand-700 max-w-none">
-                    <div class="block">
+                    <div class="block clear-both after:content-[''] after:table after:clear-both">
                         <?php echo $full_description; ?>
                   </div>
               </div>
