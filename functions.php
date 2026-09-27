@@ -590,7 +590,18 @@ add_action('wp_head', function() {
 // created TinyMCE instances with "Cannot read properties of null (reading 'on')".
 // This prevents every Visual editor tab from initialising properly.
 // Dequeue the script; the SEO meta-box itself still works without it.
-add_action('admin_enqueue_scripts', function() {
+add_action('admin_enqueue_scripts', function($hook) {
+    // If we are on the individual category edit screen (term.php), AIOSEO often crashes
+    // because WordPress doesn't load TinyMCE by default on this screen, but AIOSEO expects it.
+    // We force load it here so the AIOSEO Vue app doesn't fatally error and go blank.
+    if ( $hook === 'term.php' ) {
+        wp_enqueue_editor();
+        return;
+    }
+
+    // Only dequeue on edit-tags.php (the category list screen where AJAX add crashes happen).
+    if ( $hook !== 'edit-tags.php' ) return;
+
     // Attempt all known handles for the AIOSEO writing assistant to prevent TinyMCE crashes
     $handles = [
         'aioseo/js/src/vue/standalone/writing-assistant/main.js',
