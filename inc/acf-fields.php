@@ -21,6 +21,21 @@ add_action('acf/init', function() {
                 'instructions' => 'Overrides the default shop title. You can use HTML here like <a href="...">Link</a>.',
             ),
             array(
+                'key' => 'field_custom_seo_title',
+                'label' => 'Custom SEO Title (Override AIOSEO)',
+                'name' => 'custom_seo_title',
+                'type' => 'text',
+                'instructions' => 'AIOSEO blocks category SEO in their free version. Use this field to override the Google Title.',
+            ),
+            array(
+                'key' => 'field_custom_seo_description',
+                'label' => 'Custom SEO Description (Override AIOSEO)',
+                'name' => 'custom_seo_description',
+                'type' => 'textarea',
+                'rows' => 3,
+                'instructions' => 'AIOSEO blocks category SEO in their free version. Use this field to override the Google Meta Description.',
+            ),
+            array(
                 'key' => 'field_shop_description',
                 'label' => 'Shop Description',
                 'name' => 'shop_description',
