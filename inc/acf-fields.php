@@ -39,6 +39,13 @@ add_action('acf/init', function() {
                     'value' => wc_get_page_id('shop'),
                 ),
             ),
+            array(
+                array(
+                    'param' => 'taxonomy',
+                    'operator' => '==',
+                    'value' => 'product_cat',
+                ),
+            ),
         ),
         'menu_order' => 0,
         'position' => 'normal',

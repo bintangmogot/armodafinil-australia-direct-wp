@@ -47,6 +47,8 @@ else :
                 $badge_text = 'Full catalogue';
                 if ( is_shop() && ! is_search() ) {
                     $badge_text = get_field('shop_badge_text', $shop_page_id) ?: 'Full catalogue';
+                } elseif ( is_product_category() ) {
+                    $badge_text = get_field('shop_badge_text', get_queried_object()) ?: 'Products';
                 }
                 ?>
                 <span class="text-xs uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5"><?php echo esc_html($badge_text); ?></span>
@@ -60,7 +62,18 @@ else :
                             echo 'Search results: &ldquo;' . esc_html($sq) . '&rdquo;';
                         }
                     } else {
-                        woocommerce_page_title(); 
+                        $custom_title = '';
+                        if ( is_shop() && ! is_search() ) {
+                            $custom_title = get_field('shop_custom_title', $shop_page_id);
+                        } elseif ( is_product_category() ) {
+                            $custom_title = get_field('shop_custom_title', get_queried_object());
+                        }
+                        
+                        if ( ! empty($custom_title) ) {
+                            echo wp_kses_post($custom_title);
+                        } else {
+                            woocommerce_page_title(); 
+                        }
                     }
                     ?>
                 </h1>
