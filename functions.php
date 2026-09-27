@@ -1084,3 +1084,26 @@ add_filter('get_the_excerpt', function($excerpt, $post) {
     $excerpt = trim($excerpt);
     return $excerpt;
 }, 99, 2);
+
+
+// Override AIOSEO Title for WooCommerce Categories (Bypass Free Version Restriction)
+add_filter( 'aioseo_title', function( $title ) {
+    if ( is_product_category() ) {
+        $custom_title = get_field('custom_seo_title', get_queried_object());
+        if ( ! empty($custom_title) ) {
+            return wp_strip_all_tags($custom_title);
+        }
+    }
+    return $title;
+});
+
+// Override AIOSEO Description for WooCommerce Categories (Bypass Free Version Restriction)
+add_filter( 'aioseo_description', function( $description ) {
+    if ( is_product_category() ) {
+        $custom_desc = get_field('custom_seo_description', get_queried_object());
+        if ( ! empty($custom_desc) ) {
+            return wp_strip_all_tags($custom_desc);
+        }
+    }
+    return $description;
+});
