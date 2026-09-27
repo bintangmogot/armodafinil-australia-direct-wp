@@ -1045,10 +1045,26 @@ add_action('admin_init', function() {
 
 
 
-// Remove '1. Introduction' from auto-generated excerpts
+// Smart ACF Excerpt Generator
 add_filter('get_the_excerpt', function($excerpt, $post) {
-    if ( ! has_excerpt($post->ID) ) {
-        $excerpt = preg_replace('/^\d+\.\s+Introduction\s*/i', '', $excerpt);
+    // 1. If user typed a manual excerpt, respect it.
+    if ( has_excerpt($post->ID) ) {
+        return $excerpt;
     }
+    
+    // 2. Try to pull from ACF page_modules if it exists
+    $modules = get_field('page_modules', $post->ID);
+    if ( ! empty($modules) && is_array($modules) ) {
+        foreach ( $modules as $module ) {
+            // If they use Policy Page (TOC), use its 'intro' field
+            if ( $module['acf_fc_layout'] === 'policy_page' && ! empty($module['intro']) ) {
+                return wp_strip_all_tags($module['intro']);
+            }
+            // If they use standard text layout, we could pull from it, but let's stick to intro for now
+        }
+    }
+
+    // 3. Fallback: Strip '1. Introduction' from WordPress auto-generated excerpt
+    $excerpt = preg_replace('/^\d+\.\s+Introduction\s*/i', '', $excerpt);
     return $excerpt;
 }, 99, 2);
