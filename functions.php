@@ -1064,7 +1064,9 @@ add_filter('get_the_excerpt', function($excerpt, $post) {
         }
     }
 
-    // 3. Fallback: Strip '1. Introduction' from WordPress auto-generated excerpt
-    $excerpt = preg_replace('/^\d+\.\s+Introduction\s*/i', '', $excerpt);
+    // 3. Fallback: Aggressively strip '1. Introduction' and variations
+    $excerpt = preg_replace('/^(?:\s*<[^>]+>\s*)*\d+\.\s*Introduction\s*/i', '', $excerpt);
+    $excerpt = str_ireplace('1. Introduction', '', $excerpt);
+    $excerpt = trim($excerpt);
     return $excerpt;
 }, 99, 2);
