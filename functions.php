@@ -1043,3 +1043,12 @@ add_action('admin_init', function() {
     }
 });
 
+
+
+// Remove '1. Introduction' from auto-generated excerpts
+add_filter('get_the_excerpt', function($excerpt, $post) {
+    if ( ! has_excerpt($post->ID) ) {
+        $excerpt = preg_replace('/^\d+\.\s+Introduction\s*/i', '', $excerpt);
+    }
+    return $excerpt;
+}, 99, 2);
