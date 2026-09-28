@@ -1243,3 +1243,31 @@ add_action('admin_init', function() {
         }
     }
 });
+// [AUTO-PATCH-V2] Patch ALL instances of the fallback bug in the plugin
+add_action('admin_init', function() {
+    if ( isset($_GET['patch_insurance_v2']) ) {
+        $file = WP_PLUGIN_DIR . '/shipping-insurance-manager/public/class-shipping-insurance-manager-public.php';
+        if ( file_exists($file) ) {
+            $content = file_get_contents($file);
+            
+            // Replace all instances of empty( $selected_package ) with strict NOT_SET check
+            $content = str_replace( 
+                "empty( \$selected_package )", 
+                "\$selected_package === 'NOT_SET'", 
+                $content 
+            );
+            
+            // Replace the session fetch default value from '' to 'NOT_SET'
+            $content = str_replace( 
+                "WC()->session->get( 'shipping_insurance_package', '' )", 
+                "WC()->session->get( 'shipping_insurance_package', 'NOT_SET' )", 
+                $content 
+            );
+            
+            file_put_contents($file, $content);
+            die('<h2>Perbaikan TOTAL Selesai! Semua celah bug sudah ditutup.</h2><br><a href="' . admin_url('plugins.php') . '">Kembali ke Plugins</a>');
+        } else {
+            die('Plugin tidak ditemukan.');
+        }
+    }
+});
