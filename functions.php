@@ -852,6 +852,14 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
         $html = str_replace( '</td>', '</div></td>', $html );
         // Remove rogue BR tags between labels
         $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
+        
+        // [NO INSURANCE BUG FIX] Intercept the plugin's empty value and use a NO_INSURANCE sentinel
+        $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : '';
+        if ( $selected_package === 'NO_INSURANCE' ) {
+            $html = str_replace( 'value=""', 'value="NO_INSURANCE" checked="checked"', $html );
+        } else {
+            $html = str_replace( 'value=""', 'value="NO_INSURANCE"', $html );
+        }
         echo $html;
     }
 }, 9999 );
@@ -1126,6 +1134,14 @@ add_action( 'woocommerce_cart_totals_before_order_total', function() {
         $html = str_replace( '</td>', '</div></td>', $html );
         // Remove rogue BR tags between labels
         $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
+        
+        // [NO INSURANCE BUG FIX] Intercept the plugin's empty value and use a NO_INSURANCE sentinel
+        $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : '';
+        if ( $selected_package === 'NO_INSURANCE' ) {
+            $html = str_replace( 'value=""', 'value="NO_INSURANCE" checked="checked"', $html );
+        } else {
+            $html = str_replace( 'value=""', 'value="NO_INSURANCE"', $html );
+        }
         echo $html;
     }
 }, 9999 );
@@ -1296,3 +1312,11 @@ add_action('admin_init', function() {
         die('File plugin tidak ditemukan di folder mana pun.');
     }
 });
+
+// [NO INSURANCE INIT FIX] Force session to NO_INSURANCE if it's completely empty to bypass plugin's buggy fallback
+add_action('woocommerce_checkout_update_order_review', 'fix_initial_shipping_insurance_session', 1);
+function fix_initial_shipping_insurance_session() {
+    if ( WC()->session && WC()->session->get('shipping_insurance_package') === '' ) {
+        WC()->session->set('shipping_insurance_package', 'NO_INSURANCE');
+    }
+}
