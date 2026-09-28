@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Simple FAQ Module Template (No Categories)
  */
@@ -26,12 +26,12 @@ $faqs     = get_sub_field('faqs');
             <div class="flex flex-col gap-4">
                 <?php foreach ( $faqs as $index => $f ) : ?>
                     <div class="faq-item border border-ink-200 rounded-2xl bg-white overflow-hidden transition-colors">
-                        <button type="button" class="faq-toggle w-full flex items-center gap-4 text-left px-5 py-4 focus:outline-none hover:bg-ink-50 transition-colors">
+                        <button type="button" class="faq-toggle w-full flex items-center gap-4 text-left px-5 py-4 focus:outline-none hover:bg-ink-50 transition-colors bg-ink-50">
                             <span class="faq-num w-8 h-8 grid place-items-center rounded-lg text-sm font-semibold shrink-0 bg-brand-50 text-brand-700 transition-colors"><?php echo $index + 1; ?></span>
                             <span class="flex-1 font-medium text-ink-900"><?php echo esc_html($f['question']); ?></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron lucide lucide-chevron-down w-4 h-4 text-ink-500 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron lucide lucide-chevron-down w-4 h-4 text-ink-500 transition-transform" style="transform: rotate(180deg);"><path d="m6 9 6 6 6-6"/></svg>
                         </button>
-                        <div class="faq-content hidden p-5 text-sm text-ink-700 leading-relaxed flex gap-3 items-start border-t border-transparent">
+                        <div class="faq-content p-5 text-sm text-ink-700 leading-relaxed flex gap-3 items-start border-t border-transparent">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 text-brand-600 mt-1 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
                             <span><?php echo wp_kses_post( wpautop( $f['answer'] ) ); ?></span>
                         </div>
@@ -68,3 +68,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
