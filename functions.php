@@ -1107,3 +1107,87 @@ add_filter( 'aioseo_description', function( $description ) {
     }
     return $description;
 });
+
+
+// Hook Shipping Insurance onto Cart page as well
+add_action( 'woocommerce_cart_totals_before_order_total', function() {
+    if ( class_exists('Shipping_Insurance_Manager_Public') ) {
+        $plugin_public = new Shipping_Insurance_Manager_Public( 'shipping-insurance-manager', '1.0.0' );
+        $plugin_public->add_shipping_insurance_checkbox();
+    }
+} );
+
+// Tidy up HTML for Cart page too
+add_action( 'woocommerce_cart_totals_before_order_total', function() {
+    ob_start();
+}, -9999 );
+
+add_action( 'woocommerce_cart_totals_before_order_total', function() {
+    $html = ob_get_clean();
+    if ( $html ) {
+        $html = str_replace( '<tr class="shipping-insurance">', '<div class="shipping-insurance pt-2">', $html );
+        $html = preg_replace( '/<th>.*?<\/th>/is', '', $html );
+        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600">', $html );
+        $html = str_replace( '</td>', '</div>', $html );
+        $html = str_replace( '</tr>', '</div>', $html );
+        $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
+        echo $html;
+    }
+}, 9999 );
+
+// AJAX Endpoint to save insurance selection immediately
+add_action('wp_ajax_set_shipping_insurance', 'ajax_set_shipping_insurance');
+add_action('wp_ajax_nopriv_set_shipping_insurance', 'ajax_set_shipping_insurance');
+function ajax_set_shipping_insurance() {
+    if ( isset($_POST['package']) ) {
+        WC()->session->set('shipping_insurance_package', sanitize_text_field($_POST['package']));
+        WC()->cart->calculate_totals();
+    }
+    wp_send_json_success();
+}
+
+// Add JavaScript to trigger the AJAX update on change
+add_action('wp_footer', function() {
+    if ( is_cart() || is_checkout() ) {
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+            $(document).on('change', 'input.shipping-insurance-radio', function() {
+                var selectedPackage = $(this).val();
+                
+                // Block the cart/checkout UI while updating
+                if ( $('form.checkout').length ) {
+                    $('form.checkout').addClass('processing').block({
+                        message: null,
+                        overlayCSS: { background: '#fff', opacity: 0.6 }
+                    });
+                }
+                if ( $('div.cart_totals').length ) {
+                    $('div.cart_totals').addClass('processing').block({
+                        message: null,
+                        overlayCSS: { background: '#fff', opacity: 0.6 }
+                    });
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                    data: {
+                        action: 'set_shipping_insurance',
+                        package: selectedPackage
+                    },
+                    success: function() {
+                        if ( $('form.checkout').length ) {
+                            $('body').trigger('update_checkout');
+                        } else {
+                            $('button[name="update_cart"]').prop('disabled', false).trigger('click');
+                            $('body').trigger('wc_update_cart');
+                        }
+                    }
+                });
+            });
+        });
+        </script>
+        <?php
+    }
+});
