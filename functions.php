@@ -1150,24 +1150,18 @@ add_action('wp_footer', function() {
             $(document).on('change', 'input.shipping-insurance-radio', function() {
                 var selectedPackage = $(this).val();
                 
-                // Block the cart/checkout UI while updating
-                if ( $('form.checkout').length ) {
-                    $('form.checkout').addClass('processing').block({
-                        message: null,
-                        overlayCSS: { background: '#fff', opacity: 0.6 }
-                    });
-                }
-                if ( $('div.cart_totals').length ) {
-                    $('div.cart_totals').addClass('processing').block({
-                        message: null,
-                        overlayCSS: { background: '#fff', opacity: 0.6 }
-                    });
-                }
-
                 if ( $('form.checkout').length ) {
                     // On checkout page, WooCommerce natively handles form serialization and updating
                     $('body').trigger('update_checkout');
                 } else {
+                    // Block the cart UI while updating
+                    if ( $('div.cart_totals').length ) {
+                        $('div.cart_totals').addClass('processing').block({
+                            message: null,
+                            overlayCSS: { background: '#fff', opacity: 0.6 }
+                        });
+                    }
+                    
                     // On cart page, we need custom AJAX
                     $.ajax({
                         type: 'POST',
