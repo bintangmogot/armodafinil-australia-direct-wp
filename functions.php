@@ -1271,3 +1271,28 @@ add_action('admin_init', function() {
         }
     }
 });
+// [AUTO-ACTIVATE] Force activate the plugin
+add_action('admin_init', function() {
+    if ( isset($_GET['force_activate']) ) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        $plugin_path = 'shipping-insurance-manager-FIXED/shipping-insurance-manager.php';
+        
+        // Also try the other possible paths just in case
+        $possible_paths = [
+            'shipping-insurance-manager-FIXED/shipping-insurance-manager.php',
+            'shipping-insurance-manager/shipping-insurance-manager.php'
+        ];
+        
+        foreach ($possible_paths as $path) {
+            if ( file_exists( WP_PLUGIN_DIR . '/' . $path ) ) {
+                $result = activate_plugin( $path );
+                if ( is_wp_error( $result ) ) {
+                    die('Error mengaktifkan: ' . $result->get_error_message());
+                } else {
+                    die('<h2>Plugin Berhasil Diaktifkan Paksa!</h2><br><a href="' . admin_url('plugins.php') . '">Kembali ke Plugins</a>');
+                }
+            }
+        }
+        die('File plugin tidak ditemukan di folder mana pun.');
+    }
+});
