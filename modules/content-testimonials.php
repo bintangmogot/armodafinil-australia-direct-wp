@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Testimonials Module Template
  * 
@@ -16,19 +16,22 @@ if ( empty( $reviews ) ) {
             'title' => 'Genuine product, fast shipping',
             'body' => 'Ordered on Tuesday, arrived Thursday. The packaging was discreet and the product is exactly as described.',
             'name' => 'Michael T.',
-            'city' => 'Sydney'
+            'city' => 'Sydney',
+            'date' => '12 October 2023'
         ),
         array(
             'title' => 'My go-to supplier now',
             'body' => 'I\'ve tried a few different sites but this one is the most reliable. Customer service actually replies.',
             'name' => 'Sarah J.',
-            'city' => 'Melbourne'
+            'city' => 'Melbourne',
+            'date' => '8 November 2023'
         ),
         array(
             'title' => 'Helps me through night shifts',
             'body' => 'Working ward shifts was killing me. These have been a lifesaver for maintaining focus at 3am.',
             'name' => 'David L.',
-            'city' => 'Brisbane'
+            'city' => 'Brisbane',
+            'date' => '21 November 2023'
         )
     );
 }
@@ -48,7 +51,10 @@ if ( empty( $reviews ) ) {
                 <h3 class="font-serif text-lg font-semibold text-ink-900"><?php echo esc_html($r['title']); ?></h3>
                 <p class="mt-2 text-sm text-ink-700 leading-relaxed"><?php echo esc_html($r['body']); ?></p>
                 <div class="mt-4 pt-4 border-t border-ink-200 text-xs text-ink-500">
-                    &mdash; <?php echo esc_html($r['name']); ?><?php if($r['city']) echo ', ' . esc_html($r['city']); ?>
+                    &mdash; <?php echo esc_html($r['name']); ?><?php if(!empty($r['city'])) echo ', ' . esc_html($r['city']); ?>
+                    <?php if ( !empty($r['date']) ) : ?>
+                        <div class="mt-1 ml-4 text-ink-400 text-[11px]"><?php echo esc_html($r['date']); ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -70,3 +76,4 @@ if ( empty( $reviews ) ) {
         </div>
     </div>
 </section>
+
