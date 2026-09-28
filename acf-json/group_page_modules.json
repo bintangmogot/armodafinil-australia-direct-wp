@@ -472,6 +472,14 @@
                                     "prepend": "",
                                     "append": "",
                                     "parent_repeater": "field_testi_reviews"
+                                },
+                                {
+                                    "key": "field_testi_rev_date",
+                                    "label": "Review Date",
+                                    "name": "date",
+                                    "type": "text",
+                                    "instructions": "e.g. 12 October 2023",
+                                    "parent_repeater": "field_testi_reviews"
                                 }
                             ]
                         }
