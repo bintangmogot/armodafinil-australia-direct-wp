@@ -1164,22 +1164,28 @@ add_action('wp_footer', function() {
                     });
                 }
 
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo admin_url('admin-ajax.php'); ?>',
-                    data: {
-                        action: 'set_shipping_insurance',
-                        package: selectedPackage
-                    },
-                    success: function() {
-                        if ( $('form.checkout').length ) {
-                            $('body').trigger('update_checkout');
-                        } else {
+                if ( $('form.checkout').length ) {
+                    // On checkout page, WooCommerce natively handles form serialization and updating
+                    $('body').trigger('update_checkout');
+                } else {
+                    // On cart page, we need custom AJAX
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        data: {
+                            action: 'set_shipping_insurance',
+                            package: selectedPackage
+                        },
+                        success: function() {
                             $('button[name="update_cart"]').prop('disabled', false).trigger('click');
                             $('body').trigger('wc_update_cart');
+                        },
+                        error: function() {
+                            // Unblock if it fails
+                            $('div.cart_totals').removeClass('processing').unblock();
                         }
-                    }
-                });
+                    });
+                }
             });
         });
         </script>
