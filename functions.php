@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 add_action('acf/init', function() {
     if( function_exists('acf_add_options_page') ) {
@@ -43,6 +43,7 @@ function armodafinil_australia_setup() {
         'footer_2'  => __('Footer Column 2', 'armodafinil-australia-direct'),
         'footer_3'  => __('Footer Column 3', 'armodafinil-australia-direct'),
         'footer_4'  => __('Footer Column 4', 'armodafinil-australia-direct'),
+        'footer_trending'  => __('Footer Trending Products', 'armodafinil-australia-direct'),
     ));
 
     add_theme_support( 'title-tag' );
@@ -1296,3 +1297,4 @@ function fix_initial_shipping_insurance_session() {
 
 add_action( 'woocommerce_cart_totals_before_order_total', function() { ob_start(); }, -9999 );
 add_action( 'woocommerce_cart_totals_before_order_total', function() { $html = ob_get_clean(); if ( $html ) { $td_start = strpos($html, '<td'); $td_end = strrpos($html, '</td>'); if ($td_start !== false && $td_end !== false) { $td_start = strpos($html, '>', $td_start) + 1; $inner_content = substr($html, $td_start, $td_end - $td_start); $inner_content = str_replace('</label><br>', '</label>', $inner_content); $inner_content = preg_replace('/<\/label>\s*<br>/', '</label>', $inner_content); $html = '<div class="shipping-insurance-wrapper mt-4 pt-4 border-t border-ink-200"><div class="flex flex-col gap-1.5 text-sm text-ink-600">' . $inner_content . '</div></div>'; $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : ''; if ( $selected_package === 'NO_INSURANCE' ) { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE" checked="checked"', $html ); } else { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE"', $html ); } } echo $html; } }, 9999 );
+
