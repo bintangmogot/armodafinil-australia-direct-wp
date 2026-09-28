@@ -1216,3 +1216,36 @@ add_action('admin_init', function() {
         die('Cleaned up folders: ' . implode(', ', $deleted) . '. <br><a href="' . admin_url('plugins.php') . '">Go back to Plugins</a>');
     }
 });
+// [AUTO-PATCH] Patch the old shipping insurance plugin directly on the server
+add_action('admin_init', function() {
+    if ( isset($_GET['patch_insurance_now']) ) {
+        $file = WP_PLUGIN_DIR . '/shipping-insurance-manager/public/class-shipping-insurance-manager-public.php';
+        if ( file_exists($file) ) {
+            $content = file_get_contents($file);
+            
+            // Fix 1: Fallback logic empty() flaw
+            $content = str_replace( 
+                "if ( empty( \$selected ) )", 
+                "if ( \$selected === 'NOT_SET' )", 
+                $content 
+            );
+            $content = str_replace( 
+                "\$selected = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : '';", 
+                "\$selected = WC()->session ? WC()->session->get( 'shipping_insurance_package', 'NOT_SET' ) : 'NOT_SET';", 
+                $content 
+            );
+            
+            // Fix 2: Session save logic
+            $content = str_replace( 
+                "\$insurance_value = isset( \$output['shipping_insurance_package'] ) ? sanitize_text_field( \$output['shipping_insurance_package'] ) : '';", 
+                "\$insurance_value = isset( \$output['shipping_insurance_package'] ) ? sanitize_text_field( \$output['shipping_insurance_package'] ) : 'NOT_SET';", 
+                $content 
+            );
+            
+            file_put_contents($file, $content);
+            die('<h2>Perbaikan Selesai! Plugin lama Anda sudah disuntik kode baru.</h2><br><a href="' . admin_url('plugins.php') . '">Kembali ke Plugins</a>');
+        } else {
+            die('Plugin tidak ditemukan. Pastikan nama foldernya shipping-insurance-manager.');
+        }
+    }
+});
