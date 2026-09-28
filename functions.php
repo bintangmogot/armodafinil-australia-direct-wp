@@ -124,7 +124,7 @@ add_action('wp_footer', function() {
         const syncLoopWishlist = () => {
             document.querySelectorAll('.loop-wishlist-btn').forEach(btn => {
                 const pid = btn.dataset.productId;
-                const container = document.querySelector( + ".loop-wishlist-plugin-container[data-product-id="$" + "{pid}"]" + );
+                const container = document.querySelector('.loop-wishlist-plugin-container[data-product-id="' + pid + '"]');
                 if(!container) return;
                 
                 const yithBtn = container.querySelector('.add_to_wishlist');
@@ -170,7 +170,7 @@ add_action('wp_footer', function() {
                 e.stopPropagation();
                 
                 const pid = btn.dataset.productId;
-                const container = document.querySelector( + ".loop-wishlist-plugin-container[data-product-id="$" + "{pid}"]" + );
+                const container = document.querySelector('.loop-wishlist-plugin-container[data-product-id="' + pid + '"]');
                 if(!container) return;
                 
                 const yithBtn = container.querySelector('.add_to_wishlist');
