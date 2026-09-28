@@ -842,13 +842,15 @@ add_action( 'woocommerce_review_order_before_order_total', function() {
 add_action( 'woocommerce_review_order_before_order_total', function() {
     $html = ob_get_clean();
     if ( $html ) {
-        // Rewrite the invalid table rows to theme-compatible divs
-        $html = str_replace( '<tr class="shipping-insurance">', '<div class="shipping-insurance pt-2">', $html );
-        // Completely remove the TH block so it doesn't show the duplicate text
+        // Rewrite the table structure to span both columns and maintain valid DOM
+        $html = str_replace( '<tr class="shipping-insurance">', '<tr class="shipping-insurance"><td colspan="2" class="!p-0 !border-0 pb-2">', $html );
+        // Remove the original TH
         $html = preg_replace( '/<th>.*?<\/th>/is', '', $html );
-        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600">', $html );
-        $html = str_replace( '</td>', '</div>', $html );
-        $html = str_replace( '</tr>', '</div>', $html );
+        // Replace TD with a flex div for vertical stacking
+        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600 mt-2">', $html );
+        // Close the flex div and the TD
+        $html = str_replace( '</td>', '</div></td>', $html );
+        // Remove rogue BR tags between labels
         $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
         echo $html;
     }
@@ -1114,11 +1116,15 @@ add_action( 'woocommerce_cart_totals_before_order_total', function() {
 add_action( 'woocommerce_cart_totals_before_order_total', function() {
     $html = ob_get_clean();
     if ( $html ) {
-        $html = str_replace( '<tr class="shipping-insurance">', '<div class="shipping-insurance pt-2">', $html );
+        // Rewrite the table structure to span both columns and maintain valid DOM
+        $html = str_replace( '<tr class="shipping-insurance">', '<tr class="shipping-insurance"><td colspan="2" class="!p-0 !border-0 pb-2">', $html );
+        // Remove the original TH
         $html = preg_replace( '/<th>.*?<\/th>/is', '', $html );
-        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600">', $html );
-        $html = str_replace( '</td>', '</div>', $html );
-        $html = str_replace( '</tr>', '</div>', $html );
+        // Replace TD with a flex div for vertical stacking
+        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600 mt-2">', $html );
+        // Close the flex div and the TD
+        $html = str_replace( '</td>', '</div></td>', $html );
+        // Remove rogue BR tags between labels
         $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
         echo $html;
     }
