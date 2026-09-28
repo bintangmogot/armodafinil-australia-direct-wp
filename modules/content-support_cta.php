@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $title = get_sub_field('title') ?: 'Prefer help while you order?';
 $desc = get_sub_field('desc') ?: 'Our support team answers WhatsApp and email during Australian business hours — usually within minutes.';
 $chat_btn_text = get_sub_field('chat_btn_text') ?: 'Chat now';

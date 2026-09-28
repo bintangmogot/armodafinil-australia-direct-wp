@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 global $wp_query;
 
 if ( ! woocommerce_product_loop() ) {

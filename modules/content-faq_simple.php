@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Simple FAQ Module Template (No Categories)
  */

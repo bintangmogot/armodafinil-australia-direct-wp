@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * The footer for our theme
  *
@@ -39,17 +39,17 @@
 					<a href="<?php echo esc_url(get_field('twitter_link', 'option')); ?>" aria-label="Twitter" target="_blank" rel="noopener noreferrer" class="w-9 h-9 grid place-items-center rounded-full bg-white/5 hover:bg-white/10">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
 					</a>
-					</div>
+					<?php endif; ?>
+				</div>
 			</div>
 
-						<div>
+			<div>
 				<div class="text-white font-semibold mb-3 text-sm uppercase tracking-widest">Shop</div>
 				<?php wp_nav_menu(array('theme_location' => 'footer_1', 'menu_class' => 'space-y-2 text-sm text-ink-100/80', 'fallback_cb' => false)); ?>
                 
-                
                 <div class="text-white font-semibold mt-8 mb-3 text-sm uppercase tracking-widest">Trending Products</div>
                 <?php wp_nav_menu(array('theme_location' => 'footer_trending', 'menu_class' => 'space-y-2 text-sm text-ink-100/80', 'fallback_cb' => false)); ?>
-                </div>
+			</div>
 			<div>
 				<div class="text-white font-semibold mb-3 text-sm uppercase tracking-widest">Help</div>
 				<?php wp_nav_menu(array('theme_location' => 'footer_2', 'menu_class' => 'space-y-2 text-sm text-ink-100/80', 'fallback_cb' => false)); ?>
@@ -85,7 +85,8 @@
 					<?php endif; ?>
 					<?php if ( $support_phone = get_field('whatsapp_number', 'option') ) : ?>
 					<span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-300"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <?php echo esc_html($support_phone); ?></span>
-					</div>
+					<?php endif; ?>
+				</div>
 				<div class="flex flex-wrap items-center gap-4 mt-4 md:mt-0">
 					<?php if ( $copyright_text = get_field('copyright_text', 'option') ) : ?>
 					<div><?php echo wp_kses_post($copyright_text); ?></div>
@@ -183,8 +184,6 @@
 <?php get_template_part( 'template-parts/search-modal' ); ?>
 </body>
 </html>
-
-
 
 
 

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * FAQ Module Template (Advanced JS Filter)
  * 
