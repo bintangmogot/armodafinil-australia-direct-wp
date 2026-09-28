@@ -1186,3 +1186,27 @@ add_action('wp_footer', function() {
         <?php
     }
 });
+// [AUTO-CLEANUP] Remove all broken shipping insurance plugins
+add_action('admin_init', function() {
+    if ( isset($_GET['clean_insurance_plugins']) ) {
+        $plugins_dir = WP_PLUGIN_DIR . '/';
+        $folders_to_delete = glob($plugins_dir . '*shipping-insurance*');
+        $deleted = [];
+        foreach ($folders_to_delete as $folder) {
+            if (is_dir($folder)) {
+                // Delete recursively
+                $files = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($folder, RecursiveDirectoryIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::CHILD_FIRST
+                );
+                foreach ($files as $fileinfo) {
+                    $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                    @$todo($fileinfo->getRealPath());
+                }
+                @rmdir($folder);
+                $deleted[] = basename($folder);
+            }
+        }
+        die('Cleaned up folders: ' . implode(', ', $deleted) . '. <br><a href="' . admin_url('plugins.php') . '">Go back to Plugins</a>');
+    }
+});
