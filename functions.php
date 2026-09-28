@@ -835,34 +835,7 @@ add_action( 'wp_footer', function() {
 } );
 
 // Tidy up Shipping Insurance Layout by buffering and rewriting the HTML
-add_action( 'woocommerce_review_order_before_order_total', function() {
-    ob_start();
-}, -9999 );
-
-add_action( 'woocommerce_review_order_before_order_total', function() {
-    $html = ob_get_clean();
-    if ( $html ) {
-        // Rewrite the table structure to span both columns and maintain valid DOM
-        $html = str_replace( '<tr class="shipping-insurance">', '<tr class="shipping-insurance"><td colspan="2" class="!p-0 !border-0 pb-2">', $html );
-        // Remove the original TH
-        $html = preg_replace( '/<th>.*?<\/th>/is', '', $html );
-        // Replace TD with a flex div for vertical stacking
-        $html = str_replace( '<td>', '<div class="flex flex-col gap-1.5 text-sm text-ink-600 mt-2">', $html );
-        // Close the flex div and the TD
-        $html = str_replace( '</td>', '</div></td>', $html );
-        // Remove rogue BR tags between labels
-        $html = preg_replace( '/<\/label>\s*<br>/', '</label>', $html );
-        
-        // [NO INSURANCE BUG FIX] Intercept the plugin's empty value and use a NO_INSURANCE sentinel
-        $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : '';
-        if ( $selected_package === 'NO_INSURANCE' ) {
-            $html = str_replace( 'value=""', 'value="NO_INSURANCE" checked="checked"', $html );
-        } else {
-            $html = str_replace( 'value=""', 'value="NO_INSURANCE"', $html );
-        }
-        echo $html;
-    }
-}, 9999 );
+add_action( 'woocommerce_review_order_before_order_total', function() { ob_start(); }, -9999 ); add_action( 'woocommerce_review_order_before_order_total', function() { $html = ob_get_clean(); if ( $html ) { $td_start = strpos($html, '<td'); $td_end = strrpos($html, '</td>'); if ($td_start !== false && $td_end !== false) { $td_start = strpos($html, '>', $td_start) + 1; $inner_content = substr($html, $td_start, $td_end - $td_start); $inner_content = str_replace('</label><br>', '</label>', $inner_content); $inner_content = preg_replace('/<\/label>\s*<br>/', '</label>', $inner_content); $html = '<div class="shipping-insurance-wrapper mt-4 pt-4 border-t border-ink-200"><div class="flex flex-col gap-1.5 text-sm text-ink-600">' . $inner_content . '</div></div>'; $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : ''; if ( $selected_package === 'NO_INSURANCE' ) { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE" checked="checked"', $html ); } else { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE"', $html ); } } echo $html; } }, 9999 );
 
 
 
@@ -1320,3 +1293,6 @@ function fix_initial_shipping_insurance_session() {
         WC()->session->set('shipping_insurance_package', 'NO_INSURANCE');
     }
 }
+
+add_action( 'woocommerce_cart_totals_before_order_total', function() { ob_start(); }, -9999 );
+add_action( 'woocommerce_cart_totals_before_order_total', function() { $html = ob_get_clean(); if ( $html ) { $td_start = strpos($html, '<td'); $td_end = strrpos($html, '</td>'); if ($td_start !== false && $td_end !== false) { $td_start = strpos($html, '>', $td_start) + 1; $inner_content = substr($html, $td_start, $td_end - $td_start); $inner_content = str_replace('</label><br>', '</label>', $inner_content); $inner_content = preg_replace('/<\/label>\s*<br>/', '</label>', $inner_content); $html = '<div class="shipping-insurance-wrapper mt-4 pt-4 border-t border-ink-200"><div class="flex flex-col gap-1.5 text-sm text-ink-600">' . $inner_content . '</div></div>'; $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : ''; if ( $selected_package === 'NO_INSURANCE' ) { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE" checked="checked"', $html ); } else { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE"', $html ); } } echo $html; } }, 9999 );

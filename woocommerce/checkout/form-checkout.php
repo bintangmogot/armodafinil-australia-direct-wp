@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (originalName) {
                 $proxy.attr('data-checkout-input-name', originalName);
-                $proxy.removeAttr('name');
+                $proxy.attr('name', 'proxy_' + originalName);
             }
 
             if ($proxy.is(':radio, :checkbox')) {
@@ -211,23 +211,46 @@ document.addEventListener('DOMContentLoaded', function() {
             var val = $this.val();
             // Find the real radio in the form and trigger change
             var $realInput = $('#order_review input[name="' + name + '"][value="' + val + '"]');
-            if ($realInput.length) {
-                $realInput.addClass('update_totals_on_change').prop('checked', true).trigger('change');
-            }
+            if ($realInput.length && !$realInput.prop('checked')) { $realInput.addClass('update_totals_on_change').prop('checked', true).trigger('change'); }
         } else if (type === 'checkbox') {
             var isChecked = $this.prop('checked');
             var $realInput = $('#order_review input[name="' + name + '"]');
-            if ($realInput.length) {
-                $realInput.addClass('update_totals_on_change').prop('checked', isChecked).trigger('change');
-            }
+            if ($realInput.length && $realInput.prop('checked') !== isChecked) { $realInput.addClass('update_totals_on_change').prop('checked', isChecked).trigger('change'); }
         } else {
             var $realInput = $('#order_review input[name="' + name + '"]');
-            if ($realInput.length) {
-                $realInput.addClass('update_totals_on_change').val($this.val()).trigger('change');
-            }
+            if ($realInput.length && $realInput.val() !== $this.val()) { $realInput.addClass('update_totals_on_change').val($this.val()).trigger('change'); }
         }
     });
-    
+
+    // Sync totals from AJAX response manually since DOM replacement is disabled
+    $(document.body).on('updated_checkout', function(e, data) {
+        if (data && data.fragments && data.fragments['.woocommerce-checkout-review-order-table']) {
+            var $newHTML = $(data.fragments['.woocommerce-checkout-review-order-table']);
+            
+            // Sync Order Total
+            var newTotal = $newHTML.find('.order-total .amount').html();
+            if (newTotal) {
+                $('.order-total .amount').html(newTotal);
+                $('.sidebar-summary-container .order-total .amount').html(newTotal);
+            }
+            
+            // Sync Shipping method amounts/labels if they changed
+            $newHTML.find('.shipping_method').each(function() {
+                var id = $(this).attr('id');
+                var $newLabel = $newHTML.find('label[for="' + id + '"]');
+                if ($newLabel.length) {
+                    $('label[for="' + id + '"]').html($newLabel.html());
+                }
+            });
+            
+            // Remove lingering loading overlay
+            $('.sidebar-summary-container').css({opacity: 1});
+            
+            // Update sidebar proxy HTML
+            setTimeout(updateSidebar, 50);
+        }
+    });
+
     // Initial update
     updateSidebar();
 });
@@ -368,6 +391,8 @@ input[type="radio"], input[type="checkbox"] {
 }
 .medical-info-fields-wrapper h3 { font-family: "Playfair Display", ui-serif, Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #09152b; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; } 
 </style>
+
+
 
 
 
