@@ -1287,7 +1287,58 @@ add_action('admin_init', function() {
     }
 });
 
+
+
+
+
 add_action( 'woocommerce_cart_totals_before_order_total', function() { ob_start(); }, -9999 );
 add_action( 'woocommerce_cart_totals_before_order_total', function() { $html = ob_get_clean(); if ( $html ) { $td_start = strpos($html, '<td'); $td_end = strrpos($html, '</td>'); if ($td_start !== false && $td_end !== false) { $td_start = strpos($html, '>', $td_start) + 1; $inner_content = substr($html, $td_start, $td_end - $td_start); $inner_content = str_replace('</label><br>', '</label>', $inner_content); $inner_content = preg_replace('/<\/label>\s*<br>/', '</label>', $inner_content); $html = '<div class="shipping-insurance-wrapper mt-4 pt-4 border-t border-ink-200"><div class="flex flex-col gap-1.5 text-sm text-ink-600">' . $inner_content . '</div></div>'; $selected_package = WC()->session ? WC()->session->get( 'shipping_insurance_package' ) : ''; if ( $selected_package === 'NO_INSURANCE' ) { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE" checked="checked"', $html ); } else { $html = preg_replace( '/name="shipping_insurance_package"\s*value=""/is', 'name="shipping_insurance_package" value="NO_INSURANCE"', $html ); } } echo $html; } }, 9999 );
 
 
+// [SHIPPING INSURANCE FIX] Correctly apply default insurance session on first load
+add_action('woocommerce_cart_calculate_fees', 'force_shipping_insurance_default', 1);
+function force_shipping_insurance_default($cart) {
+    if ( ! WC()->session ) return;
+    $selected = WC()->session->get('shipping_insurance_package', 'NOT_SET');
+    if ($selected === 'NOT_SET' || $selected === '') {
+        $default_option = get_option('shipping_insurance_default_option', 'no_insurance');
+        
+        if ( in_array( $default_option, array( 'most_expensive', 'least_expensive' ), true ) ) {
+            $packages = get_option( 'shipping_insurance_packages', array() );
+            $default_index = '';
+            $default_fee   = null;
+            $cart_total = 0;
+            // Get subtotal
+            foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+                $cart_total += $cart_item['line_total'];
+            }
+            
+            foreach ( $packages as $index => $package ) {
+                if ( isset( $package['enabled'] ) && 'yes' === $package['enabled'] ) {
+                    $fee = 0;
+                    if ( 'fixed' === $package['type'] ) { 
+                        $fee = floatval($package['amount']); 
+                    } elseif ( 'percentage' === $package['type'] ) { 
+                        $fee = (floatval($package['amount']) / 100) * $cart_total; 
+                    }
+                    if ( 'most_expensive' === $default_option ) {
+                        if ( is_null($default_fee) || $fee > $default_fee ) { 
+                            $default_fee = $fee; $default_index = $index; 
+                        }
+                    } else {
+                        if ( is_null($default_fee) || $fee < $default_fee ) { 
+                            $default_fee = $fee; $default_index = $index; 
+                        }
+                    }
+                }
+            }
+            if ($default_index !== '') {
+                WC()->session->set('shipping_insurance_package', $default_index);
+            } else {
+                WC()->session->set('shipping_insurance_package', 'NO_INSURANCE');
+            }
+        } else {
+            WC()->session->set('shipping_insurance_package', 'NO_INSURANCE');
+        }
+    }
+}
