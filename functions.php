@@ -150,18 +150,7 @@ add_action('wp_footer', function() {
             });
         };
 
-                // Removed inner toggle
-            const text = btn.previousElementSibling;
-            if (text.classList.contains('line-clamp-2')) {
-                text.classList.remove('line-clamp-2');
-                btn.innerHTML = 'Read less &gt;&gt;';
-            } else {
-                text.classList.add('line-clamp-2');
-                btn.innerHTML = 'Read more &gt;&gt;';
-            }
-        };
-
-        syncLoopWishlist();
+                syncLoopWishlist();
         setInterval(syncLoopWishlist, 500);
 
         document.querySelectorAll('.loop-wishlist-btn').forEach(btn => {
