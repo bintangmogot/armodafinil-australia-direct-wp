@@ -2192,6 +2192,34 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": ""
+                        },
+                        {
+                            "key": "field_sc_chat_text",
+                            "label": "Chat Button Text",
+                            "name": "chat_btn_text",
+                            "type": "text",
+                            "default_value": "Chat now"
+                        },
+                        {
+                            "key": "field_sc_chat_url",
+                            "label": "Chat Button URL",
+                            "name": "chat_btn_url",
+                            "type": "url",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_sc_email_text",
+                            "label": "Email Button Text",
+                            "name": "email_btn_text",
+                            "type": "text",
+                            "default_value": "Email us"
+                        },
+                        {
+                            "key": "field_sc_email_url",
+                            "label": "Email Button URL (mailto:)",
+                            "name": "email_btn_url",
+                            "type": "text",
+                            "default_value": "mailto:support@armodafinilaustralia.com.au"
                         }
                     ],
                     "min": "",
