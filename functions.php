@@ -1,3 +1,71 @@
+// [AUTO-POPULATE SITEMAP] Run once to populate ACF fields for the sitemap
+add_action('init', function() {
+    if ( ! get_option('sitemap_acf_populated_v1') && function_exists('have_rows') ) {
+        // Find the sitemap page
+        $pages = get_pages(array(
+            'meta_key' => '_wp_page_template',
+            'meta_value' => 'page-sitemap.php',
+            'number' => 1
+        ));
+        
+        if ( ! empty($pages) ) {
+            $post_id = $pages[0]->ID;
+            
+            // Only populate if it's currently empty
+            if ( ! have_rows('sitemap_columns', $post_id) ) {
+                $columns = array(
+                    array(
+                        'column_title' => 'Main Pages',
+                        'links' => array(
+                            array('link' => array('url' => '/', 'title' => 'Home', 'target' => '')),
+                            array('link' => array('url' => '/shop/', 'title' => 'Shop', 'target' => '')),
+                            array('link' => array('url' => '/adelaide/', 'title' => 'Adelaide', 'target' => '')),
+                            array('link' => array('url' => '/blog/', 'title' => 'Blog', 'target' => '')),
+                            array('link' => array('url' => '/brisbane/', 'title' => 'Brisbane', 'target' => '')),
+                            array('link' => array('url' => '/cart/', 'title' => 'Cart', 'target' => '')),
+                            array('link' => array('url' => '/checkout/', 'title' => 'Checkout', 'target' => '')),
+                            array('link' => array('url' => '/darwin/', 'title' => 'Darwin', 'target' => '')),
+                            array('link' => array('url' => '/how-to-order/', 'title' => 'How to Order', 'target' => '')),
+                            array('link' => array('url' => '/melbourne/', 'title' => 'Melbourne', 'target' => '')),
+                            array('link' => array('url' => '/perth/', 'title' => 'Perth', 'target' => '')),
+                            array('link' => array('url' => '/reviews/', 'title' => 'Reviews', 'target' => '')),
+                            array('link' => array('url' => '/sydney/', 'title' => 'Sydney', 'target' => ''))
+                        )
+                    ),
+                    array(
+                        'column_title' => 'Shop Categories',
+                        'links' => array(
+                            array('link' => array('url' => '/product-category/armodafinil/', 'title' => 'Armodafinil', 'target' => '')),
+                            array('link' => array('url' => '/product-category/modafinil/', 'title' => 'Modafinil', 'target' => '')),
+                            array('link' => array('url' => '/product-category/uncategorized/', 'title' => 'Uncategorized', 'target' => ''))
+                        )
+                    ),
+                    array(
+                        'column_title' => 'Help & Support',
+                        'links' => array(
+                            array('link' => array('url' => '/about/', 'title' => 'About', 'target' => '')),
+                            array('link' => array('url' => '/contact/', 'title' => 'Contact', 'target' => '')),
+                            array('link' => array('url' => '/faq/', 'title' => 'FAQs', 'target' => ''))
+                        )
+                    ),
+                    array(
+                        'column_title' => 'Legal & Policies',
+                        'links' => array(
+                            array('link' => array('url' => '/medical-website-disclaimer/', 'title' => 'Medical & Website Disclaimer', 'target' => '')),
+                            array('link' => array('url' => '/return-refund-policy/', 'title' => 'Return & Refund Policy', 'target' => '')),
+                            array('link' => array('url' => '/shipping-policy/', 'title' => 'Shipping Policy', 'target' => '')),
+                            array('link' => array('url' => '/terms-of-service/', 'title' => 'Terms of Service', 'target' => ''))
+                        )
+                    )
+                );
+                
+                update_field('sitemap_columns', $columns, $post_id);
+            }
+            update_option('sitemap_acf_populated_v1', true);
+        }
+    }
+});
+
 <?php
 
 add_action('acf/init', function() {
