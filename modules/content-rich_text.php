@@ -13,7 +13,7 @@ if ( $width === 'narrow' ) {
 ?>
 <section class="py-12 md:py-16 bg-white">
     <div class="<?php echo esc_attr($max_width_class); ?> mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="prose prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700 mx-auto">
+        <div class="prose max-w-none prose-ink prose-brand prose-a:text-brand-600 hover:prose-a:text-brand-700 mx-auto">
             <?php echo wp_kses_post($content); ?>
         </div>
     </div>
