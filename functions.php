@@ -1,3 +1,4 @@
+<?php
 // [AUTO-POPULATE SITEMAP] Run once to populate ACF fields for the sitemap
 add_action('init', function() {
     if ( ! get_option('sitemap_acf_populated_v1') && function_exists('have_rows') ) {
@@ -59,14 +60,12 @@ add_action('init', function() {
                     )
                 );
                 
-                update_field('sitemap_columns', $columns, $post_id);
+                update_field('field_sitemap_columns', $columns, $post_id);
             }
             update_option('sitemap_acf_populated_v1', true);
         }
     }
 });
-
-<?php
 
 add_action('acf/init', function() {
     if( function_exists('acf_add_options_page') ) {
