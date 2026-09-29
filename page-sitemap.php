@@ -84,7 +84,26 @@ foreach ($all_pages as $p) {
         
         <div class="bg-white border border-ink-200 rounded-2xl p-8 md:p-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 sitemap-list">
-                
+                <?php if ( have_rows('sitemap_columns') ) : ?>
+                    <?php while ( have_rows('sitemap_columns') ) : the_row(); ?>
+                        <div>
+                            <h2><?php echo esc_html(get_sub_field('column_title')); ?></h2>
+                            <ul>
+                                <?php if ( have_rows('links') ) : ?>
+                                    <?php while ( have_rows('links') ) : the_row(); 
+                                        $link = get_sub_field('link');
+                                        if ( $link ) :
+                                            $link_url = $link['url'];
+                                            $link_title = $link['title'];
+                                            $link_target = $link['target'] ? $link['target'] : '_self';
+                                    ?>
+                                        <li><a href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>"><?php echo esc_html( $link_title ); ?></a></li>
+                                    <?php endif; endwhile; ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else : ?>
                 <!-- Main Pages -->
                 <div>
                     <h2>Main Pages</h2>
@@ -146,6 +165,7 @@ foreach ($all_pages as $p) {
                         <?php endif; ?>
                     </ul>
                 </div>
+                <?php endif; ?>
 
             </div>
         </div>
