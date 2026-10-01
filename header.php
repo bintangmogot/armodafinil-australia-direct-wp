@@ -26,13 +26,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m15 18-6-6 6-6"/></svg> Cart
             </a>
             
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2 shrink-0 min-w-0">
-                <span class="w-8 h-8 shrink-0 rounded-lg bg-brand-600 grid place-items-center text-white shadow-soft">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                </span>
-                <span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
-                    <span class="block font-serif text-[15px] sm:text-base font-bold text-brand-700 leading-none truncate">Armodafinil Direct</span>
-                </span>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink-0 min-w-0">
+                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" class="h-8 md:h-10 w-auto object-contain">
             </a>
 
             <div class="flex items-center gap-1.5 text-brand-700 text-sm font-medium">
@@ -65,14 +60,8 @@
 	<!-- Navbar -->
 	<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-ink-200">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-2 sm:gap-4">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2 shrink-0 min-w-0">
-				<span class="w-9 h-9 shrink-0 rounded-xl bg-brand-600 grid place-items-center text-white shadow-soft">
-					<!-- Sparkles Icon -->
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-				</span>
-				<span class="leading-tight min-w-0 max-w-[120px] sm:max-w-none">
-					<span class="block font-serif text-base sm:text-lg font-semibold text-ink-900 leading-none truncate">Armodafinil Direct</span>
-				</span>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink-0 min-w-0">
+                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" class="h-9 md:h-11 w-auto object-contain">
 			</a>
 
 			<nav class="hidden lg:flex items-center gap-1 ml-4">
