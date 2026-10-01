@@ -15,7 +15,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg-grid-cols-6-fix gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-block bg-white px-3 py-2 rounded-xl mb-1">
-                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" class="h-8 w-auto object-contain">
+                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" class="h-6 w-auto object-contain">
 				</a>
 				<?php if ( $footer_desc = get_field('footer_description', 'option') ) : 
 					$footer_desc = str_replace('Legal Disclaimer:', '<br><br><span class="opacity-50 uppercase tracking-widest text-[10px] font-bold block mb-1">Legal Disclaimer:</span>', $footer_desc);
