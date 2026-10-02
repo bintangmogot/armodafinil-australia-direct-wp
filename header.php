@@ -27,7 +27,7 @@
             </a>
             
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink-0 min-w-0">
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" style="height: 32px !important; width: auto !important; max-width: 200px; object-fit: contain;">
+                <img src="<?php $custom_logo_id = get_theme_mod("custom_logo"); echo $custom_logo_id ? esc_url(wp_get_attachment_image_url($custom_logo_id, "full")) : esc_url(get_template_directory_uri() . "/assets/logo.png"); ?>" alt="Armodafinil Direct" style="height: 32px !important; width: auto !important; max-width: 200px; object-fit: contain;">
             </a>
 
             <div class="flex items-center gap-1.5 text-brand-700 text-sm font-medium">
@@ -52,7 +52,7 @@
             $wa_phone = (strpos($clean_phone, '0') === 0) ? '61' . substr($clean_phone, 1) : $clean_phone;
             ?>
             <a href="https://wa.me/<?php echo esc_attr($wa_phone); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
-                CallÃ°Å¸â€œÅ¾ : <?php echo esc_html($support_phone); ?>
+                CallÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â¾ : <?php echo esc_html($support_phone); ?>
             </a>
         </div>
     </div>
@@ -61,7 +61,7 @@
 	<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-ink-200">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-2 sm:gap-4">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink-0 min-w-0">
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" style="height: 44px !important; width: auto !important; max-width: 250px; object-fit: contain;">
+                <img src="<?php $custom_logo_id = get_theme_mod("custom_logo"); echo $custom_logo_id ? esc_url(wp_get_attachment_image_url($custom_logo_id, "full")) : esc_url(get_template_directory_uri() . "/assets/logo.png"); ?>" alt="Armodafinil Direct" style="height: 44px !important; width: auto !important; max-width: 250px; object-fit: contain;">
 			</a>
 
 			<nav class="hidden lg:flex items-center gap-1 ml-4">

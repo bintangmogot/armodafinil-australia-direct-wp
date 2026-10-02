@@ -1436,3 +1436,16 @@ add_action('wp_head', function() {
         <?php
     }
 });
+
+// [AUTO-INJECT] Sync WooCommerce Email Header Image with Site Logo
+add_filter('option_woocommerce_email_header_image_url', function($value) {
+    $custom_logo_id = get_theme_mod('custom_logo');
+    if ( $custom_logo_id ) {
+        $logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
+        if ( $logo_url ) {
+            return $logo_url;
+        }
+    }
+    // Fallback to theme assets logo if no custom logo is set
+    return get_template_directory_uri() . '/assets/logo.png';
+});

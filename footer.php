@@ -15,7 +15,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg-grid-cols-6-fix gap-8">
 			<div class="col-span-2 lg:col-span-2">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-block bg-white px-3 py-2 rounded-xl mb-1">
-                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/logo.png" alt="Armodafinil Direct" style="height: 36px !important; width: auto !important; max-width: 220px; object-fit: contain;">
+                    <img src="<?php $custom_logo_id = get_theme_mod("custom_logo"); echo $custom_logo_id ? esc_url(wp_get_attachment_image_url($custom_logo_id, "full")) : esc_url(get_template_directory_uri() . "/assets/logo.png"); ?>" alt="Armodafinil Direct" style="height: 36px !important; width: auto !important; max-width: 220px; object-fit: contain;">
 				</a>
 				<?php if ( $footer_desc = get_field('footer_description', 'option') ) : 
 					$footer_desc = str_replace('Legal Disclaimer:', '<br><br><span class="opacity-50 uppercase tracking-widest text-[10px] font-bold block mb-1">Legal Disclaimer:</span>', $footer_desc);
