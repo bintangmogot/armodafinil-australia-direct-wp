@@ -13,7 +13,7 @@ $cta_url   = get_sub_field('cta_url');
 $product_obj = get_sub_field('featured_product');
 
 // Default product values in case none selected
-$p_title = 'Armodafinil 250mg — Artvigil 250mg';
+$p_title = 'Armodafinil 250mg â€” Artvigil 250mg';
 $p_image = 'https://placehold.co/800x450/e0f2fe/0369a1?text=Product+Image';
 $p_price_html = '$185.00';
 $p_stock = 'In stock';
@@ -107,9 +107,7 @@ $wrapper_classes = $has_text_content
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
                 <?php endif; ?>
-                <a href="/how-to-order/" class="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors">
-                    How to order
-                </a>
+                
             </div>
         </div>
         <?php endif; ?>
