@@ -45,7 +45,7 @@ if ($review_count > 0) {
 <div class="product group bg-white border border-ink-200 rounded-2xl overflow-hidden hover-lift flex flex-col relative" data-product-id="<?php echo $product->get_id(); ?>">
     
     <div class="aspect-square bg-white border-b border-ink-200 relative">
-        <a href="<?php echo esc_url( $link ); ?>" class="block w-full h-full">
+        <a href="<?php echo esc_url( $link ); ?>" target="_blank" class="block w-full h-full">
             <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-sm" />
         </a>
         <span class="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider text-brand-800 bg-brand-200/80 backdrop-blur-sm px-2.5 py-1 rounded-full pointer-events-none">
@@ -56,7 +56,7 @@ if ($review_count > 0) {
         </span>
     </div>
     
-    <a href="<?php echo esc_url( $link ); ?>" class="p-5 border-t border-ink-100 flex flex-col flex-1 hover:no-underline">
+    <a href="<?php echo esc_url( $link ); ?>" target="_blank" class="p-5 border-t border-ink-100 flex flex-col flex-1 hover:no-underline">
         <h3 class="font-serif text-lg font-semibold text-ink-900 group-hover:text-brand-700 transition-colors"><?php echo esc_html($product->get_name()); ?></h3>
         <div class="product-desc-wrapper mt-1">
             <p class="product-desc-text text-sm text-ink-500 line-clamp-2 transition-all duration-300">

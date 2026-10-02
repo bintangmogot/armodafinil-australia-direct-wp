@@ -13,7 +13,7 @@ $cta_url   = get_sub_field('cta_url');
 $product_obj = get_sub_field('featured_product');
 
 // Default product values in case none selected
-$p_title = 'Armodafinil 250mg â€” Artvigil 250mg';
+$p_title = 'Armodafinil 250mg Ã¢â‚¬â€ Artvigil 250mg';
 $p_image = 'https://placehold.co/800x450/e0f2fe/0369a1?text=Product+Image';
 $p_price_html = '$185.00';
 $p_stock = 'In stock';
@@ -114,7 +114,7 @@ $wrapper_classes = $has_text_content
 
         <div class="bg-white rounded-[24px] border border-ink-200 shadow-card animate-fadeup p-3 md:p-4 w-full" id="hero-product-<?php echo esc_attr($p_id); ?>">
             <!-- Image Box with border instead of full bleed -->
-            <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
+            <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="block aspect-[16/9] bg-white rounded-2xl border border-ink-100 overflow-hidden relative group">
                 <!-- Most Popular Badge -->
                 <div class="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-ink-900 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md backdrop-blur-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -126,7 +126,7 @@ $wrapper_classes = $has_text_content
             <div class="p-3 md:p-4 pb-1">
                 <div class="flex items-start justify-between gap-3">
                     <h3 class="font-serif text-2xl font-bold text-ink-900 leading-tight">
-                        <a href="<?php echo esc_url($p_url); ?>" class="hover:text-brand-600 transition-colors"><?php echo esc_html( $p_title ); ?></a>
+                        <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="hover:text-brand-600 transition-colors"><?php echo esc_html( $p_title ); ?></a>
                     </h3>
                     <span class="shrink-0 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full"><?php echo esc_html( $p_stock ); ?></span>
                 </div>

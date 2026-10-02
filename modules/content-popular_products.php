@@ -69,7 +69,7 @@ $products = get_sub_field('products');
                     }
             ?>
             <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2.5">
-                <a href="<?php echo esc_url($p_url); ?>" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
+                <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
                     <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_name); ?>" loading="lazy" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
                 </a>
                 <div class="px-3 pt-4 pb-2 flex flex-col gap-3 flex-1">
@@ -99,7 +99,7 @@ $products = get_sub_field('products');
                         </span>
                     </div>
 
-                    <a href="<?php echo esc_url($p_url); ?>" class="font-serif text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
+                    <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="font-serif text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
                     
                     <div class="flex items-baseline gap-2 mt-auto">
                         <span class="text-xl font-bold text-ink-900 price-html-wrapper tracking-tight"><?php echo $p_price_html; ?></span>
@@ -110,7 +110,7 @@ $products = get_sub_field('products');
                         <?php echo $product->is_in_stock() ? 'In Stock' : 'Out of Stock'; ?>
                     </div>
                     
-                    <form action="<?php echo esc_url( $p_url ); ?>" method="get" class="mt-1">
+                    <form action="<?php echo esc_url( $p_url ); ?>" method="get" target="_blank" class="mt-1">
                         <button type="submit" class="w-full inline-flex justify-center items-center gap-2 h-11 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold transition-all hover:shadow-md hover:shadow-brand-600/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> 
                             View Details
