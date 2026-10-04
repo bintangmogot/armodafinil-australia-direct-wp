@@ -5630,10 +5630,4 @@ body {
     }
 }
 
-/* Hide Gutenberg numbers manually added by block plugins (Kadence/Spectra) inside blog posts */
-.prose h2 .kt-title-number, 
-.prose h2 .spectra-heading-number,
-.prose h2 .wp-block-kadence-advancedheading .kt-title-number,
-.prose h3 .kt-title-number {
-    display: none !important;
-}
+
