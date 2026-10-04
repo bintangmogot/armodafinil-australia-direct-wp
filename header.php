@@ -39,7 +39,7 @@
 	<!-- TopBar -->
 	    <div class="w-full bg-ink-900 text-white text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
-            <p class="opacity-90 font-medium tracking-wide">OPEN 7 DAYS</p>
+            <p class="opacity-90 font-medium tracking-wide"><?php echo ($t = get_field("topbar_left", "option")) ? esc_html($t) : ""; ?></p>
             <?php if ( $topbar_center = get_field('topbar_center', 'option') ) : ?>
             <p class="opacity-90 hidden md:block"><?php echo esc_html($topbar_center); ?></p>
             <?php endif; ?>

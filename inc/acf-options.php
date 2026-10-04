@@ -19,14 +19,14 @@ add_action('acf/init', function() {
                 'label' => 'Top Bar Left Text',
                 'name' => 'topbar_left',
                 'type' => 'text',
-                'default_value' => 'Premium cognitive support — Australia-wide dispatch',
+                'default_value' => 'Premium cognitive support â€” Australia-wide dispatch',
             ),
             array(
                 'key' => 'field_topbar_center',
                 'label' => 'Top Bar Center Text',
                 'name' => 'topbar_center',
                 'type' => 'text',
-                'default_value' => '6–12 business days — discreet packaging',
+                'default_value' => '6â€“12 business days â€” discreet packaging',
             ),
             array(
                 'key' => 'field_topbar_right',
@@ -34,13 +34,6 @@ add_action('acf/init', function() {
                 'name' => 'topbar_right',
                 'type' => 'text',
                 'default_value' => 'Support',
-            ),
-            array(
-                'key' => 'field_promo_code',
-                'label' => 'Promo Code',
-                'name' => 'promo_code',
-                'type' => 'text',
-                'default_value' => 'ARMD10',
             ),
 
 
@@ -144,7 +137,7 @@ add_action('acf/init', function() {
                 'label' => 'Copyright Text',
                 'name' => 'copyright_text',
                 'type' => 'text',
-                'default_value' => '� 2026 Armodafinil. Information only &mdash; not medical advice.',
+                'default_value' => '© 2026 Armodafinil. Information only &mdash; not medical advice.',
             ),
 
         ),
