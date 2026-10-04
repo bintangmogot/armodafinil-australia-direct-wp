@@ -39,9 +39,7 @@
 	<!-- TopBar -->
 	    <div class="w-full bg-ink-900 text-white text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
-            <?php if ( $topbar_left = get_field('topbar_left', 'option') ) : ?>
-            <p class="hidden sm:block opacity-90"><?php echo esc_html($topbar_left); ?></p>
-            <?php endif; ?>
+            <p class="opacity-90 font-medium tracking-wide">OPEN 7 DAYS</p>
             <?php if ( $topbar_center = get_field('topbar_center', 'option') ) : ?>
             <p class="opacity-90 hidden md:block"><?php echo esc_html($topbar_center); ?></p>
             <?php endif; ?>
@@ -51,7 +49,7 @@
             // Convert Australian 04... format to 614... for WhatsApp
             $wa_phone = (strpos($clean_phone, '0') === 0) ? '61' . substr($clean_phone, 1) : $clean_phone;
             ?>
-            <a href="https://wa.me/<?php echo esc_attr($wa_phone); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
+            <a href="tel:+<?php echo esc_attr($wa_phone); ?>" class="inline-flex items-center gap-1.5 text-brand-300 hover:text-brand-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg> Call us: <?php echo esc_html($support_phone); ?>
             </a>
         </div>
