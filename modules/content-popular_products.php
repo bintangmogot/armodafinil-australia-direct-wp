@@ -138,7 +138,16 @@ $products = get_sub_field('products');
                                 $onclick = "let card = this.closest('.group'); card.querySelector('.dynamic-price').innerHTML = '{$js_price}'; Array.from(this.parentElement.children).forEach(el => { el.classList.remove('bg-brand-600', 'text-white', 'border-brand-600'); el.classList.add('text-brand-700', 'bg-brand-50', 'border-brand-200', 'hover:bg-brand-100'); }); this.classList.remove('text-brand-700', 'bg-brand-50', 'border-brand-200', 'hover:bg-brand-100'); this.classList.add('bg-brand-600', 'text-white', 'border-brand-600');";
 
                                 echo '<button type="button" onclick="' . esc_attr($onclick) . '" class="' . esc_attr($current_classes) . '">';
-                                echo esc_html(str_replace(" Tablets", " Tabs", $label));
+                                
+                                $display_label = trim($label);
+                                if (is_numeric($display_label)) {
+                                    $display_label .= " Tabs";
+                                } elseif (stripos($display_label, "tab") === false && stripos($display_label, "pill") === false) {
+                                    $display_label .= " Tabs";
+                                }
+                                $display_label = str_ireplace("tablets", "Tabs", $display_label);
+                                echo esc_html($display_label);
+
                                 echo '</button>';
                                 
                                 $count++;
