@@ -136,14 +136,6 @@ $products = get_sub_field('products');
                         }
                         ?>
                     </div>
-
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">200 Pills</div>
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">300 Pills</div>
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">400 Pills</div>
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">500 Pills</div>
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">600 Pills</div>
-                    </div>
-
                     
                     <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest <?php echo $product->is_in_stock() ? 'text-emerald-700' : 'text-rose-600'; ?>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> 
