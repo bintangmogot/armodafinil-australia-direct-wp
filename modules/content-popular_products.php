@@ -103,40 +103,55 @@ $products = get_sub_field('products');
                     
                     
                     
+                    
                     <div class="grid grid-cols-2 gap-1.5 mt-auto mb-3">
                         <?php 
+                        $first_price = "";
                         if ( $product->is_type('variable') ) {
                             $variations = $product->get_available_variations();
                             $count = 0;
                             foreach ($variations as $var) {
                                 if ($count >= 6) break;
                                 
-                                // Extract the attribute value (e.g., "100 Tabs" or "100 Pills")
                                 $label = "";
                                 foreach ($var['attributes'] as $key => $val) {
                                     if ($val) { $label = $val; break; }
                                 }
-                                // Fallback to parsing from title if attributes array fails
                                 if (empty($label)) {
                                     $parts = explode('-', get_the_title($var['variation_id']));
                                     $label = trim(end($parts));
                                 }
 
                                 $price_html = wc_price($var['display_price']);
-                                
-                                // Clean up the price HTML to remove decimals if needed, but wc_price handles it based on settings
-                                $price_text = strip_tags($price_html);
+                                if ($count === 0) {
+                                    $first_price = $price_html;
+                                }
 
-                                echo '<div class="text-center py-1.5 px-1 border border-brand-200 rounded-full text-brand-700 bg-brand-50/50 leading-none truncate">'; echo '<span class="text-[11px] font-bold">' . esc_html(str_replace(" Tablets", " Tabs", $label)) . '</span>'; echo '<span class="text-[10px] text-ink-500 font-medium ml-1">' . $price_text . '</span>'; echo '</div>';
+                                $is_first = ($count === 0);
+                                $base_classes = "text-center py-1.5 px-1 border rounded-md transition-colors text-[11px] font-bold truncate cursor-pointer";
+                                $active_classes = "bg-brand-600 text-white border-brand-600";
+                                $inactive_classes = "text-brand-700 bg-brand-50 border-brand-200 hover:bg-brand-100";
+                                
+                                $current_classes = $base_classes . " " . ($is_first ? $active_classes : $inactive_classes);
+                                
+                                $js_price = addslashes($price_html);
+                                $onclick = "let card = this.closest('.group'); card.querySelector('.dynamic-price').innerHTML = '{$js_price}'; Array.from(this.parentElement.children).forEach(el => { el.classList.remove('bg-brand-600', 'text-white', 'border-brand-600'); el.classList.add('text-brand-700', 'bg-brand-50', 'border-brand-200', 'hover:bg-brand-100'); }); this.classList.remove('text-brand-700', 'bg-brand-50', 'border-brand-200', 'hover:bg-brand-100'); this.classList.add('bg-brand-600', 'text-white', 'border-brand-600');";
+
+                                echo '<button type="button" onclick="' . esc_attr($onclick) . '" class="' . esc_attr($current_classes) . '">';
+                                echo esc_html(str_replace(" Tablets", " Tabs", $label));
+                                echo '</button>';
                                 
                                 $count++;
                             }
                         } else {
-                            echo '<div class="col-span-2 text-center text-lg font-bold text-ink-900 price-html-wrapper tracking-tight">' . $p_price_html . '</div>';
+                            $first_price = $p_price_html;
                         }
                         ?>
                     </div>
                     
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="dynamic-price text-xl font-bold text-ink-900 tracking-tight"><?php echo $first_price; ?></span>
+                    </div>
                     <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest <?php echo $product->is_in_stock() ? 'text-emerald-700' : 'text-rose-600'; ?>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> 
                         <?php echo $product->is_in_stock() ? 'In Stock' : 'Out of Stock'; ?>
