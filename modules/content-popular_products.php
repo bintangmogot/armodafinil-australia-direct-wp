@@ -102,8 +102,41 @@ $products = get_sub_field('products');
                     <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="font-serif text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
                     
                     
-                    <div class="grid grid-cols-2 gap-2 mt-auto mb-2">
-                        <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">100 Pills</div>
+                    
+                    <div class="grid grid-cols-2 gap-1.5 mt-auto mb-3">
+                        <?php 
+                        if ( $product->is_type('variable') ) {
+                            $variations = $product->get_available_variations();
+                            $count = 0;
+                            foreach ($variations as $var) {
+                                if ($count >= 6) break;
+                                
+                                // Extract the attribute value (e.g., "100 Tabs" or "100 Pills")
+                                $label = "";
+                                foreach ($var['attributes'] as $key => $val) {
+                                    if ($val) { $label = $val; break; }
+                                }
+                                // Fallback to parsing from title if attributes array fails
+                                if (empty($label)) {
+                                    $parts = explode('-', get_the_title($var['variation_id']));
+                                    $label = trim(end($parts));
+                                }
+
+                                $price_html = wc_price($var['display_price']);
+                                
+                                // Clean up the price HTML to remove decimals if needed, but wc_price handles it based on settings
+                                $price_text = strip_tags($price_html);
+
+                                echo '<div class="text-center py-1.5 px-1 border border-brand-200 rounded-full text-brand-700 bg-brand-50/50 leading-none truncate">'; echo '<span class="text-[11px] font-bold">' . esc_html(str_replace(" Tablets", " Tabs", $label)) . '</span>'; echo '<span class="text-[10px] text-ink-500 font-medium ml-1">' . $price_text . '</span>'; echo '</div>';
+                                
+                                $count++;
+                            }
+                        } else {
+                            echo '<div class="col-span-2 text-center text-lg font-bold text-ink-900 price-html-wrapper tracking-tight">' . $p_price_html . '</div>';
+                        }
+                        ?>
+                    </div>
+
                         <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">200 Pills</div>
                         <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">300 Pills</div>
                         <div class="text-center text-[11px] font-semibold py-1 px-2 border border-brand-100 rounded-full text-brand-700 bg-brand-50">400 Pills</div>
