@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || exit;
                     </div>
                     <h2 class="relative z-10 font-serif text-3xl font-semibold text-ink-900">Order confirmed</h2>
                     <p class="relative z-10 mt-3 text-ink-700 max-w-lg mx-auto leading-relaxed">
-                        Thanks <b><?php echo esc_html( $order->get_billing_first_name() ? $order->get_billing_first_name() : 'friend' ); ?></b> â€” your order has been received. 
+                        Thanks <b><?php echo esc_html( $order->get_billing_first_name() ? $order->get_billing_first_name() : 'friend' ); ?></b> - your order has been received. 
                         <?php if ( $order->get_billing_email() ) : ?>
                             A confirmation email is on its way to <b><?php echo esc_html( $order->get_billing_email() ); ?></b>.
                         <?php endif; ?>
@@ -69,14 +69,14 @@ defined( 'ABSPATH' ) || exit;
                                 } elseif ( $payment_method === 'crypto' || strpos($payment_method, 'bitcoin') !== false ) {
                                     echo 'A wallet address for your chosen currency is provided. Please complete the transfer.';
                                 } else {
-                                    echo 'Your payment is being processed now â€” no further action needed.';
+                                    echo 'Your payment is being processed now - no further action needed.';
                                 }
                                 ?>
                             </span>
                         </li>
                         <li class="flex gap-4">
                             <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">2</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Dispatch.</b> Your parcel leaves our facility within 24â€“48 business hours after funds clear.</span>
+                            <span class="leading-relaxed"><b class="text-ink-900">Dispatch.</b> Your parcel leaves our facility within 24-48 business hours after funds clear.</span>
                         </li>
                         <li class="flex gap-4">
                             <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">3</span>
@@ -84,7 +84,7 @@ defined( 'ABSPATH' ) || exit;
                         </li>
                         <li class="flex gap-4">
                             <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">4</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Delivery.</b> Most Australian addresses receive the parcel within 6â€“12 business days, dispatched in neutral outer packaging.</span>
+                            <span class="leading-relaxed"><b class="text-ink-900">Delivery.</b> Most Australian addresses receive the parcel within 6-12 business days, dispatched in neutral outer packaging.</span>
                         </li>
                     </ol>
                 </section>
