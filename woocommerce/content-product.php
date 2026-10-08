@@ -57,7 +57,7 @@ if ($review_count > 0) {
     </div>
     
     <a href="<?php echo esc_url( $link ); ?>" target="_blank" class="p-5 border-t border-ink-100 flex flex-col flex-1 hover:no-underline">
-        <h3 class="font-serif text-lg font-semibold text-ink-900 group-hover:text-brand-700 transition-colors"><?php echo esc_html($product->get_name()); ?></h3>
+        <h3 class="font-serif text-[15px] sm:text-lg font-semibold text-ink-900 group-hover:text-brand-700 transition-colors"><?php echo esc_html($product->get_name()); ?></h3>
         <div class="product-desc-wrapper mt-1">
             <p class="product-desc-text text-sm text-ink-500 line-clamp-2 transition-all duration-300">
                 <?php 
