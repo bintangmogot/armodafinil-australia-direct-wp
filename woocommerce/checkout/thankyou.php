@@ -239,7 +239,7 @@ defined( 'ABSPATH' ) || exit;
     line-height: 1.6;
 }
 
-.woocommerce-thankyou-hooks section.woocommerce-bacs-bank-details h3 {
+.woocommerce-thankyou-hooks section.woocommerce-bacs-bank-details h3 { padding-left: 1rem;
     font-size: 1.125rem;
     color: #0f172a;
     margin-bottom: 1rem;
@@ -249,8 +249,7 @@ defined( 'ABSPATH' ) || exit;
     display: flex !important;
     flex-direction: column !important;
     gap: 1.25rem !important;
-    padding: 0 !important;
-    margin: 1rem 0 0 0 !important;
+    padding: 0 0 0 1rem !important; margin: 1rem 0 0 0 !important;
     list-style: none !important;
 }
 @media (min-width: 640px) {
