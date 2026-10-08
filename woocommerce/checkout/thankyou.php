@@ -249,7 +249,7 @@ defined( 'ABSPATH' ) || exit;
     display: flex !important;
     flex-direction: column !important;
     gap: 1.25rem !important;
-    padding: 0 0 0 1rem !important; margin: 1rem 0 0 0 !important;
+    padding: 1rem 1.5rem !important; margin: 1rem 0 0 0 !important;
     list-style: none !important;
 }
 @media (min-width: 640px) {
