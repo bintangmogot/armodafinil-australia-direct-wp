@@ -13,7 +13,7 @@ $cta_url   = get_sub_field('cta_url');
 $product_obj = get_sub_field('featured_product');
 
 // Default product values in case none selected
-$p_title = 'Armodafinil 250mg Ã¢â‚¬â€ Artvigil 250mg';
+$p_title = 'Armodafinil 250mg ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Artvigil 250mg';
 $p_image = 'https://placehold.co/800x450/e0f2fe/0369a1?text=Product+Image';
 $p_price_html = '$185.00';
 $p_stock = 'In stock';
@@ -83,7 +83,7 @@ $wrapper_classes = $has_text_content
         <div class="animate-fadeup w-full">
             <?php if ( $eyebrow ) : ?>
             <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 <?php echo esc_html( $eyebrow ); ?>
             </span>
             <?php endif; ?>

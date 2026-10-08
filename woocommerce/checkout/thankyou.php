@@ -84,7 +84,7 @@ defined( 'ABSPATH' ) || exit;
                         </li>
                         <li class="flex gap-4">
                             <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">4</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Delivery.</b> Most Australian addresses receive the parcel within 6-12 business days, dispatched in neutral outer packaging.</span>
+                            <span class="leading-relaxed"><b class="text-ink-900">Delivery.</b> Most Australian addresses receive the parcel within 7-10 business days, dispatched in neutral outer packaging.</span>
                         </li>
                     </ol>
                 </section>
