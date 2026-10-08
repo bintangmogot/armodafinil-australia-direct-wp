@@ -99,7 +99,7 @@ $products = get_sub_field('products');
                         </span>
                     </div>
 
-                    <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="font-serif text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
+                    <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="font-serif text-[15px] sm:text-lg font-bold text-ink-900 leading-snug hover:text-brand-600 transition-colors line-clamp-2"><?php echo esc_html($p_name); ?></a>
                     
                     
                     
