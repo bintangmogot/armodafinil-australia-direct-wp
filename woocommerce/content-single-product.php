@@ -53,7 +53,7 @@ if ( $is_variable ) {
     );
 }
 
-$currency = html_entity_decode(get_woocommerce_currency_symbol());
+$currency = str_replace("A", "", html_entity_decode(get_woocommerce_currency_symbol()));
 
 // Fetch Custom Reviews
 $reviews = get_posts([
@@ -190,7 +190,7 @@ foreach ( $attributes as $attribute ) {
                         
                         <?php if ( $is_variable ) : ?>
                             <div class="flex items-center justify-between text-sm">
-                                <span class="font-semibold text-ink-900">Tablets</span>
+                                <span class="font-semibold text-ink-900">Choose Quantity (prices in AUD)</span>
                                 <span class="text-ink-500">Prices vary</span>
                             </div>
                             
