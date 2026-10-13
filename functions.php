@@ -503,7 +503,12 @@ function aad_side_cart_checkout_button_subtotal( $args ) {
             $chk_text = trim( Xoo_Wsc_Template_Args::$gl['sct-ft-chkbtn'] );
         }
         
-        $chk_text = rtrim( $chk_text, '- ' );
+        $chk_text = html_entity_decode( $chk_text, ENT_QUOTES, 'UTF-8' );
+        $chk_text = preg_replace( '/\s*[\-\x{2013}\x{2014}]+\s*$/u', '', $chk_text );
+        $chk_text = trim( $chk_text );
+        if ( empty( $chk_text ) ) {
+            $chk_text = 'Checkout';
+        }
         $args['buttons']['checkout']['label'] = $chk_text . ' - ' . $subtotal;
     }
     return $args;
