@@ -489,16 +489,20 @@ function aad_change_currency_symbol( $currency_symbol, $currency ) {
     return $currency_symbol;
 }
 // Side Cart: Set Checkout button price to match product subtotal (not order total) and strip 'A'
-add_filter( 'xoo_wsc_footer_buttons_args', 'aad_side_cart_checkout_button_subtotal', 20 );
+add_filter( 'xoo_wsc_footer_buttons_args', 'aad_side_cart_checkout_button_subtotal', 99 );
 function aad_side_cart_checkout_button_subtotal( $args ) {
     if ( isset( $args['buttons']['checkout'] ) && function_exists( 'WC' ) && WC()->cart && ! WC()->cart->is_empty() ) {
         // Use cart subtotal (product price total) instead of order total
         $subtotal = WC()->cart->get_cart_subtotal();
-        // Ensure no 'A' prefix appears in the price
-        $subtotal = str_replace( array( 'A$', 'A&#36;', 'A&dollar;' ), '$', $subtotal );
+        $clean_price = html_entity_decode( strip_tags( $subtotal ), ENT_QUOTES, 'UTF-8' );
+        $clean_price = str_replace( 'A', '', $clean_price );
+        $clean_price = trim( preg_replace( '/[^0-9\.,\$]/', '', $clean_price ) );
+        if ( substr( $clean_price, 0, 1 ) !== '$' ) {
+            $clean_price = '$' . $clean_price;
+        }
 
-        // Set label directly to 'Checkout - [subtotal]' with single hyphen
-        $args['buttons']['checkout']['label'] = 'Checkout - ' . $subtotal;
+        // Set label directly to 'Checkout - [clean_price]' with single hyphen
+        $args['buttons']['checkout']['label'] = 'Checkout - ' . $clean_price;
     }
     return $args;
 }
