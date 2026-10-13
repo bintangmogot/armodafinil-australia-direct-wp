@@ -15,7 +15,7 @@ $shortcode = get_sub_field('shortcode');
             <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-brand-600/30 blur-3xl"></div>
             
             <div class="relative">
-                <h2 class="font-serif text-3xl md:text-4xl font-semibold"><?php echo esc_html($title); ?></h2>
+                <h2 class="font-serif text-3xl md:text-4xl font-semibold text-white"><?php echo esc_html($title); ?></h2>
                 <p class="mt-2 text-ink-100/70 max-w-xl"><?php echo esc_html($subtitle); ?></p>
                 
                 <div class="mt-6 max-w-lg">
