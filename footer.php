@@ -35,9 +35,15 @@
 					</a>
 					<?php endif; ?>
 
-					<?php if ( $trustpilot_link = get_field('trustpilot_link', 'option') ) : ?>
+					<?php 
+					$trustpilot_link = get_field('trustpilot_link', 'option');
+					if ( empty($trustpilot_link) ) {
+						$trustpilot_link = 'https://www.trustpilot.com/review/armodafinildirect.com.au';
+					}
+					if ( $trustpilot_link !== 'hide' && $trustpilot_link !== 'none' ) : 
+					?>
 					<a href="<?php echo esc_url($trustpilot_link); ?>" aria-label="Review us on Trustpilot" target="_blank" rel="noopener noreferrer" class="inline-flex items-center h-9 ml-1 opacity-90 hover:opacity-100 transition-opacity">
-						<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/trustpilot-white.svg'); ?>" alt="Trustpilot" width="100" height="24" loading="lazy" style="width: 100px; height: auto;">
+						<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/trustpilot-white.svg'); ?>" alt="Trustpilot" width="105" height="26" loading="lazy" style="width: 105px; height: auto; display: block;">
 					</a>
 					<?php endif; ?>
 				</div>
