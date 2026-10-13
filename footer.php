@@ -184,6 +184,28 @@
 			menuClose.addEventListener('click', closeMenu);
 			backdrop.addEventListener('click', closeMenu);
 		}
+
+		// Ensure no double dashes ever appear on the side cart checkout button
+		function aadCleanSideCartBtn() {
+			var btns = document.querySelectorAll('.xoo-wsc-ft-btn-checkout');
+			btns.forEach(function(btn) {
+				if (btn && btn.innerHTML) {
+					btn.innerHTML = btn.innerHTML.replace(/\s*[-–—]\s*[-–—]+\s*/g, ' - ');
+				}
+			});
+		}
+		document.addEventListener('DOMContentLoaded', aadCleanSideCartBtn);
+		window.addEventListener('load', aadCleanSideCartBtn);
+		if (window.jQuery) {
+			jQuery(document).on('wc_fragments_refreshed xoo_wsc_cart_updated added_to_cart xoo_wsc_cart_opened', aadCleanSideCartBtn);
+		}
+		var aadCartObserver = new MutationObserver(function() {
+			aadCleanSideCartBtn();
+		});
+		var aadCartTarget = document.querySelector('.xoo-wsc-container') || document.body;
+		if (aadCartTarget) {
+			aadCartObserver.observe(aadCartTarget, { childList: true, subtree: true });
+		}
 	</script>
 <?php wp_footer(); ?>
 
