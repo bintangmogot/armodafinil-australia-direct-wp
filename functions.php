@@ -497,24 +497,8 @@ function aad_side_cart_checkout_button_subtotal( $args ) {
         // Ensure no 'A' prefix appears in the price
         $subtotal = str_replace( array( 'A$', 'A&#36;', 'A&dollar;' ), '$', $subtotal );
 
-        // Extract button text prefix (strip ALL non-alphanumeric characters, ensuring no dashes can leak)
-        $chk_text = 'Checkout';
-        if ( class_exists( 'Xoo_Wsc_Template_Args' ) && ! empty( Xoo_Wsc_Template_Args::$gl['sct-ft-chkbtn'] ) ) {
-            $raw_btn = Xoo_Wsc_Template_Args::$gl['sct-ft-chkbtn'];
-            $clean_btn = trim( preg_replace( '/[^\p{L}\p{N}\s]/u', '', html_entity_decode( $raw_btn, ENT_QUOTES, 'UTF-8' ) ) );
-            if ( ! empty( $clean_btn ) ) {
-                $chk_text = $clean_btn;
-            }
-        }
-
-        // Clean any leading dashes from subtotal
-        $subtotal = preg_replace( '/^\s*[\-\x{2013}\x{2014}]+\s*/u', '', $subtotal );
-
-        // Assemble cleanly and collapse any multiple dashes
-        $final_label = $chk_text . ' - ' . $subtotal;
-        $final_label = preg_replace( '/\s*[\-\x{2013}\x{2014}]+\s*[\-\x{2013}\x{2014}]+\s*/u', ' - ', $final_label );
-
-        $args['buttons']['checkout']['label'] = $final_label;
+        // Set label directly to 'Checkout - [subtotal]' with single hyphen
+        $args['buttons']['checkout']['label'] = 'Checkout - ' . $subtotal;
     }
     return $args;
 }
