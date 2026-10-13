@@ -484,10 +484,44 @@ function aad_force_default_variable_price_range( $price, $product ) {
 add_filter('woocommerce_currency_symbol', 'aad_change_currency_symbol', 10, 2);
 function aad_change_currency_symbol( $currency_symbol, $currency ) {
     if ( $currency === 'AUD' ) {
-        return 'A$';
+        return '$';
     }
     return $currency_symbol;
 }
+// Side Cart: Set Checkout button price to match product subtotal (not order total) and strip 'A'
+add_filter( 'xoo_wsc_footer_buttons_args', 'aad_side_cart_checkout_button_subtotal', 20 );
+function aad_side_cart_checkout_button_subtotal( $args ) {
+    if ( isset( $args['buttons']['checkout'] ) && function_exists( 'WC' ) && WC()->cart && ! WC()->cart->is_empty() ) {
+        // Use cart subtotal (product price total) instead of order total
+        $subtotal = WC()->cart->get_cart_subtotal();
+        // Ensure no 'A' prefix appears in the price
+        $subtotal = str_replace( array( 'A$', 'A&#36;', 'A&dollar;' ), '$', $subtotal );
+
+        // Extract button text prefix
+        $chk_text = 'Checkout';
+        if ( class_exists( 'Xoo_Wsc_Template_Args' ) && ! empty( Xoo_Wsc_Template_Args::$gl['sct-ft-chkbtn'] ) ) {
+            $chk_text = trim( Xoo_Wsc_Template_Args::$gl['sct-ft-chkbtn'] );
+        }
+        
+        $chk_text = rtrim( $chk_text, '- ' );
+        $args['buttons']['checkout']['label'] = $chk_text . ' - ' . $subtotal;
+    }
+    return $args;
+}
+
+// Clean any 'A' prefix from Side Cart totals display
+add_filter( 'xoo_wsc_footer_totals_args', 'aad_side_cart_clean_currency_totals', 20 );
+function aad_side_cart_clean_currency_totals( $args ) {
+    if ( ! empty( $args['totals'] ) && is_array( $args['totals'] ) ) {
+        foreach ( $args['totals'] as $k => $total ) {
+            if ( isset( $total['value'] ) ) {
+                $args['totals'][$k]['value'] = str_replace( array( 'A$', 'A&#36;', 'A&dollar;' ), '$', $total['value'] );
+            }
+        }
+    }
+    return $args;
+}
+
 // Fix ACF WYSIWYG bookmark bug on backend
 
 
