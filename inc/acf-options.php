@@ -58,6 +58,14 @@ add_action('acf/init', function() {
                 'type' => 'url',
             ),
             array(
+                'key' => 'field_trustpilot_link',
+                'label' => 'Trustpilot Link',
+                'name' => 'trustpilot_link',
+                'type' => 'url',
+                'default_value' => 'https://www.trustpilot.com/review/armodafinildirect.com.au',
+                'instructions' => 'Shown as the Trustpilot logo in the footer. Leave empty to hide it.',
+            ),
+            array(
                 'key' => 'field_twitter_link',
                 'label' => 'Twitter Link',
                 'name' => 'twitter_link',
