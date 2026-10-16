@@ -5,6 +5,9 @@
  * Data provided by ACF Sub Fields: faq_categories
  */
 
+$title    = get_sub_field('title');
+$subtitle = get_sub_field('subtitle');
+
 $raw_categories = get_sub_field('faq_categories');
 $categories = array('All topics');
 $faqs = array();
@@ -48,6 +51,12 @@ if ( !empty( $raw_categories ) ) {
     }
 } else {
     // Fallback data if module is empty
+    if ( empty($title) ) {
+        $title = 'Frequently Asked Questions';
+    }
+    if ( empty($subtitle) ) {
+        $subtitle = 'Find answers to common questions about our products, ordering, shipping, and payment options.';
+    }
     $categories = array('All topics', 'Ordering', 'Payment', 'Shipping', 'Account');
     $category_icons = array(
         'Ordering' => $icons['package'],
@@ -72,6 +81,17 @@ if ( !empty( $raw_categories ) ) {
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-10" id="faq-app">
     
+    <?php if ( !empty($title) || !empty($subtitle) ) : ?>
+        <div class="text-center mb-8">
+            <?php if ( !empty($title) ) : ?>
+                <h2 class="text-3xl md:text-4xl font-serif font-semibold text-ink-900 leading-tight"><?php echo esc_html($title); ?></h2>
+            <?php endif; ?>
+            <?php if ( !empty($subtitle) ) : ?>
+                <p class="mt-2 text-ink-500 max-w-2xl mx-auto"><?php echo esc_html($subtitle); ?></p>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Filter Buttons -->
     <div class="flex flex-wrap gap-2 justify-center">
         <?php foreach ($categories as $cat) : ?>
