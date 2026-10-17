@@ -46,3 +46,17 @@ When setting up a new project or verifying an environment, the AI must ensure th
 - **ACF Sync:** Always respect the `acf-json` folder. If filling out forms via the browser changes the ACF schema, ensure the JSON files are committed to Git.
 - **WooCommerce:** Any modifications to WooCommerce templates must be done safely within the `woocommerce/` override folder.
 - **Dependencies:** Use Composer for PHP packages and NPM for frontend tools. Never modify the `vendor/` or `node_modules/` folders directly.
+
+## 7. Strict UI/UX Standards: Natural Design (Anti-AI-Slop)
+- **Zero AI Slop Policy:** NEVER introduce synthetic or tacky AI design tropes into frontend components.
+- **Forbidden Elements:**
+  - NO neon colors (e.g. hyper-saturated green `#39ff14`, neon amber, or garish glow gradients).
+  - NO glowing box-shadows or blurred colored light flares (`blur-3xl`, radial orb lights).
+  - NO pulsing radar beacons or distracting ping animations (`animate-ping`).
+  - NO artificial background dot matrices, tech grids, or synthetic micro-textures.
+  - NO artificial text shadows.
+- **Mandatory Natural Design Language:**
+  - Use authentic, organic, natural tones (e.g., deep botanical forest green `#123428`, warm neutral stones, muted slates, crisp whites).
+  - Prioritize clean editorial typography, balanced whitespace, and understated contrast.
+  - Design pills and badges with subtle translucent fills, clean 1px borders, or crisp solid white cards with quiet status chips (e.g., `#ecfdf5` background with `#065f46` text).
+
