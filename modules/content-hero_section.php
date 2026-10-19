@@ -60,16 +60,6 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     background-size: cover;
     background-repeat: no-repeat;
 }
-.hero-gradient-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 65%;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.98) 55%, rgba(223, 255, 249, 0.75) 80%, rgba(223, 255, 249, 0) 100%);
-}
 .hero-text-col {
     position: relative;
     z-index: 10;
@@ -77,6 +67,11 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
+    margin: 0;
+}
+.hero-text-col > * {
+    margin: 0;
 }
 
 /* Mobile: Compact Landscape Layout */
@@ -88,10 +83,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     .hero-text-col {
         width: 72%;
         max-width: 295px;
-    }
-    .hero-gradient-overlay {
-        width: 78%;
-        background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.98) 60%, rgba(223, 255, 249, 0.75) 84%, rgba(223, 255, 249, 0) 100%);
+        gap: 12px;
     }
     .hero-badge-pill {
         display: inline-flex;
@@ -107,7 +99,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         background: rgba(255, 255, 255, 0.94);
         border: 1px solid rgba(13, 148, 136, 0.35);
         color: #0f766e;
-        margin-bottom: 8px;
+        margin: 0;
         max-width: fit-content;
     }
     .hero-badge-pill svg {
@@ -120,14 +112,14 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         line-height: 1.14;
         font-weight: 700;
         color: #0f172a;
-        margin-bottom: 10px;
+        margin: 0;
     }
     .hero-subtitle {
         font-size: clamp(10.5px, 2.7vw, 12px);
         line-height: 1.36;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 16px;
+        margin: 0;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -135,6 +127,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     }
     .hero-desc {
         display: none;
+        margin: 0;
     }
     .hero-cta-btn {
         display: inline-flex;
@@ -149,6 +142,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         font-weight: 600;
         text-decoration: none;
         box-shadow: 0 2px 6px rgba(13, 148, 136, 0.28);
+        margin: 0;
         max-width: fit-content;
     }
     .hero-cta-btn svg {
@@ -166,9 +160,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     .hero-text-col {
         width: 55%;
         max-width: 660px;
-    }
-    .hero-gradient-overlay {
-        width: 65%;
+        gap: 20px;
     }
     .hero-badge-pill {
         display: inline-flex;
@@ -183,7 +175,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid rgba(13, 148, 136, 0.35);
         color: #0f766e;
-        margin-bottom: 18px;
+        margin: 0;
         max-width: fit-content;
     }
     .hero-badge-pill svg {
@@ -196,20 +188,20 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         line-height: 1.1;
         font-weight: 700;
         color: #0f172a;
-        margin-bottom: 22px;
+        margin: 0;
     }
     .hero-subtitle {
         font-size: clamp(15px, 1.45vw, 19px);
         line-height: 1.48;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 28px;
+        margin: 0;
     }
     .hero-desc {
         font-size: clamp(12px, 1.1vw, 15px);
         line-height: 1.55;
         color: #475569;
-        margin-bottom: 28px;
+        margin: 0;
     }
     .hero-cta-btn {
         display: inline-flex;
@@ -225,6 +217,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         text-decoration: none;
         box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         transition: background-color 0.2s, transform 0.2s;
+        margin: 0;
         max-width: fit-content;
     }
     .hero-cta-btn:hover {
@@ -245,15 +238,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     .hero-text-col {
         width: 56%;
         max-width: 720px;
-    }
-    .hero-gradient-overlay {
-        width: 66%;
-    }
-    .hero-title {
-        margin-bottom: 24px;
-    }
-    .hero-subtitle {
-        margin-bottom: 32px;
+        gap: 24px;
     }
 }
 
@@ -264,9 +249,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     .hero-text-col {
         width: 58%;
         max-width: 780px;
-    }
-    .hero-gradient-overlay {
-        width: 68%;
+        gap: 24px;
     }
 }
 </style>
@@ -279,9 +262,6 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         aria-label="<?php echo esc_attr( $bg_image_title ); ?>"
         role="img">
     </div>
-    
-    <!-- Seamless Left Gradient Blend for Maximum Legibility -->
-    <div class="hero-gradient-overlay"></div>
 
     <!-- Content Container -->
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
