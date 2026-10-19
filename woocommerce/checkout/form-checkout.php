@@ -118,11 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 $sec.find('h2').removeClass('mb-6');
             }
         });
-        
-        // Scroll to step
-        $('html, body').animate({
-            scrollTop: $('#step-' + stepNum).offset().top - 100
-        }, 300);
     }
     
     $(document.body).on('click', '.btn-next-step', function() {
