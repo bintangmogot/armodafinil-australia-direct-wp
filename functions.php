@@ -87,6 +87,7 @@ require_once get_template_directory() . '/inc/ajax-reviews.php';
 require_once get_template_directory() . '/inc/ajax-search.php';
 require_once get_template_directory() . '/inc/medical-reviewers.php';
 require_once get_template_directory() . '/inc/email-routing.php';
+require_once get_template_directory() . '/inc/nav-walkers.php';
 
 add_filter('nav_menu_css_class', function($classes, $item, $args) {
     if(in_array($args->theme_location, ['footer_1', 'footer_2', 'footer_3', 'footer_4', 'footer_trending'])) {

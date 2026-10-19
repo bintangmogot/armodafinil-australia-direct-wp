@@ -366,8 +366,9 @@ if (strpos($whatsapp_raw, 'http') === 0) {
 			'theme_location' => 'mobile',
 			'menu_id' => 'mobile-menu-items',
 			'container' => false,
-			'items_wrap' => '%3$s',
+			'items_wrap' => '<ul id="%1$s" class="flex flex-col space-y-1 w-full px-4 pt-2">%3$s</ul>',
 			'fallback_cb' => false,
+			'walker' => class_exists('Armodafinil_Mobile_Nav_Walker') ? new Armodafinil_Mobile_Nav_Walker() : false,
 		));
 		?>
 	</nav>
