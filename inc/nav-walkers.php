@@ -161,7 +161,7 @@ class Armodafinil_Desktop_Nav_Walker extends Walker_Nav_Menu {
             $title = get_field('nav_dropdown_title', 'option') ?: 'Genuine Armodafinil Catalogue';
             $badge = get_field('nav_dropdown_badge', 'option') ?: 'AU Express 7-10 Days';
 
-            $output .= '<div class="sub-menu-dropdown-wrapper absolute top-full left-0 pt-2 w-[580px] max-w-[92vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto filter drop-shadow-xl">';
+            $output .= '<div class="sub-menu-dropdown-wrapper absolute top-full right-0 left-auto pt-2 w-[580px] max-w-[92vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto filter drop-shadow-xl">';
             $output .= '<div class="rounded-2xl border border-ink-200/90 bg-white shadow-2xl overflow-hidden">';
 
             // Dropdown Header Strip: Botanical Deep Teal
