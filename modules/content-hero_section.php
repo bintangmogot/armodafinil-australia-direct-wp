@@ -56,7 +56,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     height: 100%;
     pointer-events: auto;
     cursor: default;
-    background-position: right center;
+    background-position: right top;
     background-size: cover;
     background-repeat: no-repeat;
 }
