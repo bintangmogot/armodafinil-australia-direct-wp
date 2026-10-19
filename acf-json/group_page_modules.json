@@ -24,9 +24,9 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_hero_eyebrow",
-                            "label": "Eyebrow",
-                            "name": "eyebrow",
+                            "key": "field_hero_badge",
+                            "label": "Badge",
+                            "name": "badge",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -65,8 +65,28 @@
                         },
                         {
                             "key": "field_hero_subtitle",
-                            "label": "Subtitle",
+                            "label": "Subtitle (H2)",
                             "name": "subtitle",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "rows": 3,
+                            "default_value": "",
+                            "new_lines": "",
+                            "maxlength": "",
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_hero_description",
+                            "label": "Description",
+                            "name": "description",
                             "aria-label": "",
                             "type": "textarea",
                             "instructions": "",
@@ -124,12 +144,12 @@
                             "append": ""
                         },
                         {
-                            "key": "field_hero_featured_product",
-                            "label": "Featured Product",
-                            "name": "featured_product",
+                            "key": "field_hero_background_image",
+                            "label": "Background Image",
+                            "name": "background_image",
                             "aria-label": "",
-                            "type": "post_object",
-                            "instructions": "",
+                            "type": "image",
+                            "instructions": "Optional custom background image. If left empty, default warehouse dispatch landscape banner is used.",
                             "required": false,
                             "conditional_logic": false,
                             "wrapper": {
@@ -137,15 +157,16 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "post_type": [
-                                "product"
-                            ],
-                            "return_format": "object",
-                            "taxonomy": [],
-                            "allow_null": 0,
-                            "multiple": 0,
-                            "ui": 1,
-                            "bidirectional_target": []
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "min_width": 0,
+                            "min_height": 0,
+                            "min_size": 0,
+                            "max_width": 0,
+                            "max_height": 0,
+                            "max_size": 0,
+                            "mime_types": ""
                         }
                     ],
                     "min": "",

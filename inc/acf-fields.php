@@ -92,9 +92,9 @@ acf_add_local_field_group(array(
 					'display' => 'block',
 					'sub_fields' => array(
 						array(
-							'key' => 'field_hero_eyebrow',
-							'label' => 'Eyebrow',
-							'name' => 'eyebrow',
+							'key' => 'field_hero_badge',
+							'label' => 'Badge',
+							'name' => 'badge',
 							'type' => 'text',
 						),
 						array(
@@ -105,8 +105,15 @@ acf_add_local_field_group(array(
 						),
 						array(
 							'key' => 'field_hero_subtitle',
-							'label' => 'Subtitle',
+							'label' => 'Subtitle (H2)',
 							'name' => 'subtitle',
+							'type' => 'textarea',
+							'rows' => 3,
+						),
+						array(
+							'key' => 'field_hero_description',
+							'label' => 'Description',
+							'name' => 'description',
 							'type' => 'textarea',
 							'rows' => 3,
 						),
@@ -123,14 +130,12 @@ acf_add_local_field_group(array(
 							'type' => 'text',
 						),
 						array(
-							'key' => 'field_hero_featured_product',
-							'label' => 'Featured Product',
-							'name' => 'featured_product',
-							'type' => 'post_object',
-							'post_type' => array(
-								0 => 'product',
-							),
-							'return_format' => 'object',
+							'key' => 'field_hero_background_image',
+							'label' => 'Background Image',
+							'name' => 'background_image',
+							'type' => 'image',
+							'return_format' => 'id',
+							'instructions' => 'Optional custom background image. If left empty, default warehouse dispatch landscape banner is used.',
 						),
 					),
 				),
