@@ -93,6 +93,40 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 document.addEventListener('DOMContentLoaded', function() {
     const $ = jQuery;
     
+    // Smoothly follow to the center of the step content
+    function scrollToStepCenter(stepNum) {
+        var $sec = $('#step-' + stepNum);
+        if (!$sec.length) return;
+
+        var headerHeight = $('header').outerHeight() || 65;
+        var availHeight = window.innerHeight - headerHeight;
+        var $content = $sec.find('.step-content');
+        var $elem = $content.length ? $content : $sec;
+
+        var elemTop = $elem.offset().top;
+        var elemHeight = $elem.outerHeight();
+        var secTop = $sec.offset().top;
+
+        var targetScroll;
+        // If content fits within visible area, center it vertically in the visible viewport
+        if (elemHeight <= availHeight) {
+            targetScroll = elemTop - headerHeight - ((availHeight - elemHeight) / 2);
+        } else {
+            // If taller than viewport, align top of step cleanly with breathing room below header
+            targetScroll = secTop - headerHeight - 16;
+        }
+
+        // Never let the top of the step card get cut off behind the sticky header
+        var maxScrollToKeepTopVisible = secTop - headerHeight - 16;
+        if (targetScroll > maxScrollToKeepTopVisible && elemHeight > (availHeight - 80)) {
+            targetScroll = maxScrollToKeepTopVisible;
+        }
+
+        targetScroll = Math.max(0, targetScroll);
+
+        $('html, body').stop().animate({ scrollTop: targetScroll }, 300);
+    }
+
     // Accordion Logic
     function goToStep(stepNum) {
         $('.step-section').each(function() {
@@ -101,7 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (num === stepNum) {
                 // Activate
                 $sec.removeClass('opacity-60 cursor-pointer hover:border-ink-300 cursor-not-allowed').addClass('border-brand-200 ring-1 ring-brand-200 shadow-sm');
-                $sec.find('.step-content').slideDown(300);
+                $sec.find('.step-content').slideDown(250, function() {
+                    scrollToStepCenter(stepNum);
+                });
                 $sec.find('.step-badge').removeClass('bg-ink-100 text-ink-500 bg-brand-700').addClass('bg-brand-600 text-white').html(num);
                 $sec.find('h2').addClass('mb-6');
             } else if (num < stepNum) {
