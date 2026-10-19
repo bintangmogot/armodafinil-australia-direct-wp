@@ -107,26 +107,26 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (num < stepNum) {
                 // Completed
                 $sec.removeClass('border-brand-200 ring-1 ring-brand-200 shadow-sm cursor-not-allowed').addClass('opacity-60 cursor-pointer hover:border-ink-300');
-                $sec.find('.step-content').slideUp(300);
+                $sec.find('.step-content').slideUp(200);
                 $sec.find('.step-badge').removeClass('bg-brand-600 bg-ink-100 text-ink-500 text-white').addClass('bg-brand-700 text-white').html('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>');
                 $sec.find('h2').removeClass('mb-6');
             } else {
                 // Future
                 $sec.removeClass('border-brand-200 ring-1 ring-brand-200 shadow-sm cursor-pointer hover:border-ink-300').addClass('opacity-60 cursor-not-allowed');
-                $sec.find('.step-content').slideUp(300);
+                $sec.find('.step-content').slideUp(200);
                 $sec.find('.step-badge').removeClass('bg-brand-600 bg-brand-700 text-white').addClass('bg-ink-100 text-ink-500').html(num);
                 $sec.find('h2').removeClass('mb-6');
             }
         });
     }
     
-    $(document.body).on('click', '.btn-next-step', function() {
-        // Optional: Trigger WooCommerce checkout validation here if needed, 
-        // but since fields are all in one form, standard submission works at step 3.
+    $(document.body).on('click', '.btn-next-step', function(e) {
+        e.preventDefault();
         goToStep(parseInt($(this).data('target')));
     });
     
-    $(document.body).on('click', '.btn-prev-step', function() {
+    $(document.body).on('click', '.btn-prev-step', function(e) {
+        e.preventDefault();
         goToStep(parseInt($(this).data('target')));
     });
     
