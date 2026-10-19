@@ -5,127 +5,297 @@
  * Sub Fields: badge, title, subtitle, description, cta_label, cta_url, background_image
  */
 
-$badge = get_sub_field('badge');
-$title = get_sub_field('title');
-$subtitle = get_sub_field('subtitle');
+$badge       = get_sub_field('badge');
+$title       = get_sub_field('title');
+$subtitle    = get_sub_field('subtitle');
 $description = get_sub_field('description');
-$cta_label = get_sub_field('cta_label');
-$cta_url = get_sub_field('cta_url');
+$cta_label   = get_sub_field('cta_label');
+$cta_url     = get_sub_field('cta_url');
 $bg_image_id = get_sub_field('background_image');
 
 $bg_image_url   = '';
 $bg_image_title = '';
 
-if ($bg_image_id) {
-    if (is_array($bg_image_id)) {
+if ( $bg_image_id ) {
+    if ( is_array( $bg_image_id ) ) {
         $bg_image_url   = $bg_image_id['url'] ?? '';
         $bg_image_title = $bg_image_id['title'] ?? '';
         $att_id         = $bg_image_id['ID'] ?? ($bg_image_id['id'] ?? 0);
     } else {
         $att_id         = (int) $bg_image_id;
-        $bg_image_url   = wp_get_attachment_image_url($att_id, 'full');
-        $bg_image_title = get_the_title($att_id);
+        $bg_image_url   = wp_get_attachment_image_url( $att_id, 'full' );
+        $bg_image_title = get_the_title( $att_id );
     }
-    if (!$bg_image_title && !empty($att_id)) {
-        $bg_image_title = get_the_title($att_id);
+    if ( ! $bg_image_title && ! empty( $att_id ) ) {
+        $bg_image_title = get_the_title( $att_id );
     }
 }
-if (!$bg_image_url) {
-    $bg_image_url   = get_theme_file_uri('/assets/images/homepage-armodafinil-direct.png');
+if ( ! $bg_image_url ) {
+    $bg_image_url = get_theme_file_uri('/assets/images/homepage-armodafinil-direct.png');
 }
-if (!$bg_image_title) {
+if ( ! $bg_image_title ) {
     $bg_image_title = get_bloginfo('name');
 }
 
 $has_text_content = $badge || $title || $subtitle || $description || $cta_label || $cta_url;
 ?>
-<section
-    class="relative w-full overflow-hidden bg-[#dffff9] flex items-center min-h-[185px] xs:min-h-[210px] sm:min-h-[300px] md:min-h-[440px] lg:min-h-[500px] group"
-    style="background-color: #dffff9;"
-    title="<?php echo esc_attr($bg_image_title); ?>">
-    <!-- Background Hero Landscape Image -->
-    <div class="absolute inset-0 w-full h-full pointer-events-auto cursor-default bg-no-repeat bg-right bg-cover"
-        style="background-image: url('<?php echo esc_url($bg_image_url); ?>'); background-position: right center; background-size: cover;"
-        title="<?php echo esc_attr($bg_image_title); ?>"
-        aria-label="<?php echo esc_attr($bg_image_title); ?>"
+
+<style>
+.hero-landscape-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #dffff9;
+    display: flex;
+    align-items: center;
+}
+.hero-bg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    cursor: default;
+    background-position: right center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 52%;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.95) 55%, rgba(223, 255, 249, 0) 100%);
+}
+.hero-text-col {
+    position: relative;
+    z-index: 10;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Mobile: Compact Landscape Layout */
+@media (max-width: 639px) {
+    .hero-landscape-section {
+        min-height: 230px;
+        padding: 16px 0;
+    }
+    .hero-text-col {
+        width: 70%;
+        max-width: 285px;
+    }
+    .hero-gradient-overlay {
+        width: 75%;
+        background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.98) 60%, rgba(223, 255, 249, 0.75) 82%, rgba(223, 255, 249, 0) 100%);
+    }
+    .hero-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 3.5px;
+        font-size: 8px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+        padding: 2.5px 7.5px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(13, 148, 136, 0.35);
+        color: #0f766e;
+        margin-bottom: 6px;
+        max-width: fit-content;
+    }
+    .hero-badge-pill svg {
+        width: 8px;
+        height: 8px;
+    }
+    .hero-title {
+        font-family: var(--font-serif, Georgia, serif);
+        font-size: clamp(17px, 5.2vw, 22px);
+        line-height: 1.14;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 5px;
+    }
+    .hero-subtitle {
+        font-size: clamp(10px, 2.7vw, 11.5px);
+        line-height: 1.34;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .hero-desc {
+        display: none;
+    }
+    .hero-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        height: 32px;
+        padding: 0 15px;
+        border-radius: 9999px;
+        background-color: #0d9488;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(13, 148, 136, 0.28);
+        max-width: fit-content;
+    }
+    .hero-cta-btn svg {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Tablet & Desktop */
+@media (min-width: 640px) {
+    .hero-landscape-section {
+        min-height: 380px;
+        padding: 40px 0;
+    }
+    .hero-text-col {
+        width: 44%;
+        max-width: 520px;
+    }
+    .hero-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(13, 148, 136, 0.35);
+        color: #0f766e;
+        margin-bottom: 12px;
+        max-width: fit-content;
+    }
+    .hero-badge-pill svg {
+        width: 14px;
+        height: 14px;
+    }
+    .hero-title {
+        font-family: var(--font-serif, Georgia, serif);
+        font-size: clamp(26px, 3.2vw, 48px);
+        line-height: 1.08;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 12px;
+    }
+    .hero-subtitle {
+        font-size: clamp(14px, 1.4vw, 19px);
+        line-height: 1.45;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 12px;
+    }
+    .hero-desc {
+        font-size: clamp(12px, 1.1vw, 15px);
+        line-height: 1.5;
+        color: #475569;
+        margin-bottom: 16px;
+    }
+    .hero-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 22px;
+        border-radius: 9999px;
+        background-color: #0d9488;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+        transition: background-color 0.2s, transform 0.2s;
+        max-width: fit-content;
+    }
+    .hero-cta-btn:hover {
+        background-color: #0f766e;
+        transform: translateY(-1px);
+    }
+    .hero-cta-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-landscape-section {
+        min-height: 580px;
+        padding: 60px 0;
+    }
+}
+</style>
+
+<section class="hero-landscape-section" title="<?php echo esc_attr( $bg_image_title ); ?>">
+    <!-- Background Hero Landscape Image (Title appears on hover via mouse pointer) -->
+    <div class="hero-bg-layer"
+        style="background-image: url('<?php echo esc_url($bg_image_url); ?>');"
+        title="<?php echo esc_attr( $bg_image_title ); ?>"
+        aria-label="<?php echo esc_attr( $bg_image_title ); ?>"
         role="img">
     </div>
-
-    <!-- Seamless Left Gradient Blend for Crystal-Clear Legibility -->
-    <div
-        class="absolute inset-y-0 left-0 w-[52%] sm:w-[48%] md:w-[45%] bg-gradient-to-r from-[#dffff9] via-[#dffff9]/95 to-transparent pointer-events-none z-[1]">
-    </div>
-
-    <?php if ($bg_image_title): ?>
-    <!-- Media Title Chip on Hover -->
-    <div class="absolute bottom-3 right-4 z-[8] hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm border border-white/20 text-white text-[11px] font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-sm"
-        aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-75">
-            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-            <circle cx="9" cy="9" r="2"/>
-            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-        </svg>
-        <span><?php echo esc_html($bg_image_title); ?></span>
-    </div>
-    <?php endif; ?>
+    
+    <!-- Seamless Left Gradient Blend for Maximum Legibility -->
+    <div class="hero-gradient-overlay"></div>
 
     <!-- Content Container -->
-    <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 xs:py-4 sm:py-8 md:py-12 lg:py-16">
-        <?php if ($has_text_content): ?>
-            <div
-                class="w-[48%] xs:w-[47%] sm:w-[46%] md:w-[44%] lg:w-[42%] max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl text-left animate-fadeup flex flex-col justify-center">
-
-                <?php if ($badge): ?>
-                    <div class="mb-1 xs:mb-1.5 sm:mb-2 md:mb-3">
-                        <span
-                            class="inline-flex items-center gap-1 sm:gap-1.5 text-[7px] xs:text-[8px] sm:text-[11px] md:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-brand-800 bg-white/90 backdrop-blur-xs border border-brand-300/60 px-1.5 xs:px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-full shadow-2xs">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"
-                                fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="w-1.5 h-1.5 xs:w-2 xs:h-2 sm:w-3 sm:h-3 text-brand-600 shrink-0">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                            </svg>
-                            <span class="truncate"><?php echo esc_html($badge); ?></span>
-                        </span>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($title): ?>
-                    <h1
-                        class="font-serif text-[11px] xs:text-[13px] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.12] sm:leading-[1.1] font-bold text-brand-700 tracking-tight">
-                        <?php echo wp_kses_post($title); ?>
-                    </h1>
-                <?php endif; ?>
-
-                <?php if ($subtitle): ?>
-                    <h2
-                        class="mt-0.5 xs:mt-1 sm:mt-2 md:mt-3 font-bold text-base md:text-md lg:text-[22px] xl:text-2xl text-brand-700 leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">
-                        <strong><?php echo wp_kses_post($subtitle); ?></strong>
-                    </h2>
-                <?php endif; ?>
-
-                <?php if ($description): ?>
-                    <p
-                        class="hidden sm:block mt-1 sm:mt-2 md:mt-3 text-xs md:text-sm lg:text-base text-ink-600 leading-relaxed">
-                        <?php echo wp_kses_post($description); ?>
-                    </p>
-                <?php endif; ?>
-
-                <?php if ($cta_url && $cta_label): ?>
-                    <div class="mt-1 xs:mt-1.5 sm:mt-3 md:mt-5">
-                        <a href="<?php echo esc_url($cta_url); ?>"
-                            class="inline-flex items-center gap-1 sm:gap-2 h-5 xs:h-6 sm:h-9 md:h-11 px-2 xs:px-2.5 sm:px-4 md:px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-[7.5px] xs:text-[9px] sm:text-xs md:text-sm font-semibold transition-all shadow-soft hover:shadow-md">
-                            <span><?php echo esc_html($cta_label); ?></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5">
-                                <path d="M5 12h14" />
-                                <path d="m12 5 7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                <?php endif; ?>
-
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <?php if ( $has_text_content ) : ?>
+        <div class="hero-text-col animate-fadeup">
+            
+            <?php if ( $badge ) : ?>
+            <div>
+                <span class="hero-badge-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <span><?php echo esc_html( $badge ); ?></span>
+                </span>
             </div>
+            <?php endif; ?>
+
+            <?php if ( $title ) : ?>
+            <h1 class="hero-title">
+                <?php echo wp_kses_post( $title ); ?>
+            </h1>
+            <?php endif; ?>
+
+            <?php if ( $subtitle ) : ?>
+            <h2 class="hero-subtitle">
+                <strong><?php echo wp_kses_post( $subtitle ); ?></strong>
+            </h2>
+            <?php endif; ?>
+
+            <?php if ( $description ) : ?>
+            <p class="hero-desc">
+                <?php echo wp_kses_post( $description ); ?>
+            </p>
+            <?php endif; ?>
+
+            <?php if ( $cta_url && $cta_label ) : ?>
+            <div>
+                <a href="<?php echo esc_url( $cta_url ); ?>" class="hero-cta-btn">
+                    <span><?php echo esc_html( $cta_label ); ?></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+            </div>
+            <?php endif; ?>
+
+        </div>
         <?php endif; ?>
     </div>
 </section>
