@@ -60,16 +60,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
     background-size: cover;
     background-repeat: no-repeat;
 }
-.hero-gradient-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 52%;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.95) 55%, rgba(223, 255, 249, 0) 100%);
-}
+
 .hero-text-col {
     position: relative;
     z-index: 10;
@@ -89,10 +80,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         width: 70%;
         max-width: 285px;
     }
-    .hero-gradient-overlay {
-        width: 75%;
-        background: linear-gradient(to right, #dffff9 0%, rgba(223, 255, 249, 0.98) 60%, rgba(223, 255, 249, 0.75) 82%, rgba(223, 255, 249, 0) 100%);
-    }
+
     .hero-badge-pill {
         display: inline-flex;
         align-items: center;
@@ -123,7 +111,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         margin-bottom: 5px;
     }
     .hero-subtitle {
-        font-size: clamp(10px, 2.7vw, 11.5px);
+        font-size: clamp(12px, 2.7vw, 11.5px);
         line-height: 1.34;
         font-weight: 700;
         color: #1e293b;
@@ -140,7 +128,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        height: 32px;
+        height: 40px;
         padding: 0 15px;
         border-radius: 9999px;
         background-color: #0d9488;
@@ -152,8 +140,8 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         max-width: fit-content;
     }
     .hero-cta-btn svg {
-        width: 10px;
-        height: 10px;
+        width: 12px;
+        height: 12px;
     }
 }
 
@@ -250,9 +238,6 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         aria-label="<?php echo esc_attr( $bg_image_title ); ?>"
         role="img">
     </div>
-    
-    <!-- Seamless Left Gradient Blend for Maximum Legibility -->
-    <div class="hero-gradient-overlay"></div>
 
     <!-- Content Container -->
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
