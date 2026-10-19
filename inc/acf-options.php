@@ -100,6 +100,19 @@ add_action('acf/init', function() {
                 'default_value' => '',
                 'instructions' => 'Custom URL for the footer button. If empty, defaults to the WooCommerce Shop page.',
             ),
+            array(
+                'key' => 'field_nav_best_seller_products',
+                'label' => 'Dropdown Best Seller Products',
+                'name' => 'nav_best_seller_products',
+                'type' => 'post_object',
+                'post_type' => array('product'),
+                'taxonomy' => array(),
+                'allow_null' => 1,
+                'multiple' => 1,
+                'return_format' => 'id',
+                'ui' => 1,
+                'instructions' => 'Choose which products display the "Best Seller" badge in the navigation dropdown catalogue. Admin can select or remove products at any time.',
+            ),
 
             // Tab: Social Media
             array(

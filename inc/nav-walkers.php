@@ -96,16 +96,47 @@ function armodafinil_get_product_menu_meta($item) {
         }
     }
 
-    // Best seller status
+    // Best seller status - 100% dynamic!
     $is_best_seller = false;
-    if ($product && method_exists($product, 'is_featured') && $product->is_featured()) {
+    $badge_label    = 'Best Seller';
+
+    // 1. Check if menu item has CSS class 'best-seller' in Appearance > Menus
+    $classes = !empty($item->classes) ? (array) $item->classes : array();
+    if (in_array('best-seller', $classes) || in_array('is-best-seller', $classes)) {
         $is_best_seller = true;
-    } elseif ($product_id && get_field('is_best_seller', $product_id)) {
-        $is_best_seller = true;
-    } else {
-        $lower = strtolower($title);
-        if (strpos($lower, 'waklert 150') !== false || strpos($lower, 'modalert 200') !== false) {
+    }
+
+    // 2. Check if product is chosen in Theme Settings > Dropdown Best Seller Products
+    if (!$is_best_seller && $product_id) {
+        $theme_best_sellers = get_field('nav_best_seller_products', 'option');
+        if (!empty($theme_best_sellers)) {
+            $selected_ids = array_map(function($p) {
+                return is_object($p) ? (int)$p->ID : (int)$p;
+            }, (array) $theme_best_sellers);
+
+            if (in_array((int)$product_id, $selected_ids, true)) {
+                $is_best_seller = true;
+            }
+        }
+    }
+
+    // 3. Check if marked on the individual product edit screen (ACF 'is_best_seller')
+    if (!$is_best_seller && $product_id) {
+        if (get_field('is_best_seller', $product_id)) {
             $is_best_seller = true;
+        }
+    }
+
+    // 4. Check WooCommerce native Featured product status (Star in Products list)
+    if (!$is_best_seller && $product && method_exists($product, 'is_featured') && $product->is_featured()) {
+        $is_best_seller = true;
+    }
+
+    // Dynamic custom badge text if admin customized it
+    if ($product_id) {
+        $custom_text = get_field('custom_badge_text', $product_id);
+        if (!empty($custom_text)) {
+            $badge_label = $custom_text;
         }
     }
 
@@ -115,6 +146,7 @@ function armodafinil_get_product_menu_meta($item) {
         'price_html'     => $price_html,
         'brand'          => $brand,
         'is_best_seller' => $is_best_seller,
+        'badge_label'    => $badge_label,
     );
 }
 
@@ -244,7 +276,7 @@ class Armodafinil_Desktop_Nav_Walker extends Walker_Nav_Menu {
             $output .= '<div class="flex items-center justify-between gap-1">';
             $output .= '<h4 class="text-[13px] font-bold text-ink-900 truncate group-hover/pcard:text-brand-800">' . $title . '</h4>';
             if (!empty($meta['is_best_seller'])) {
-                $output .= '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-semibold shrink-0">Best Seller</span>';
+                $output .= '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-semibold shrink-0">' . esc_html($meta['badge_label']) . '</span>';
             }
             $output .= '</div>';
 
@@ -304,7 +336,7 @@ class Armodafinil_Mobile_Nav_Walker extends Walker_Nav_Menu {
             $output .= '<div class="min-w-0 flex-1">';
             $output .= '<div class="flex items-center justify-between gap-1"><span class="text-xs font-bold text-ink-900 truncate">' . $title . '</span>';
             if (!empty($meta['is_best_seller'])) {
-                $output .= '<span class="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[9px] font-semibold">Best Seller</span>';
+                $output .= '<span class="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[9px] font-semibold">' . esc_html($meta['badge_label']) . '</span>';
             }
             $output .= '</div>';
             $output .= '<div class="flex items-center justify-between text-[10px] text-ink-500">';

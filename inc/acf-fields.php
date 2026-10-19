@@ -1057,4 +1057,42 @@ acf_add_local_field_group(array(
 		),
 	),
 ));
+
+acf_add_local_field_group(array(
+	'key' => 'group_product_badge_settings',
+	'title' => 'Product Badges & Catalogue Settings',
+	'fields' => array(
+		array(
+			'key' => 'field_is_best_seller',
+			'label' => 'Best Seller Badge',
+			'name' => 'is_best_seller',
+			'type' => 'true_false',
+			'instructions' => 'Enable this to display the "Best Seller" badge on this product in the navigation dropdown and product cards.',
+			'message' => 'Mark as Best Seller',
+			'default_value' => 0,
+			'ui' => 1,
+		),
+		array(
+			'key' => 'field_custom_badge_text',
+			'label' => 'Custom Badge Text',
+			'name' => 'custom_badge_text',
+			'type' => 'text',
+			'instructions' => 'Optional custom badge text (e.g. "Best Seller", "Popular", "Top Choice"). If left empty and Best Seller is enabled, "Best Seller" is used.',
+			'placeholder' => 'Best Seller',
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'product',
+			),
+		),
+	),
+	'menu_order' => 1,
+	'position' => 'side',
+	'style' => 'default',
+	'active' => true,
+));
 });

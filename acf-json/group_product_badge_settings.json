@@ -1,0 +1,66 @@
+{
+    "key": "group_product_badge_settings",
+    "title": "Product Badges & Catalogue Settings",
+    "fields": [
+        {
+            "key": "field_is_best_seller",
+            "label": "Best Seller Badge",
+            "name": "is_best_seller",
+            "aria-label": "",
+            "prefix": "acf",
+            "type": "true_false",
+            "instructions": "Enable this to display the \"Best Seller\" badge on this product in the navigation dropdown and product cards.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Mark as Best Seller",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_custom_badge_text",
+            "label": "Custom Badge Text",
+            "name": "custom_badge_text",
+            "aria-label": "",
+            "prefix": "acf",
+            "type": "text",
+            "instructions": "Optional custom badge text (e.g. \"Best Seller\", \"Popular\", \"Top Choice\"). If left empty and Best Seller is enabled, \"Best Seller\" is used.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Best Seller",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}
