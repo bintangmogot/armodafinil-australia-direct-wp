@@ -6,7 +6,7 @@
  */
 
 $title = get_sub_field('title') ?: 'Popular right now';
-$subtitle = get_sub_field('subtitle') ?: 'Add to cart, or open a product for full details and dosing notes.';
+$subtitle = get_sub_field('subtitle');
 $view_all_text = get_sub_field('view_all_text') ?: 'View all';
 $view_all_url = get_sub_field('view_all_url') ?: '/product';
 $products = get_sub_field('products');
