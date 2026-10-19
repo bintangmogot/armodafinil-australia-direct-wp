@@ -178,10 +178,10 @@ if (strpos($whatsapp_raw, 'http') === 0) {
 							style="height: 34px; max-height: 36px; width: auto; max-width: 160px; object-fit: contain;">
 					<?php endforeach; ?>
 				<?php else: ?>
-					<img src="<?php echo esc_url(get_theme_file_uri('/assets/images/commonwealth-white.png')); ?>"
-						alt="Commonwealth Bank"
+					<img src="<?php echo esc_url(get_theme_file_uri('/assets/images/ing-bank.svg')); ?>"
+						alt="ING Bank"
 						class="footer-payment-logo object-contain h-8 sm:h-9 w-auto hover:scale-105 transition-transform"
-						style="height: 34px; max-height: 36px; width: auto; max-width: 160px; object-fit: contain;">
+						style="height: 34px; max-height: 36px; width: auto; max-width: 160px; object-fit: contain; background: #fff; padding: 8px 12px; border-radius: 6px;">
 					<img src="<?php echo esc_url(get_theme_file_uri('/assets/images/osko-white.png')); ?>"
 						alt="Osko by BPAY"
 						class="footer-payment-logo object-contain h-7 sm:h-8 w-auto hover:scale-105 transition-transform"
@@ -215,13 +215,13 @@ if (strpos($whatsapp_raw, 'http') === 0) {
 						?>
 						<img src="<?php echo esc_url($img_src); ?>" alt="<?php echo esc_attr($alt_val); ?>"
 							class="footer-shipping-logo object-contain h-10 sm:h-11 w-auto hover:scale-105 transition-transform"
-							style="height: 40px; max-height: 44px; width: auto; max-width: 150px; object-fit: contain;">
+							style="height: 40px; max-height: 44px; width: auto; max-width: 150px; object-fit: contain; background: #fff; padding: 8px 12px; border-radius: 6px;">
 					<?php endforeach; ?>
 				<?php else: ?>
 					<img src="<?php echo esc_url(get_theme_file_uri('/assets/images/australia-post.png')); ?>"
 						alt="Australia Post"
 						class="footer-shipping-logo object-contain h-10 sm:h-11 w-auto hover:scale-105 transition-transform"
-						style="height: 40px; max-height: 44px; width: auto; max-width: 150px; object-fit: contain;">
+						style="height: 56px; max-height: 80px; width: auto; max-width: 240px; object-fit: contain; background: #fff; padding: 8px 12px; border-radius: 6px;">
 				<?php endif; ?>
 			</div>
 		</div>
