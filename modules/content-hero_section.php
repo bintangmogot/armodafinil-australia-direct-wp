@@ -13,28 +13,61 @@ $cta_label = get_sub_field('cta_label');
 $cta_url = get_sub_field('cta_url');
 $bg_image_id = get_sub_field('background_image');
 
-$bg_image_url = '';
+$bg_image_url   = '';
+$bg_image_title = '';
+
 if ($bg_image_id) {
-    $bg_image_url = is_array($bg_image_id) ? ($bg_image_id['url'] ?? '') : wp_get_attachment_image_url($bg_image_id, 'full');
+    if (is_array($bg_image_id)) {
+        $bg_image_url   = $bg_image_id['url'] ?? '';
+        $bg_image_title = $bg_image_id['title'] ?? '';
+        $att_id         = $bg_image_id['ID'] ?? ($bg_image_id['id'] ?? 0);
+    } else {
+        $att_id         = (int) $bg_image_id;
+        $bg_image_url   = wp_get_attachment_image_url($att_id, 'full');
+        $bg_image_title = get_the_title($att_id);
+    }
+    if (!$bg_image_title && !empty($att_id)) {
+        $bg_image_title = get_the_title($att_id);
+    }
 }
 if (!$bg_image_url) {
-    $bg_image_url = get_theme_file_uri('/assets/images/homepage-armodafinil-direct.png');
+    $bg_image_url   = get_theme_file_uri('/assets/images/homepage-armodafinil-direct.png');
+}
+if (!$bg_image_title) {
+    $bg_image_title = get_bloginfo('name');
 }
 
 $has_text_content = $badge || $title || $subtitle || $description || $cta_label || $cta_url;
 ?>
 <section
-    class="relative w-full overflow-hidden bg-[#dffff9] flex items-center min-h-[185px] xs:min-h-[210px] sm:min-h-[300px] md:min-h-[440px] lg:min-h-[500px]"
-    style="background-color: #dffff9;">
+    class="relative w-full overflow-hidden bg-[#dffff9] flex items-center min-h-[185px] xs:min-h-[210px] sm:min-h-[300px] md:min-h-[440px] lg:min-h-[500px] group"
+    style="background-color: #dffff9;"
+    title="<?php echo esc_attr($bg_image_title); ?>">
     <!-- Background Hero Landscape Image -->
-    <div class="absolute inset-0 w-full h-full pointer-events-none bg-no-repeat bg-right bg-cover"
-        style="background-image: url('<?php echo esc_url($bg_image_url); ?>'); background-position: right center; background-size: cover;">
+    <div class="absolute inset-0 w-full h-full pointer-events-auto cursor-default bg-no-repeat bg-right bg-cover"
+        style="background-image: url('<?php echo esc_url($bg_image_url); ?>'); background-position: right center; background-size: cover;"
+        title="<?php echo esc_attr($bg_image_title); ?>"
+        aria-label="<?php echo esc_attr($bg_image_title); ?>"
+        role="img">
     </div>
 
     <!-- Seamless Left Gradient Blend for Crystal-Clear Legibility -->
     <div
         class="absolute inset-y-0 left-0 w-[52%] sm:w-[48%] md:w-[45%] bg-gradient-to-r from-[#dffff9] via-[#dffff9]/95 to-transparent pointer-events-none z-[1]">
     </div>
+
+    <?php if ($bg_image_title): ?>
+    <!-- Media Title Chip on Hover -->
+    <div class="absolute bottom-3 right-4 z-[8] hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm border border-white/20 text-white text-[11px] font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-sm"
+        aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-75">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+        </svg>
+        <span><?php echo esc_html($bg_image_title); ?></span>
+    </div>
+    <?php endif; ?>
 
     <!-- Content Container -->
     <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 xs:py-4 sm:py-8 md:py-12 lg:py-16">
