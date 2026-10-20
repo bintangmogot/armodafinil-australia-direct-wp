@@ -19,7 +19,16 @@ if ( ! empty( $cities_field ) && is_array( $cities_field ) ) {
             $highlight = !empty($c['highlight']);
             // Allow admin full flexibility to customize status text
             $status = isset($c['status']) && $c['status'] !== '' ? trim($c['status']) : (!empty($c['status_badge']) ? trim($c['status_badge']) : '');
-            $url = !empty($c['city_url']) ? trim($c['city_url']) : (!empty($c['url']) ? trim($c['url']) : '');
+            $raw_url = !empty($c['city_url']) ? $c['city_url'] : (!empty($c['url']) ? $c['url'] : '');
+            if ( is_numeric($raw_url) ) {
+                $url = get_permalink((int)$raw_url) ?: '';
+            } elseif ( is_object($raw_url) && isset($raw_url->ID) ) {
+                $url = get_permalink($raw_url->ID) ?: '';
+            } elseif ( is_array($raw_url) && isset($raw_url['ID']) ) {
+                $url = get_permalink($raw_url['ID']) ?: '';
+            } else {
+                $url = trim((string)$raw_url);
+            }
         } else {
             $name = trim((string)$c);
             $highlight = false;
