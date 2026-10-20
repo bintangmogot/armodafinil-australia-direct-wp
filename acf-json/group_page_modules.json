@@ -3815,11 +3815,11 @@
                                 },
                                 {
                                     "key": "field_deliv_city_url",
-                                    "label": "City URL (Optional)",
+                                    "label": "Select Page",
                                     "name": "city_url",
                                     "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
+                                    "type": "page_link",
+                                    "instructions": "Select the destination city landing page. If unselected, automatically links to /{city-slug}/.",
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
@@ -3827,7 +3827,13 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "placeholder": "e.g. /sydney/",
+                                    "post_type": [
+                                        "page"
+                                    ],
+                                    "taxonomy": [],
+                                    "allow_null": 1,
+                                    "allow_archives": 0,
+                                    "multiple": 0,
                                     "parent_repeater": "field_deliv_cities"
                                 }
                             ]
@@ -3965,11 +3971,11 @@
                                 },
                                 {
                                     "key": "field_deliv_city_url",
-                                    "label": "City URL (Optional)",
+                                    "label": "Select Page",
                                     "name": "city_url",
                                     "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
+                                    "type": "page_link",
+                                    "instructions": "Select the destination city landing page. If unselected, automatically links to /{city-slug}/.",
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
@@ -3977,7 +3983,13 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "placeholder": "e.g. /sydney/",
+                                    "post_type": [
+                                        "page"
+                                    ],
+                                    "taxonomy": [],
+                                    "allow_null": 1,
+                                    "allow_archives": 0,
+                                    "multiple": 0,
                                     "parent_repeater": "field_deliv_cities"
                                 }
                             ]
