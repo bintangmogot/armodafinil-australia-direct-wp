@@ -47,7 +47,7 @@ $buttons = get_sub_field('buttons');
             <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($title); ?></h1>
         <?php endif; ?>
         
-        <?php if ($desc) : ?>
+        <?php if ($desc && !is_single()) : ?>
             <p class="mt-4 text-lg text-ink-700 leading-relaxed max-w-2xl"><?php echo esc_html($desc); ?></p>
         <?php endif; ?>
         

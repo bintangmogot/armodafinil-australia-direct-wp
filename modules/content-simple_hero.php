@@ -16,7 +16,7 @@ $desc = get_sub_field('desc');
         <?php if ($title) : ?>
             <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900"><?php echo esc_html($title); ?></h1>
         <?php endif; ?>
-        <?php if ($desc) : ?>
+        <?php if ($desc && !is_single()) : ?>
             <p class="mt-3 text-ink-700 max-w-2xl mx-auto"><?php echo esc_html($desc); ?></p>
         <?php endif; ?>
     </div>
