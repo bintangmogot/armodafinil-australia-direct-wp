@@ -42,7 +42,7 @@ $sections = get_sub_field('sections');
                 <div class="text-[11px] uppercase tracking-widest text-brand-700 font-semibold bg-brand-100 rounded-full px-3 py-1.5 inline-block"><?php echo esc_html($badge); ?></div>
             </div>
             <h1 class="mt-4 font-serif text-4xl md:text-5xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($title); ?></h1>
-            <?php if ($intro) : ?>
+            <?php if ($intro && !is_single()) : ?>
                 <p class="mt-4 text-lg text-ink-700 leading-relaxed max-w-3xl"><?php echo esc_html($intro); ?></p>
             <?php endif; ?>
             <p class="mt-5 text-xs text-ink-500">Last updated <?php echo esc_html($updated); ?></p>
