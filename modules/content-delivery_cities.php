@@ -19,10 +19,12 @@ if ( ! empty( $cities_field ) && is_array( $cities_field ) ) {
             $highlight = !empty($c['highlight']);
             // Allow admin full flexibility to customize status text
             $status = isset($c['status']) && $c['status'] !== '' ? trim($c['status']) : (!empty($c['status_badge']) ? trim($c['status_badge']) : '');
+            $url = !empty($c['city_url']) ? trim($c['city_url']) : (!empty($c['url']) ? trim($c['url']) : '');
         } else {
             $name = trim((string)$c);
             $highlight = false;
             $status = '';
+            $url = '';
         }
         if ( ! empty($name) ) {
             $is_special = $highlight || ( strpos($name, '✓') !== false );
@@ -40,10 +42,24 @@ if ( ! empty( $cities_field ) && is_array( $cities_field ) ) {
                 }
             }
 
+            // Automatic URL resolution if no custom URL specified
+            if ( empty($url) ) {
+                // Strip common Australian state codes (NSW, VIC, QLD, WA, SA, TAS, ACT, NT) and checkmarks
+                $clean_name = trim(preg_replace('/(\s+(NSW|VIC|QLD|WA|SA|TAS|ACT|NT))|✓/i', '', $name));
+                $slug = sanitize_title($clean_name);
+                
+                if ( stripos($name, 'Regional') !== false || stripos($name, 'Remote') !== false ) {
+                    $url = home_url('/shipping-policy/');
+                } elseif ( ! empty($slug) ) {
+                    $url = home_url('/' . $slug . '/');
+                }
+            }
+
             $cities[] = array(
                 'name'      => $name,
                 'highlight' => $is_special,
                 'status'    => $status,
+                'url'       => $url,
             );
         }
     }
@@ -52,21 +68,21 @@ if ( ! empty( $cities_field ) && is_array( $cities_field ) ) {
 // Fallback to Australian coverage list if empty
 if ( empty( $cities ) ) {
     $cities = array(
-        array('name' => 'Sydney NSW', 'highlight' => true, 'status' => 'Same-Day Dispatch'),
-        array('name' => 'Melbourne VIC', 'highlight' => true, 'status' => 'Same-Day Dispatch'),
-        array('name' => 'Brisbane QLD', 'highlight' => true, 'status' => 'Express Metro'),
-        array('name' => 'Perth WA', 'highlight' => false, 'status' => ''),
-        array('name' => 'Adelaide SA', 'highlight' => false, 'status' => ''),
-        array('name' => 'Gold Coast QLD', 'highlight' => false, 'status' => ''),
-        array('name' => 'Canberra ACT', 'highlight' => false, 'status' => ''),
-        array('name' => 'Newcastle NSW', 'highlight' => false, 'status' => ''),
-        array('name' => 'Darwin NT', 'highlight' => false, 'status' => ''),
-        array('name' => 'Hobart TAS', 'highlight' => false, 'status' => ''),
-        array('name' => 'Cairns QLD', 'highlight' => false, 'status' => ''),
-        array('name' => 'Geelong VIC', 'highlight' => false, 'status' => ''),
-        array('name' => 'Townsville QLD', 'highlight' => false, 'status' => ''),
-        array('name' => 'Wollongong NSW', 'highlight' => false, 'status' => ''),
-        array('name' => 'Regional & Remote ✓', 'highlight' => true, 'status' => '100% AU-Wide'),
+        array('name' => 'Sydney NSW', 'highlight' => true, 'status' => 'Same-Day Dispatch', 'url' => home_url('/sydney/')),
+        array('name' => 'Melbourne VIC', 'highlight' => true, 'status' => 'Same-Day Dispatch', 'url' => home_url('/melbourne/')),
+        array('name' => 'Brisbane QLD', 'highlight' => true, 'status' => 'Express Metro', 'url' => home_url('/brisbane/')),
+        array('name' => 'Perth WA', 'highlight' => false, 'status' => '', 'url' => home_url('/perth/')),
+        array('name' => 'Adelaide SA', 'highlight' => false, 'status' => '', 'url' => home_url('/adelaide/')),
+        array('name' => 'Gold Coast QLD', 'highlight' => false, 'status' => '', 'url' => home_url('/gold-coast/')),
+        array('name' => 'Canberra ACT', 'highlight' => false, 'status' => '', 'url' => home_url('/canberra/')),
+        array('name' => 'Newcastle NSW', 'highlight' => false, 'status' => '', 'url' => home_url('/newcastle/')),
+        array('name' => 'Darwin NT', 'highlight' => false, 'status' => '', 'url' => home_url('/darwin/')),
+        array('name' => 'Hobart TAS', 'highlight' => false, 'status' => '', 'url' => home_url('/hobart/')),
+        array('name' => 'Cairns QLD', 'highlight' => false, 'status' => '', 'url' => home_url('/cairns/')),
+        array('name' => 'Geelong VIC', 'highlight' => false, 'status' => '', 'url' => home_url('/geelong/')),
+        array('name' => 'Townsville QLD', 'highlight' => false, 'status' => '', 'url' => home_url('/townsville/')),
+        array('name' => 'Wollongong NSW', 'highlight' => false, 'status' => '', 'url' => home_url('/wollongong/')),
+        array('name' => 'Regional & Remote ✓', 'highlight' => true, 'status' => '100% AU-Wide', 'url' => home_url('/shipping-policy/')),
     );
 }
 
@@ -82,7 +98,7 @@ $colorways = array(
 );
 ?>
 
-<section class="py-14 md:py-18 text-white select-none border-y" data-module="delivery-cities" style="background: linear-gradient(180deg, #134e4a 0%, #115e59 50%, #0f4a43 100%); border-color: #0f766e;">
+<section class="py-14 md:py-18 text-white border-y select-text" data-module="delivery-cities" style="background: linear-gradient(180deg, #134e4a 0%, #115e59 50%, #0f4a43 100%); border-color: #0f766e;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <?php if ( ! empty($badge) ) : ?>
         <!-- Micro-Proportioned Refined Shipping Nationwide Badge -->
@@ -105,7 +121,7 @@ $colorways = array(
         </p>
         <?php endif; ?>
 
-        <!-- Cities Badges Container (No bullet icons, compact status below city, creative theme colorways) -->
+        <!-- Cities Badges Container (Clickable links to city pages, selectable text, creative theme colorways) -->
         <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 max-w-5xl mx-auto">
             <?php 
             $normal_idx = 0;
@@ -113,13 +129,16 @@ $colorways = array(
                 $c_name = $c['name'];
                 $is_special = !empty($c['highlight']);
                 $c_status = !empty($c['status']) ? $c['status'] : '';
+                $c_url = !empty($c['url']) ? $c['url'] : '';
+                $tag = !empty($c_url) ? 'a' : 'div';
+                $href_attr = !empty($c_url) ? ' href="' . esc_url($c_url) . '"' : '';
             ?>
                 <?php if ( $is_special ) : ?>
-                <!-- Special Highlight City Card: Compact Pure White Card with Status Below (NO BULLETS) -->
-                <div class="inline-flex flex-col items-center justify-center px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-150 cursor-default shadow-xs hover:-translate-y-0.5 hover:shadow-sm border-2"
+                <!-- Special Highlight City Card: Compact Pure White Card with Status Below (NO BULLETS, Clickable Link) -->
+                <<?php echo $tag . $href_attr; ?> class="inline-flex flex-col items-center justify-center px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-150 shadow-xs hover:-translate-y-0.5 hover:shadow-md border-2 cursor-pointer hover:no-underline group"
                      style="background-color: #ffffff; color: #09152b; border-color: #5eead4;">
                     
-                    <span class="leading-tight"><?php echo esc_html($c_name); ?></span>
+                    <span class="leading-tight group-hover:text-brand-700 transition-colors"><?php echo esc_html($c_name); ?></span>
 
                     <?php if ( ! empty($c_status) ) : ?>
                     <!-- Compact Small Status Text Below City -->
@@ -127,22 +146,22 @@ $colorways = array(
                         <?php echo esc_html($c_status); ?>
                     </span>
                     <?php endif; ?>
-                </div>
+                </<?php echo $tag; ?>>
 
                 <?php else : 
                     $cw = $colorways[$normal_idx % count($colorways)];
                     $normal_idx++;
                 ?>
-                <!-- Normal City Pill: Creative Theme Colorway (NO BULLETS, compact status below if present) -->
-                <div class="inline-flex <?php echo !empty($c_status) ? 'flex-col items-center justify-center py-1.5 sm:py-2 rounded-xl' : 'items-center py-1.5 sm:py-2 rounded-full'; ?> px-3.5 sm:px-4 text-xs sm:text-sm font-semibold transition-all duration-150 cursor-default shadow-xs hover:-translate-y-0.5 hover:shadow-sm border"
+                <!-- Normal City Pill: Creative Theme Colorway (NO BULLETS, Clickable Link, compact status below if present) -->
+                <<?php echo $tag . $href_attr; ?> class="inline-flex <?php echo !empty($c_status) ? 'flex-col items-center justify-center py-1.5 sm:py-2 rounded-xl' : 'items-center py-1.5 sm:py-2 rounded-full'; ?> px-3.5 sm:px-4 text-xs sm:text-sm font-semibold transition-all duration-150 shadow-xs hover:-translate-y-0.5 hover:shadow-md border cursor-pointer hover:no-underline group"
                      style="background-color: <?php echo esc_attr($cw['bg']); ?>; border-color: <?php echo esc_attr($cw['border']); ?>; color: <?php echo esc_attr($cw['text']); ?>;">
-                    <span class="leading-tight"><?php echo esc_html($c_name); ?></span>
+                    <span class="leading-tight group-hover:opacity-90 transition-opacity"><?php echo esc_html($c_name); ?></span>
                     <?php if ( ! empty($c_status) ) : ?>
                     <span class="mt-0.5 text-[9px] font-bold uppercase tracking-wider opacity-75 leading-none">
                         <?php echo esc_html($c_status); ?>
                     </span>
                     <?php endif; ?>
-                </div>
+                </<?php echo $tag; ?>>
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>

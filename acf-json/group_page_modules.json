@@ -3771,7 +3771,7 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "45%",
+                                        "width": "35%",
                                         "class": "",
                                         "id": ""
                                     },
@@ -3788,7 +3788,7 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "20%",
+                                        "width": "15%",
                                         "class": "",
                                         "id": ""
                                     },
@@ -3806,11 +3806,28 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "35%",
+                                        "width": "25%",
                                         "class": "",
                                         "id": ""
                                     },
                                     "placeholder": "e.g. Same-Day Dispatch",
+                                    "parent_repeater": "field_deliv_cities"
+                                },
+                                {
+                                    "key": "field_deliv_city_url",
+                                    "label": "City URL (Optional)",
+                                    "name": "city_url",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "25%",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "placeholder": "e.g. /sydney/",
                                     "parent_repeater": "field_deliv_cities"
                                 }
                             ]
@@ -3904,7 +3921,7 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "45%",
+                                        "width": "35%",
                                         "class": "",
                                         "id": ""
                                     },
@@ -3921,7 +3938,7 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "20%",
+                                        "width": "15%",
                                         "class": "",
                                         "id": ""
                                     },
@@ -3939,11 +3956,28 @@
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
-                                        "width": "35%",
+                                        "width": "25%",
                                         "class": "",
                                         "id": ""
                                     },
                                     "placeholder": "e.g. Same-Day Dispatch",
+                                    "parent_repeater": "field_deliv_cities"
+                                },
+                                {
+                                    "key": "field_deliv_city_url",
+                                    "label": "City URL (Optional)",
+                                    "name": "city_url",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "25%",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "placeholder": "e.g. /sydney/",
                                     "parent_repeater": "field_deliv_cities"
                                 }
                             ]
