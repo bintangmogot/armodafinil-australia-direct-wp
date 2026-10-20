@@ -39,7 +39,9 @@ if (is_product()) {
     $product_name = get_the_title();
 }
 
-$important_note = str_replace('{product_name}', '<span class="font-semibold">' . esc_html($product_name) . '</span>', $important_note);
+$bold_product_name = '<strong class="font-bold text-amber-950">' . esc_html($product_name) . '</strong>';
+$important_note = preg_replace('/<(strong|b)>\s*\{product_name\}\s*<\/\1>/i', '{product_name}', $important_note);
+$important_note = str_replace('{product_name}', $bold_product_name, $important_note);
 ?>
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="space-y-4">

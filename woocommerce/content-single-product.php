@@ -388,7 +388,9 @@ foreach ( $attributes as $attribute ) {
                 $last_updated = get_the_modified_date('F Y');
               
               if ($usage_text) {
-                  $usage_text = str_replace('{product_name}', get_the_title(), $usage_text);
+                  $bold_title = '<strong class="font-bold text-ink-900">' . esc_html(get_the_title()) . '</strong>';
+                  $usage_text = preg_replace('/<(strong|b)>\s*\{product_name\}\s*<\/\1>/i', '{product_name}', $usage_text);
+                  $usage_text = str_replace('{product_name}', $bold_title, $usage_text);
               }
               
               // Only render the wrapper if AT LEAST ONE piece of content exists
