@@ -37,10 +37,11 @@ function handle_armodafinil_search() {
             
             if (!$product) continue;
 
+            $shop_title = get_field('shop_page_title', get_the_ID());
             $results[] = array(
                 'url' => get_permalink(),
                 'image' => get_the_post_thumbnail_url(get_the_ID(), 'thumbnail') ?: wc_placeholder_img_src(),
-                'title' => get_the_title(),
+                'title' => !empty($shop_title) ? $shop_title : get_the_title(),
                 'price' => $product->get_price_html(),
                 'price_per_unit' => get_field('price_per_unit', get_the_ID()),
             );

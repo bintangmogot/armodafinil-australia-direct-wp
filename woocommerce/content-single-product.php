@@ -13,6 +13,10 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 $product_id = $product->get_id();
 $product_name = $product->get_name();
+$custom_h1 = get_field('custom_h1', $product_id);
+$display_h1 = !empty($custom_h1) ? $custom_h1 : $product_name;
+$shop_page_title = get_field('shop_page_title', $product_id);
+$short_title = !empty($shop_page_title) ? $shop_page_title : $product_name;
 $product_image = wp_get_attachment_image_src( $product->get_image_id(), 'full' );
 $product_image_url = $product_image ? $product_image[0] : 'https://placehold.co/600x600/e0f2fe/0369a1?text=Product';
 
@@ -108,7 +112,7 @@ foreach ( $attributes as $attribute ) {
             <span>/</span>
             <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="hover:text-brand-700">Products</a>
             <span>/</span>
-            <span class="text-ink-900 truncate"><?php echo esc_html($product_name); ?></span>
+            <span class="text-ink-900 truncate"><?php echo esc_html($short_title); ?></span>
         </div>
     </div>
 
@@ -150,7 +154,7 @@ foreach ( $attributes as $attribute ) {
                         </span>
                     </div>
                     
-                    <h1 class="mt-3 font-serif text-3xl md:text-4xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($product_name); ?></h1>
+                    <h1 class="mt-3 font-serif text-3xl md:text-4xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($display_h1); ?></h1>
                     
                     <div class="mt-3 flex items-center gap-2">
                         <?php for($i=0; $i<5; $i++): ?>

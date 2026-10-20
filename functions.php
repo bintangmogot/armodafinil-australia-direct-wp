@@ -383,7 +383,10 @@ function aad_sticky_add_to_cart_bar() {
             <div class="aad-sticky-bar-left">
             <?php echo $product->get_image('thumbnail', ['class' => 'aad-sticky-bar-img']); ?>
             <div style="min-width:0;">
-                <div style="font-family:serif; font-weight:700; color:#0f172a; line-height:1.2; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><?php echo esc_html($product->get_name()); ?></div>
+                <div style="font-family:serif; font-weight:700; color:#0f172a; line-height:1.2; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><?php 
+                    $sticky_title = get_field('shop_page_title', $product->get_id()) ?: $product->get_name();
+                    echo esc_html($sticky_title); 
+                ?></div>
                 <div style="font-size:11px; color:#64748b; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><?php echo esc_html(wp_strip_all_tags($product->get_short_description())); ?></div>
             </div>
         </div>

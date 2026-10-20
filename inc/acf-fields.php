@@ -1095,4 +1095,42 @@ acf_add_local_field_group(array(
 	'style' => 'default',
 	'active' => true,
 ));
+
+acf_add_local_field_group(array(
+	'key' => 'group_product_title_settings',
+	'title' => 'Product Title & H1 Settings',
+	'fields' => array(
+		array(
+			'key' => 'field_shop_page_title',
+			'label' => 'Shop Page Title (Optional)',
+			'name' => 'shop_page_title',
+			'type' => 'text',
+			'instructions' => 'Custom title for the shop page and product card grids (e.g. "Waklert 150mg"). If left empty, uses the main product title.',
+			'placeholder' => 'e.g. Waklert 150mg',
+			'wrapper' => array('width' => '50'),
+		),
+		array(
+			'key' => 'field_product_custom_h1',
+			'label' => 'Single Product H1 Title (Optional)',
+			'name' => 'custom_h1',
+			'type' => 'text',
+			'instructions' => 'Custom H1 title on the single product page (e.g. "Buy Waklert 150mg Online in Australia"). If left empty, uses the main product title.',
+			'placeholder' => 'e.g. Buy Waklert 150mg Online in Australia',
+			'wrapper' => array('width' => '50'),
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'product',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'acf_after_title',
+	'style' => 'default',
+	'active' => true,
+));
 });

@@ -140,6 +140,11 @@ function armodafinil_get_product_menu_meta($item) {
         }
     }
 
+    $shop_title = '';
+    if ($product_id) {
+        $shop_title = get_field('shop_page_title', $product_id);
+    }
+
     return array(
         'product_id'     => $product_id,
         'img_url'        => $img_url,
@@ -147,6 +152,7 @@ function armodafinil_get_product_menu_meta($item) {
         'brand'          => $brand,
         'is_best_seller' => $is_best_seller,
         'badge_label'    => $badge_label,
+        'shop_title'     => $shop_title,
     );
 }
 
@@ -271,10 +277,12 @@ class Armodafinil_Desktop_Nav_Walker extends Walker_Nav_Menu {
             }
             $output .= '</div>';
 
+            $display_card_title = !empty($meta['shop_title']) ? $meta['shop_title'] : $title;
+
             // Text Info
             $output .= '<div class="min-w-0 flex-1">';
             $output .= '<div class="flex items-center justify-between gap-1">';
-            $output .= '<h4 class="text-[13px] font-bold text-ink-900 truncate group-hover/pcard:text-brand-800">' . $title . '</h4>';
+            $output .= '<h4 class="text-[13px] font-bold text-ink-900 truncate group-hover/pcard:text-brand-800">' . esc_html($display_card_title) . '</h4>';
             if (!empty($meta['is_best_seller'])) {
                 $output .= '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-semibold shrink-0">' . esc_html($meta['badge_label']) . '</span>';
             }
@@ -333,8 +341,9 @@ class Armodafinil_Mobile_Nav_Walker extends Walker_Nav_Menu {
             if (!empty($meta['img_url'])) {
                 $output .= '<div class="w-10 h-10 rounded-lg bg-white border border-ink-200/80 p-0.5 shrink-0 overflow-hidden"><img src="' . esc_url($meta['img_url']) . '" alt="' . esc_attr($title) . '" class="w-full h-full object-contain" /></div>';
             }
+            $display_card_title = !empty($meta['shop_title']) ? $meta['shop_title'] : $title;
             $output .= '<div class="min-w-0 flex-1">';
-            $output .= '<div class="flex items-center justify-between gap-1"><span class="text-xs font-bold text-ink-900 truncate">' . $title . '</span>';
+            $output .= '<div class="flex items-center justify-between gap-1"><span class="text-xs font-bold text-ink-900 truncate">' . esc_html($display_card_title) . '</span>';
             if (!empty($meta['is_best_seller'])) {
                 $output .= '<span class="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[9px] font-semibold">' . esc_html($meta['badge_label']) . '</span>';
             }
