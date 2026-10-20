@@ -1096,6 +1096,7 @@ acf_add_local_field_group(array(
 	'active' => true,
 ));
 
+if ( ! acf_get_local_field_group('group_product_title_settings') ) {
 acf_add_local_field_group(array(
 	'key' => 'group_product_title_settings',
 	'title' => 'Product Title & H1 Settings',
@@ -1133,4 +1134,5 @@ acf_add_local_field_group(array(
 	'style' => 'default',
 	'active' => true,
 ));
+}
 });
