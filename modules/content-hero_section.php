@@ -115,7 +115,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         margin: 0;
     }
     .hero-subtitle {
-        font-size: clamp(10.5px, 2.7vw, 12px);
+        font-size: clamp(15.75px, 4.05vw, 18px);
         line-height: 1.36;
         font-weight: 700;
         color: #1e293b;
@@ -191,14 +191,14 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         margin: 0;
     }
     .hero-subtitle {
-        font-size: clamp(15px, 1.45vw, 19px);
+        font-size: clamp(22.5px, 2.18vw, 28.5px);
         line-height: 1.48;
         font-weight: 700;
         color: #1e293b;
         margin: 0;
     }
     .hero-desc {
-        font-size: clamp(12px, 1.1vw, 15px);
+        font-size: clamp(18px, 1.65vw, 22.5px);
         line-height: 1.55;
         color: #475569;
         margin: 0;
