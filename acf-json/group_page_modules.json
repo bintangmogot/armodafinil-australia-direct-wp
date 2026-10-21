@@ -390,6 +390,46 @@
                             "append": ""
                         },
                         {
+                            "key": "field_testi_link_text",
+                            "label": "View All Link Text",
+                            "name": "view_all_text",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "View all Reviews",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_testi_link_url",
+                            "label": "View All Link URL",
+                            "name": "view_all_url",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "/reviews",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_testi_reviews",
                             "label": "Selected Reviews",
                             "name": "reviews",

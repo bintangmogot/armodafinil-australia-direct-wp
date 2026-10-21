@@ -227,6 +227,20 @@ acf_add_local_field_group(array(
 							'type' => 'text',
 						),
 						array(
+							'key' => 'field_testi_link_text',
+							'label' => 'View All Link Text',
+							'name' => 'view_all_text',
+							'type' => 'text',
+							'default_value' => 'View all Reviews',
+						),
+						array(
+							'key' => 'field_testi_link_url',
+							'label' => 'View All Link URL',
+							'name' => 'view_all_url',
+							'type' => 'text',
+							'default_value' => '/reviews',
+						),
+						array(
 							'key' => 'field_testi_reviews',
 							'label' => 'Reviews',
 							'name' => 'reviews',

@@ -7,6 +7,8 @@
 
 $title = get_sub_field('title') ?: 'What Australians say';
 $subtitle = get_sub_field('subtitle') ?: 'A handful of recent notes from verified buyers.';
+$view_all_text = get_sub_field('view_all_text') ?: 'View all Reviews';
+$view_all_url = get_sub_field('view_all_url') ?: home_url('/reviews/');
 $selected_reviews = get_sub_field('reviews');
 
 $review_items = array();
@@ -202,7 +204,16 @@ if ( empty( $review_items ) ) {
         <h2 class="text-3xl md:text-4xl font-serif font-semibold text-ink-900 text-center"><?php echo esc_html($title); ?></h2>
         <p class="mt-2 text-center text-ink-500"><?php echo esc_html($subtitle); ?></p>
         
-        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <?php if ( ! empty($view_all_text) && ! empty($view_all_url) ) : ?>
+        <div class="mt-4 flex justify-center md:justify-end">
+            <a href="<?php echo esc_url($view_all_url); ?>" class="inline-flex items-center gap-1 text-sm md:text-base text-brand-700 font-semibold hover:text-brand-800 hover:gap-1.5 transition-all">
+                <?php echo esc_html($view_all_text); ?>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+        </div>
+        <?php endif; ?>
+        
+        <div class="<?php echo ( ! empty($view_all_text) && ! empty($view_all_url) ) ? 'mt-4' : 'mt-10'; ?> grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             <?php foreach ( $review_items as $r ) : ?>
             <div class="bg-white border border-ink-200 rounded-2xl p-6 hover-lift relative shadow-sm flex flex-col">
                 <div class="flex items-center justify-between gap-2 mb-3">
