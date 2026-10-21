@@ -235,7 +235,19 @@ if ( empty( $review_items ) ) {
         <p class="mt-2 text-center text-ink-500"><?php echo esc_html($subtitle); ?></p>
         
         <?php if ( ! empty($view_all_text) && ! empty($view_all_url) ) : ?>
-        <div class="mt-4 flex justify-end" style="display: flex; justify-content: flex-end; width: 100%;">
+        <style>
+            .testimonials-view-all-wrap {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+            @media (min-width: 768px) {
+                .testimonials-view-all-wrap {
+                    justify-content: flex-end;
+                }
+            }
+        </style>
+        <div class="mt-4 testimonials-view-all-wrap">
             <a href="<?php echo esc_url($view_all_url); ?>" class="inline-flex items-center gap-1 text-sm md:text-base text-brand-700 font-semibold hover:text-brand-800 hover:gap-1.5 transition-all">
                 <?php echo esc_html($view_all_text); ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4"><path d="m9 18 6-6-6-6"/></svg>
