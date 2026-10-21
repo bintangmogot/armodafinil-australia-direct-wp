@@ -154,7 +154,7 @@ foreach ( $attributes as $attribute ) {
                         </span>
                     </div>
                     
-                    <h1 class="mt-3 font-serif text-3xl md:text-4xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($display_h1); ?></h1>
+                    <h1 class="mt-3 font-serif text-5xl md:text-6xl font-semibold text-ink-900 leading-tight"><?php echo esc_html($display_h1); ?></h1>
                     
                     <div class="mt-3 flex items-center gap-2">
                         <?php for($i=0; $i<5; $i++): ?>
@@ -178,7 +178,7 @@ foreach ( $attributes as $attribute ) {
                       $short_desc = apply_filters('woocommerce_short_description', $product->get_short_description());
                       if($short_desc): 
                       ?>
-                          <div class="mt-5 p-5 bg-white rounded-xl border border-ink-200 shadow-sm text-[14px] text-ink-700 leading-relaxed prose prose-ink prose-a:text-brand-700 max-w-none">
+                          <div class="mt-5 p-5 bg-white rounded-xl border border-ink-200 shadow-sm text-[21px] text-ink-700 leading-relaxed prose prose-ink prose-a:text-brand-700 max-w-none">
                               <?php echo wp_kses_post($short_desc); ?>
                           </div>
                       <?php endif; ?>
