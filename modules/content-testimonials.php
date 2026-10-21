@@ -8,7 +8,37 @@
 $title = get_sub_field('title') ?: 'What Australians say';
 $subtitle = get_sub_field('subtitle') ?: 'A handful of recent notes from verified buyers.';
 $view_all_text = get_sub_field('view_all_text') ?: 'View all Reviews';
-$view_all_url = get_sub_field('view_all_url') ?: home_url('/reviews/');
+$view_all_url  = get_sub_field('view_all_url');
+if ( is_numeric($view_all_url) ) {
+    $view_all_url = get_permalink((int) $view_all_url);
+}
+if ( empty($view_all_url) ) {
+    $review_pages = get_posts(array(
+        'post_type'      => 'page',
+        'post_status'    => 'publish',
+        'posts_per_page' => 1,
+        'meta_query'     => array(
+            'relation' => 'OR',
+            array(
+                'key'     => 'page_modules',
+                'value'   => 'review_page',
+                'compare' => 'LIKE',
+            ),
+            array(
+                'key'     => 'page_modules',
+                'value'   => 'reviews_carousel_grid',
+                'compare' => 'LIKE',
+            ),
+        ),
+        'fields'         => 'ids',
+    ));
+    if ( ! empty($review_pages) ) {
+        $view_all_url = get_permalink($review_pages[0]);
+    } else {
+        $reviews_page_obj = get_page_by_path('reviews') ?: get_page_by_path('customer-reviews');
+        $view_all_url = $reviews_page_obj ? get_permalink($reviews_page_obj->ID) : home_url('/reviews/');
+    }
+}
 $selected_reviews = get_sub_field('reviews');
 
 $review_items = array();
@@ -205,7 +235,7 @@ if ( empty( $review_items ) ) {
         <p class="mt-2 text-center text-ink-500"><?php echo esc_html($subtitle); ?></p>
         
         <?php if ( ! empty($view_all_text) && ! empty($view_all_url) ) : ?>
-        <div class="mt-4 flex justify-center md:justify-end">
+        <div class="mt-4 flex justify-end" style="display: flex; justify-content: flex-end; width: 100%;">
             <a href="<?php echo esc_url($view_all_url); ?>" class="inline-flex items-center gap-1 text-sm md:text-base text-brand-700 font-semibold hover:text-brand-800 hover:gap-1.5 transition-all">
                 <?php echo esc_html($view_all_text); ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4"><path d="m9 18 6-6-6-6"/></svg>

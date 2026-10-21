@@ -411,11 +411,11 @@
                         },
                         {
                             "key": "field_testi_link_url",
-                            "label": "View All Link URL",
+                            "label": "Select Reviews Page",
                             "name": "view_all_url",
                             "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
+                            "type": "page_link",
+                            "instructions": "Select the destination Reviews page. If left empty, automatically links to the Reviews page.",
                             "required": false,
                             "conditional_logic": false,
                             "wrapper": {
@@ -423,11 +423,13 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "/reviews",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": ""
+                            "post_type": [
+                                "page"
+                            ],
+                            "taxonomy": [],
+                            "allow_null": 1,
+                            "allow_archives": 0,
+                            "multiple": 0
                         },
                         {
                             "key": "field_testi_reviews",
@@ -1361,7 +1363,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "/contact",
+                            "default_value": "\/contact",
                             "maxlength": "",
                             "placeholder": "",
                             "prepend": "",
@@ -2178,29 +2180,78 @@
                             "key": "field_sc_chat_text",
                             "label": "Chat Button Text",
                             "name": "chat_btn_text",
+                            "aria-label": "",
                             "type": "text",
-                            "default_value": "Chat now"
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Chat now",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
                         },
                         {
                             "key": "field_sc_chat_url",
                             "label": "Chat Button URL",
                             "name": "chat_btn_url",
+                            "aria-label": "",
                             "type": "url",
-                            "default_value": ""
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": ""
                         },
                         {
                             "key": "field_sc_email_text",
                             "label": "Email Button Text",
                             "name": "email_btn_text",
+                            "aria-label": "",
                             "type": "text",
-                            "default_value": "Email us"
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Email us",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
                         },
                         {
                             "key": "field_sc_email_url",
                             "label": "Email Button URL (mailto:)",
                             "name": "email_btn_url",
+                            "aria-label": "",
                             "type": "text",
-                            "default_value": "mailto:support@armodafinilaustralia.com.au"
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "mailto:support@armodafinilaustralia.com.au",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
                         }
                     ],
                     "min": "",
@@ -3392,7 +3443,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "{product_name} is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor's advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href=\"https://www.tga.gov.au/\" target=\"_blank\" rel=\"noopener\" class=\"text-brand-700 hover:underline\">Therapeutic Goods Administration (TGA)</a>.",
+                            "default_value": "{product_name} is a Schedule 4 (prescription-only) medicine in Australia. Effects, dosage, and possible side effects can differ from person to person. Taking this medicine without a doctor's advice may be harmful. This website does not encourage self-medication. For official Australian prescription-medicine guidance, see the <a href=\"https:\/\/www.tga.gov.au\/\" target=\"_blank\" rel=\"noopener\" class=\"text-brand-700 hover:underline\">Therapeutic Goods Administration (TGA)<\/a>.",
                             "new_lines": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -3412,7 +3463,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href=\"/medical-disclaimer\" class=\"font-semibold text-brand-800 hover:underline\">Read our full medical disclaimer.</a>",
+                            "default_value": "This website is for informational purposes only and does not constitute medical advice. Always consult a qualified healthcare professional before starting, stopping, or changing any medication. <a href=\"\/medical-disclaimer\" class=\"font-semibold text-brand-800 hover:underline\">Read our full medical disclaimer.<\/a>",
                             "new_lines": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -3432,7 +3483,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "https://armodafinildirect.com.au/medical-team/dr-ginni-mansberg/",
+                            "default_value": "https:\/\/armodafinildirect.com.au\/medical-team\/dr-ginni-mansberg\/",
                             "placeholder": ""
                         },
                         {
@@ -3462,7 +3513,7 @@
                 "layout_rich_text": {
                     "key": "layout_rich_text",
                     "name": "rich_text",
-                    "label": "Rich Text (Top/Bottom Content)",
+                    "label": "Rich Text (Top\/Bottom Content)",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -3684,7 +3735,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "Leave us a review \ud83d\ude4f",
+                            "default_value": "Leave us a review 🙏",
                             "maxlength": "",
                             "placeholder": "",
                             "prepend": "",
@@ -3727,158 +3778,11 @@
                 "layout_delivery_cities": {
                     "key": "layout_delivery_cities",
                     "name": "delivery_cities",
-                    "label": "Delivery Cities / Nationwide",
+                    "label": "Delivery Cities \/ Nationwide",
                     "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_deliv_badge",
-                            "label": "Badge Text",
-                            "name": "badge",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": false,
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "SHIPPING NATIONWIDE",
-                            "placeholder": ""
-                        },
-                        {
-                            "key": "field_deliv_title",
-                            "label": "Section Title",
-                            "name": "title",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": false,
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "Delivered Everywhere in Australia",
-                            "placeholder": ""
-                        },
-                        {
-                            "key": "field_deliv_subtitle",
-                            "label": "Subtitle",
-                            "name": "subtitle",
-                            "aria-label": "",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": false,
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "Metro cities, regional towns, or remote FIFO camps \u2014 we ship to your address.",
-                            "rows": 2,
-                            "placeholder": ""
-                        },
-                        {
-                            "key": "field_deliv_cities",
-                            "label": "Cities / Locations",
-                            "name": "cities",
-                            "aria-label": "",
-                            "type": "repeater",
-                            "instructions": "Add or modify cities. If left empty, default Australian cities will be displayed automatically.",
-                            "required": false,
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "layout": "table",
-                            "button_label": "Add City",
-                            "min": 0,
-                            "max": 0,
-                            "sub_fields": [
-                                {
-                                    "key": "field_deliv_city_name",
-                                    "label": "City Name",
-                                    "name": "city_name",
-                                    "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
-                                    "required": false,
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "35%",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "placeholder": "e.g. Sydney NSW",
-                                    "parent_repeater": "field_deliv_cities"
-                                },
-                                {
-                                    "key": "field_deliv_city_highlight",
-                                    "label": "Highlight",
-                                    "name": "highlight",
-                                    "aria-label": "",
-                                    "type": "true_false",
-                                    "instructions": "",
-                                    "required": false,
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "15%",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "message": "Special highlight",
-                                    "default_value": 0,
-                                    "parent_repeater": "field_deliv_cities"
-                                },
-                                {
-                                    "key": "field_deliv_city_status",
-                                    "label": "Status Badge",
-                                    "name": "status",
-                                    "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
-                                    "required": false,
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "25%",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "placeholder": "e.g. Same-Day Dispatch",
-                                    "parent_repeater": "field_deliv_cities"
-                                },
-                                {
-                                    "key": "field_deliv_city_url",
-                                    "label": "Select Page",
-                                    "name": "city_url",
-                                    "aria-label": "",
-                                    "type": "page_link",
-                                    "instructions": "Select the destination city landing page. If unselected, automatically links to /{city-slug}/.",
-                                    "required": false,
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "25%",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "post_type": [
-                                        "page"
-                                    ],
-                                    "taxonomy": [],
-                                    "allow_null": 1,
-                                    "allow_archives": 0,
-                                    "multiple": 0,
-                                    "parent_repeater": "field_deliv_cities"
-                                }
-                            ]
-                        }
-                    ]
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
                 },
                 "layout_city_sections": {
                     "key": "layout_city_sections",
@@ -3901,7 +3805,10 @@
                                 "id": ""
                             },
                             "default_value": "SHIPPING NATIONWIDE",
-                            "placeholder": ""
+                            "placeholder": "",
+                            "maxlength": "",
+                            "prepend": "",
+                            "append": ""
                         },
                         {
                             "key": "field_deliv_title",
@@ -3918,7 +3825,10 @@
                                 "id": ""
                             },
                             "default_value": "Delivered Everywhere in Australia",
-                            "placeholder": ""
+                            "placeholder": "",
+                            "maxlength": "",
+                            "prepend": "",
+                            "append": ""
                         },
                         {
                             "key": "field_deliv_subtitle",
@@ -3934,13 +3844,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "Metro cities, regional towns, or remote FIFO camps \u2014 we ship to your address.",
+                            "default_value": "Metro cities, regional towns, or remote FIFO camps — we ship to your address.",
                             "rows": 2,
-                            "placeholder": ""
+                            "placeholder": "",
+                            "new_lines": "",
+                            "maxlength": ""
                         },
                         {
                             "key": "field_deliv_cities",
-                            "label": "Cities / Locations",
+                            "label": "Cities \/ Locations",
                             "name": "cities",
                             "aria-label": "",
                             "type": "repeater",
@@ -3956,6 +3868,8 @@
                             "button_label": "Add City",
                             "min": 0,
                             "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
                             "sub_fields": [
                                 {
                                     "key": "field_deliv_city_name",
@@ -3972,7 +3886,11 @@
                                         "id": ""
                                     },
                                     "placeholder": "e.g. Sydney NSW",
-                                    "parent_repeater": "field_deliv_cities"
+                                    "parent_repeater": "field_deliv_cities",
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "prepend": "",
+                                    "append": ""
                                 },
                                 {
                                     "key": "field_deliv_city_highlight",
@@ -3990,7 +3908,10 @@
                                     },
                                     "message": "Special highlight",
                                     "default_value": 0,
-                                    "parent_repeater": "field_deliv_cities"
+                                    "parent_repeater": "field_deliv_cities",
+                                    "ui": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": ""
                                 },
                                 {
                                     "key": "field_deliv_city_status",
@@ -4007,7 +3928,11 @@
                                         "id": ""
                                     },
                                     "placeholder": "e.g. Same-Day Dispatch",
-                                    "parent_repeater": "field_deliv_cities"
+                                    "parent_repeater": "field_deliv_cities",
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "prepend": "",
+                                    "append": ""
                                 },
                                 {
                                     "key": "field_deliv_city_url",
@@ -4015,7 +3940,7 @@
                                     "name": "city_url",
                                     "aria-label": "",
                                     "type": "page_link",
-                                    "instructions": "Select the destination city landing page. If unselected, automatically links to /{city-slug}/.",
+                                    "instructions": "Select the destination city landing page. If unselected, automatically links to \/{city-slug}\/.",
                                     "required": false,
                                     "conditional_logic": false,
                                     "wrapper": {
@@ -4034,7 +3959,9 @@
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Module",
@@ -4098,5 +4025,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792246326
+    "modified": 1792583482
 }

@@ -235,10 +235,13 @@ acf_add_local_field_group(array(
 						),
 						array(
 							'key' => 'field_testi_link_url',
-							'label' => 'View All Link URL',
+							'label' => 'Select Reviews Page',
 							'name' => 'view_all_url',
-							'type' => 'text',
-							'default_value' => '/reviews',
+							'type' => 'page_link',
+							'post_type' => array('page'),
+							'allow_null' => 1,
+							'allow_archives' => 0,
+							'multiple' => 0,
 						),
 						array(
 							'key' => 'field_testi_reviews',
