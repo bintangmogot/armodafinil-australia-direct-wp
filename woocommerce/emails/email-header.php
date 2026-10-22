@@ -25,6 +25,11 @@ $store_name = get_bloginfo( 'name', 'display' );
 							<tr>
 								<td align="center" valign="top">
                                     
+                                    <!-- Preheader Preview Text for Email Clients -->
+                                    <div style="display: none; font-size: 1px; color: #ffffff; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+                                        An Armodafinil Australia Direct Thank you for your order.
+                                    </div>
+
                                     <!-- HTML Logo -->
                                     <div id="template_header_image" style="margin-bottom: 24px;">
                                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration: none; display: inline-block;">
@@ -33,7 +38,7 @@ $store_name = get_bloginfo( 'name', 'display' );
                                                     <!-- Icon box -->
                                                     <td valign="middle" style="padding-right: 12px;">
                                                         <div style="width: 40px; height: 40px; border-radius: 12px; background-color: #0d9488; text-align: center; line-height: 40px;">
-                                                            <span style="color: #ffffff; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: bold;">A</span>
+                                                            <span style="color: #ffffff; font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: bold; letter-spacing: -0.5px;">An</span>
                                                         </div>
                                                     </td>
                                                     <!-- Text -->
