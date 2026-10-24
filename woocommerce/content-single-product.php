@@ -459,30 +459,8 @@ foreach ( $attributes as $attribute ) {
               <div class="bg-brand-50/30 border-t border-ink-100 py-12">
               <?php get_template_part('template-parts/product-reviews'); ?>
               </div>
-  
-              <!-- Frequently Bought Together -->
-              <div class="bg-white py-12"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <h2 class="text-2xl font-bold text-ink-900 mb-8">Frequently Bought Together</h2>
-                  <?php 
-                  $related_products = wc_get_related_products(get_the_ID(), 4);
-                  if (empty($related_products)) {
-                      // Native WC Shortcode fallback
-                      echo do_shortcode('[products limit="4" columns="4" orderby="rand" excludes="' . get_the_ID() . '"]');
-                  } else {
-                      add_filter( 'woocommerce_product_related_products_heading', '__return_empty_string' );
-                      woocommerce_output_related_products(array(
-                          'posts_per_page' => 4,
-                          'columns'        => 4,
-                          'orderby'        => 'rand'
-                      )); 
-                      remove_filter( 'woocommerce_product_related_products_heading', '__return_empty_string' );
-                  }
-                  ?>
-              </div>
-  
-              <?php get_template_part('template-parts/order-cta'); ?>
 
-</div>
+              <?php get_template_part('template-parts/order-cta'); ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
