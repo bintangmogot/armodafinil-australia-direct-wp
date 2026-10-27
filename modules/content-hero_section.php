@@ -85,7 +85,7 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         pointer-events: auto;
         cursor: default;
         background-position: left top;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
     }
     .hero-text-col {
