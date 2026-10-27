@@ -114,8 +114,11 @@ acf_add_local_field_group(array(
 							'key' => 'field_hero_description',
 							'label' => 'Description',
 							'name' => 'description',
-							'type' => 'textarea',
-							'rows' => 3,
+							'type' => 'wysiwyg',
+							'tabs' => 'all',
+							'toolbar' => 'basic',
+							'media_upload' => 0,
+							'delay' => 0,
 						),
 						array(
 							'key' => 'field_hero_cta_label',
