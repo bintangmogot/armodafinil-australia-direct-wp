@@ -126,7 +126,10 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         overflow: hidden;
     }
     .hero-desc {
-        display: none;
+        display: block;
+        font-size: clamp(12.5px, 3.2vw, 14px);
+        line-height: 1.45;
+        color: #475569;
         margin: 0;
     }
     .hero-cta-btn {
