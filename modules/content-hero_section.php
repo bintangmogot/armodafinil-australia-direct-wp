@@ -89,8 +89,8 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         background-repeat: no-repeat;
     }
     .hero-text-col {
-        width: 72%;
-        max-width: 295px;
+        width: 85%;
+        max-width: 360px;
         gap: 12px;
     }
     .hero-badge-pill {
