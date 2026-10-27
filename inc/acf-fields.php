@@ -140,6 +140,14 @@ acf_add_local_field_group(array(
 							'return_format' => 'id',
 							'instructions' => 'Optional custom background image. If left empty, default warehouse dispatch landscape banner is used.',
 						),
+						array(
+							'key' => 'field_hero_image_hover_title',
+							'label' => 'Image Hover Title',
+							'name' => 'image_hover_title',
+							'type' => 'text',
+							'default_value' => 'Trusted Australian Armodafinil Supplier',
+							'instructions' => 'Text displayed when hovering mouse over the hero background image.',
+						),
 					),
 				),
 				'layout_trust_strip' => array(
