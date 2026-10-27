@@ -1,4 +1,14 @@
-@layer base { html { scroll-behavior: smooth; } }
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}
 /*!
 Theme Name: Armodafinil Australia Direct
 Theme URI: https://armodafinilaustralia.com.au

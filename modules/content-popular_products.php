@@ -26,7 +26,7 @@ $products = get_sub_field('products');
             </a>
         </div>
         
-        <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
             <?php 
             if ( $products ) : 
                 foreach ( $products as $post ) : 
@@ -70,7 +70,7 @@ $products = get_sub_field('products');
                         $rating = 5.0; // Default fake average if 0
                     }
             ?>
-            <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2.5">
+            <div class="group bg-white border border-ink-200 rounded-[20px] overflow-hidden hover:shadow-card hover:border-ink-300 transition-all duration-300 flex flex-col p-2 sm:p-2.5">
                 <a href="<?php echo esc_url($p_url); ?>" target="_blank" class="block aspect-[4/3] bg-white rounded-xl border border-ink-100 overflow-hidden relative">
                     <img src="<?php echo esc_url($p_image); ?>" alt="<?php echo esc_attr($p_display_name); ?>" loading="lazy" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
                 </a>
@@ -133,7 +133,7 @@ $products = get_sub_field('products');
                                     }
 
                                     $is_first = ($count === 0);
-                                    $base_classes = "text-center py-1.5 px-1 border rounded-md transition-colors text-[11px] font-bold truncate cursor-pointer";
+                                    $base_classes = "text-center py-1.5 px-0.5 sm:px-1 border rounded-md transition-colors text-[10px] sm:text-[11px] font-bold truncate cursor-pointer";
                                     $active_classes = "bg-brand-600 text-white border-brand-600";
                                     $inactive_classes = "text-brand-700 bg-brand-50 border-brand-200 hover:bg-brand-100";
                                     

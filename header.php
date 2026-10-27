@@ -14,10 +14,10 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class('overflow-x-hidden'); ?>>
 <?php wp_body_open(); ?>
 
-<div id="page" class="site">
+<div id="page" class="site overflow-x-hidden w-full">
 
 	<?php if ( function_exists('is_checkout') && is_checkout() && empty( is_wc_endpoint_url('order-received') ) ) : ?>
     <header class="sticky top-0 z-40 bg-white border-b border-ink-100 shadow-sm">
@@ -26,9 +26,9 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m15 18-6-6 6-6"/></svg> Cart
             </a>
             
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink-0 min-w-0">
-                <img src="<?php $custom_logo_id = get_theme_mod("custom_logo"); echo $custom_logo_id ? esc_url(wp_get_attachment_image_url($custom_logo_id, "full")) : esc_url(get_template_directory_uri() . "/assets/logo.png"); ?>" alt="Armodafinil Direct" style="height: 32px !important; width: auto !important; max-width: 200px; object-fit: contain;">
-            </a>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center shrink min-w-0">
+                <img src="<?php $custom_logo_id = get_theme_mod("custom_logo"); echo $custom_logo_id ? esc_url(wp_get_attachment_image_url($custom_logo_id, "full")) : esc_url(get_template_directory_uri() . "/assets/logo.png"); ?>" alt="Armodafinil Direct" class="h-8 sm:h-11 w-auto max-w-[170px] sm:max-w-[250px] object-contain">
+			</a>
 
             <div class="flex items-center gap-1.5 text-brand-700 text-sm font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path style="fill:none !important;" d="m9 12 2 2 4-4"/></svg> Secure
@@ -39,7 +39,7 @@
 	<!-- TopBar -->
 	<div class="w-full bg-ink-900 text-white text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between gap-4">
-            <p class="opacity-90 font-medium tracking-wide truncate"><?php echo ($t = get_field("topbar_left", "option")) ? esc_html(trim(str_ireplace("dispatch", "", $t))) : ""; ?></p>
+            <p class="opacity-90 font-medium tracking-wide truncate min-w-0"><?php echo ($t = get_field("topbar_left", "option")) ? esc_html(trim(str_ireplace("dispatch", "", $t))) : ""; ?></p>
 
             <div class="flex items-center gap-4 shrink-0">
                 <?php if ( $topbar_center = get_field('topbar_center', 'option') ) : ?>
