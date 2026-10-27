@@ -140,6 +140,23 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         color: #475569;
         margin: 0;
     }
+    .hero-desc p {
+        margin: 0;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+    }
+    .hero-desc p + p {
+        margin-top: 0.5em;
+    }
+    .hero-desc a {
+        color: #0d9488;
+        text-decoration: underline;
+    }
+    .hero-desc strong, .hero-desc b {
+        color: #0f172a;
+        font-weight: 700;
+    }
     .hero-cta-btn {
         display: inline-flex;
         align-items: center;
@@ -213,6 +230,23 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
         line-height: 1.55;
         color: #475569;
         margin: 0;
+    }
+    .hero-desc p {
+        margin: 0;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+    }
+    .hero-desc p + p {
+        margin-top: 0.6em;
+    }
+    .hero-desc a {
+        color: #0d9488;
+        text-decoration: underline;
+    }
+    .hero-desc strong, .hero-desc b {
+        color: #0f172a;
+        font-weight: 700;
     }
     .hero-cta-btn {
         display: inline-flex;
@@ -301,9 +335,9 @@ $has_text_content = $badge || $title || $subtitle || $description || $cta_label 
             <?php endif; ?>
 
             <?php if ( $description ) : ?>
-            <p class="hero-desc">
+            <div class="hero-desc">
                 <?php echo wp_kses_post( $description ); ?>
-            </p>
+            </div>
             <?php endif; ?>
 
             <?php if ( $cta_url && $cta_label ) : ?>
