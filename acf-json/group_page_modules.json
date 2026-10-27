@@ -167,6 +167,26 @@
                             "max_height": 0,
                             "max_size": 0,
                             "mime_types": ""
+                        },
+                        {
+                            "key": "field_hero_image_hover_title",
+                            "label": "Image Hover Title",
+                            "name": "image_hover_title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "Text displayed when hovering mouse over the hero background image.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Trusted Australian Armodafinil Supplier",
+                            "maxlength": "",
+                            "placeholder": "Trusted Australian Armodafinil Supplier",
+                            "prepend": "",
+                            "append": ""
                         }
                     ],
                     "min": "",
@@ -4025,5 +4045,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793081343
+    "modified": 1793082681
 }

@@ -16,15 +16,21 @@ $bg_image_id = get_sub_field('background_image');
 $bg_image_url   = '';
 $bg_image_title = '';
 
+$bg_image_title = get_sub_field('image_hover_title') ?: get_sub_field('background_image_title');
+
 if ( $bg_image_id ) {
     if ( is_array( $bg_image_id ) ) {
-        $bg_image_url   = $bg_image_id['url'] ?? '';
-        $bg_image_title = $bg_image_id['title'] ?? '';
-        $att_id         = $bg_image_id['ID'] ?? ($bg_image_id['id'] ?? 0);
+        $bg_image_url = $bg_image_id['url'] ?? '';
+        $att_id       = $bg_image_id['ID'] ?? ($bg_image_id['id'] ?? 0);
+        if ( ! $bg_image_title ) {
+            $bg_image_title = $bg_image_id['title'] ?? '';
+        }
     } else {
-        $att_id         = (int) $bg_image_id;
-        $bg_image_url   = wp_get_attachment_image_url( $att_id, 'full' );
-        $bg_image_title = get_the_title( $att_id );
+        $att_id       = (int) $bg_image_id;
+        $bg_image_url = wp_get_attachment_image_url( $att_id, 'full' );
+        if ( ! $bg_image_title ) {
+            $bg_image_title = get_the_title( $att_id );
+        }
     }
     if ( ! $bg_image_title && ! empty( $att_id ) ) {
         $bg_image_title = get_the_title( $att_id );
@@ -34,7 +40,7 @@ if ( ! $bg_image_url ) {
     $bg_image_url = get_theme_file_uri('/assets/images/homepage-armodafinil-direct.png');
 }
 if ( ! $bg_image_title ) {
-    $bg_image_title = get_bloginfo('name');
+    $bg_image_title = 'Trusted Australian Armodafinil Supplier';
 }
 
 $has_text_content = $badge || $title || $subtitle || $description || $cta_label || $cta_url;
