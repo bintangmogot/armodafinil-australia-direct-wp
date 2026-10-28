@@ -253,6 +253,26 @@
                     "display": "block",
                     "sub_fields": [
                         {
+                            "key": "field_popular_badge",
+                            "label": "Badge / Eyebrow",
+                            "name": "badge",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "Optional badge/eyebrow pill displayed above the title.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Top Sellers",
+                            "maxlength": "",
+                            "placeholder": "e.g. Top Sellers",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_popular_title",
                             "label": "Title",
                             "name": "title",
@@ -4045,5 +4065,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793082681
+    "modified": 1793229738
 }

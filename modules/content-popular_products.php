@@ -5,6 +5,7 @@
  * Data provided by ACF Sub Fields: title, subtitle, view_all_text, view_all_url, products
  */
 
+$badge = get_sub_field('badge') ?: 'Top Sellers';
 $title = get_sub_field('title') ?: 'Popular right now';
 $subtitle = get_sub_field('subtitle');
 $view_all_text = get_sub_field('view_all_text') ?: 'View all';
@@ -17,6 +18,14 @@ $products = get_sub_field('products');
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 flex-wrap">
             <div>
+                <?php if ( ! empty($badge) ) : ?>
+                <div class="mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10.5px] sm:text-[11px] font-bold tracking-wider uppercase bg-brand-50 text-brand-700 border border-brand-200/80">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span><?php echo esc_html($badge); ?></span>
+                    </span>
+                </div>
+                <?php endif; ?>
                 <h2 class="text-3xl md:text-4xl font-serif font-semibold text-ink-900"><?php echo esc_html($title); ?></h2>
                 <p class="mt-2 text-ink-500"><?php echo esc_html($subtitle); ?></p>
             </div>
