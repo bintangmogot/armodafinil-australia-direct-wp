@@ -253,12 +253,12 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_popular_badge",
-                            "label": "Badge / Eyebrow",
-                            "name": "badge",
+                            "key": "field_popular_top_content",
+                            "label": "Top Content / Wording",
+                            "name": "top_content",
                             "aria-label": "",
-                            "type": "text",
-                            "instructions": "Optional badge/eyebrow pill displayed above the title.",
+                            "type": "wysiwyg",
+                            "instructions": "Optional wording or paragraph displayed above the title.",
                             "required": false,
                             "conditional_logic": false,
                             "wrapper": {
@@ -266,11 +266,11 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "Top Sellers",
-                            "maxlength": "",
-                            "placeholder": "e.g. Top Sellers",
-                            "prepend": "",
-                            "append": ""
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "delay": 0
                         },
                         {
                             "key": "field_popular_title",
@@ -4065,5 +4065,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793229738
+    "modified": 1793240564
 }
