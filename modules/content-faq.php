@@ -13,11 +13,29 @@ $categories = array('All topics');
 $faqs = array();
 
 // Support Block Fields
-$support_title    = get_sub_field('support_title') ?: 'Still need help?';
-$support_subtitle = get_sub_field('support_subtitle') ?: 'Our pharmacy support team typically responds within one business day.';
-$support_email    = get_sub_field('support_email');
+$support_title    = get_sub_field('support_title');
+$support_subtitle = get_sub_field('support_subtitle');
+$support_email    = get_field('support_email', 'option') ?: get_sub_field('support_email') ?: 'orders@armodafinildirect.com.au';
 $support_btn_text = get_sub_field('support_btn_text') ?: 'Contact us';
 $support_btn_url  = get_sub_field('support_btn_url') ?: '/contact';
+
+// Refresh the original module defaults without overriding custom copy.
+if ( empty($support_title) || $support_title === 'Still need help?' ) {
+    $support_title = 'Talk to our support team';
+}
+if ( empty($support_subtitle) || $support_subtitle === 'Our pharmacy support team typically responds within one business day.' ) {
+    $support_subtitle = 'Need help with website information, an existing order or delivery details? Send us a message and we will get back to you as soon as possible.';
+}
+
+$whatsapp_raw = get_field('whatsapp_button_url', 'option') ?: get_field('whatsapp_number', 'option');
+$whatsapp_url = '';
+if ( $whatsapp_raw ) {
+    $whatsapp_url = strpos($whatsapp_raw, 'http') === 0
+        ? $whatsapp_raw
+        : 'https://wa.me/' . preg_replace('/[^0-9]/', '', $whatsapp_raw);
+}
+
+$support_image_url = get_template_directory_uri() . '/assets/images/Homepage armodafinil direct.png';
 
 // Default icons mapping for fallback
 $icons = array(
@@ -130,31 +148,219 @@ if ( !empty( $raw_categories ) ) {
         <?php endforeach; ?>
     </div>
 
-    <!-- Support Block -->
-    <div class="mt-14 bg-white border border-ink-200 rounded-2xl p-8 text-center shadow-soft">
-        <h2 class="font-serif text-2xl font-semibold text-ink-900"><?php echo esc_html($support_title); ?></h2>
-        <p class="mt-2 text-ink-700"><?php echo esc_html($support_subtitle); ?></p>
-        <div class="mt-5 flex flex-wrap gap-3 justify-center">
-            <?php if ( $support_email ) : ?>
-                <a href="mailto:<?php echo esc_attr($support_email); ?>" class="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <?php echo esc_html($support_email); ?>
-                </a>
-            <?php endif; ?>
-            <?php if ( $support_btn_text && $support_btn_url ) : ?>
-                <a href="<?php echo esc_url($support_btn_url); ?>" class="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors">
-                    <?php echo esc_html($support_btn_text); ?>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-            <?php endif; ?>
-        </div>
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 justify-center text-xs text-ink-500">
-            <span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-3.5 h-3.5 text-brand-600"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Verified pharmacy</span>
-            <span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card w-3.5 h-3.5 text-brand-600"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> Secure checkout</span>
-            <span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-3.5 h-3.5 text-brand-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> AU-wide delivery</span>
-        </div>
+    <!-- Support Banner -->
+    <div class="faq-support-shell mt-14">
+        <section class="faq-support-banner" style="--faq-support-image: url('<?php echo esc_url($support_image_url); ?>');" aria-labelledby="faq-support-heading">
+            <div class="faq-support-orbit faq-support-orbit-one" aria-hidden="true"></div>
+            <div class="faq-support-orbit faq-support-orbit-two" aria-hidden="true"></div>
+
+            <div class="faq-support-content">
+                <h2 id="faq-support-heading"><?php echo esc_html($support_title); ?></h2>
+                <p><?php echo esc_html($support_subtitle); ?></p>
+
+                <div class="faq-support-actions">
+                    <?php if ( $whatsapp_url ) : ?>
+                        <a href="<?php echo esc_url($whatsapp_url); ?>" class="faq-support-button faq-support-button-primary" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8.2 8.2c.5 3 2.6 5.1 5.6 5.6"/></svg>
+                            WhatsApp Support
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ( $support_email ) : ?>
+                        <a href="mailto:<?php echo esc_attr($support_email); ?>" class="faq-support-button faq-support-button-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            Email Support
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                        </a>
+                    <?php elseif ( $support_btn_text && $support_btn_url ) : ?>
+                        <a href="<?php echo esc_url($support_btn_url); ?>" class="faq-support-button faq-support-button-secondary">
+                            <?php echo esc_html($support_btn_text); ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="faq-support-brand" aria-hidden="true">
+                <span class="faq-support-brand-mark">A</span>
+                <span>Armodafinil Direct</span>
+            </div>
+        </section>
     </div>
 </div>
+
+<style>
+.faq-support-shell {
+    width: min(1120px, calc(100vw - 32px));
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.faq-support-banner {
+    --faq-navy: #061b33;
+    position: relative;
+    min-height: 330px;
+    overflow: hidden;
+    border-radius: 24px;
+    isolation: isolate;
+    background-color: var(--faq-navy);
+    background-image: linear-gradient(90deg, rgba(6, 27, 51, .99) 0%, rgba(6, 27, 51, .98) 40%, rgba(6, 27, 51, .76) 58%, rgba(6, 27, 51, .1) 100%), var(--faq-support-image);
+    background-repeat: no-repeat;
+    background-size: cover, cover;
+    background-position: center, 70% center;
+    box-shadow: 0 24px 60px rgba(6, 27, 51, .16);
+}
+.faq-support-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid rgba(45, 212, 191, .28);
+    border-radius: inherit;
+    pointer-events: none;
+}
+.faq-support-content {
+    width: min(620px, 62%);
+    padding: 66px 56px;
+    color: #fff;
+}
+.faq-support-content h2 {
+    margin: 0;
+    color: #fff;
+    font-family: inherit;
+    font-size: clamp(1.75rem, 3vw, 2.55rem);
+    font-weight: 750;
+    line-height: 1.08;
+    letter-spacing: -.025em;
+}
+.faq-support-content p {
+    max-width: 560px;
+    margin: 16px 0 0;
+    color: rgba(255, 255, 255, .79);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+.faq-support-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+.faq-support-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: .84rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.faq-support-button:hover {
+    transform: translateY(-2px);
+}
+.faq-support-button-primary {
+    background: #fff;
+    color: #075e57;
+}
+.faq-support-button-primary:hover {
+    background: #e6fffb;
+    color: #064e49;
+}
+.faq-support-button-secondary {
+    border-color: rgba(94, 234, 212, .65);
+    background: rgba(13, 148, 136, .2);
+    color: #fff;
+}
+.faq-support-button-secondary:hover {
+    border-color: #5eead4;
+    background: rgba(13, 148, 136, .38);
+    color: #fff;
+}
+.faq-support-brand {
+    position: absolute;
+    top: 28px;
+    right: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px 7px 8px;
+    border: 1px solid rgba(255, 255, 255, .38);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .88);
+    color: #075e57;
+    font-size: .72rem;
+    font-weight: 700;
+    box-shadow: 0 8px 28px rgba(6, 27, 51, .18);
+    backdrop-filter: blur(8px);
+}
+.faq-support-brand-mark {
+    display: grid;
+    width: 21px;
+    height: 21px;
+    place-items: center;
+    border-radius: 50%;
+    background: #0d9488;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: .8rem;
+}
+.faq-support-orbit {
+    position: absolute;
+    z-index: -1;
+    border: 1px solid rgba(45, 212, 191, .2);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.faq-support-orbit-one {
+    width: 250px;
+    height: 250px;
+    left: 31%;
+    top: -95px;
+}
+.faq-support-orbit-two {
+    width: 130px;
+    height: 130px;
+    left: 43%;
+    bottom: -72px;
+}
+@media (max-width: 767px) {
+    .faq-support-shell {
+        width: calc(100vw - 24px);
+    }
+    .faq-support-banner {
+        min-height: 420px;
+        background-image: linear-gradient(180deg, rgba(6, 27, 51, .97) 0%, rgba(6, 27, 51, .91) 57%, rgba(6, 27, 51, .45) 100%), var(--faq-support-image);
+        background-position: center, 72% center;
+    }
+    .faq-support-content {
+        width: 100%;
+        padding: 52px 26px 180px;
+        text-align: left;
+    }
+    .faq-support-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .faq-support-button {
+        width: 100%;
+    }
+    .faq-support-brand {
+        top: auto;
+        right: 18px;
+        bottom: 18px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .faq-support-button {
+        transition: none;
+    }
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
