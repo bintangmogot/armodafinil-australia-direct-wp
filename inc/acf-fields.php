@@ -181,12 +181,15 @@ acf_add_local_field_group(array(
 					'display' => 'block',
 					'sub_fields' => array(
 						array(
-							'key' => 'field_popular_badge',
-							'label' => 'Badge / Eyebrow',
-							'name' => 'badge',
-							'type' => 'text',
-							'default_value' => 'Top Sellers',
-							'instructions' => 'Optional badge/eyebrow pill displayed above the title.',
+							'key' => 'field_popular_top_content',
+							'label' => 'Top Content / Wording',
+							'name' => 'top_content',
+							'type' => 'wysiwyg',
+							'instructions' => 'Optional wording or paragraph displayed above the title.',
+							'tabs' => 'all',
+							'toolbar' => 'basic',
+							'media_upload' => 0,
+							'delay' => 0,
 						),
 						array(
 							'key' => 'field_popular_title',
