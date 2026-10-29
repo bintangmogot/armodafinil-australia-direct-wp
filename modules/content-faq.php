@@ -15,27 +15,12 @@ $faqs = array();
 // Support Block Fields
 $support_title    = get_sub_field('support_title');
 $support_subtitle = get_sub_field('support_subtitle');
-$support_email    = get_field('support_email', 'option') ?: get_sub_field('support_email') ?: 'orders@armodafinildirect.com.au';
-$support_btn_text = get_sub_field('support_btn_text') ?: 'Contact us';
-$support_btn_url  = get_sub_field('support_btn_url') ?: '/contact';
+$support_email    = get_sub_field('support_email');
+$support_email_text = get_sub_field('support_email_text');
+$support_btn_text = get_sub_field('support_btn_text');
+$support_btn_url  = get_sub_field('support_btn_url');
 
-// Refresh the original module defaults without overriding custom copy.
-if ( empty($support_title) || $support_title === 'Still need help?' ) {
-    $support_title = 'Talk to our support team';
-}
-if ( empty($support_subtitle) || $support_subtitle === 'Our pharmacy support team typically responds within one business day.' ) {
-    $support_subtitle = 'Need help with website information, an existing order or delivery details? Send us a message and we will get back to you as soon as possible.';
-}
-
-$whatsapp_raw = get_field('whatsapp_button_url', 'option') ?: get_field('whatsapp_number', 'option');
-$whatsapp_url = '';
-if ( $whatsapp_raw ) {
-    $whatsapp_url = strpos($whatsapp_raw, 'http') === 0
-        ? $whatsapp_raw
-        : 'https://wa.me/' . preg_replace('/[^0-9]/', '', $whatsapp_raw);
-}
-
-$support_image_url = get_template_directory_uri() . '/assets/images/Homepage armodafinil direct.png';
+$support_image_url = get_template_directory_uri() . '/assets/images/faq-support-banner.png';
 
 // Default icons mapping for fallback
 $icons = array(
@@ -151,214 +136,156 @@ if ( !empty( $raw_categories ) ) {
     <!-- Support Banner -->
     <div class="faq-support-shell mt-14">
         <section class="faq-support-banner" style="--faq-support-image: url('<?php echo esc_url($support_image_url); ?>');" aria-labelledby="faq-support-heading">
-            <div class="faq-support-orbit faq-support-orbit-one" aria-hidden="true"></div>
-            <div class="faq-support-orbit faq-support-orbit-two" aria-hidden="true"></div>
-
             <div class="faq-support-content">
                 <h2 id="faq-support-heading"><?php echo esc_html($support_title); ?></h2>
                 <p><?php echo esc_html($support_subtitle); ?></p>
 
                 <div class="faq-support-actions">
-                    <?php if ( $whatsapp_url ) : ?>
-                        <a href="<?php echo esc_url($whatsapp_url); ?>" class="faq-support-button faq-support-button-primary" target="_blank" rel="noopener noreferrer">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8.2 8.2c.5 3 2.6 5.1 5.6 5.6"/></svg>
-                            WhatsApp Support
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                    <?php if ( $support_btn_text && $support_btn_url ) : ?>
+                        <a href="<?php echo esc_url($support_btn_url); ?>" class="faq-support-button faq-support-button-primary">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/faq-whatsapp.png'); ?>" width="15" height="16" alt="" />
+                            <?php echo esc_html($support_btn_text); ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
                         </a>
                     <?php endif; ?>
 
                     <?php if ( $support_email ) : ?>
                         <a href="mailto:<?php echo esc_attr($support_email); ?>" class="faq-support-button faq-support-button-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                            Email Support
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-                        </a>
-                    <?php elseif ( $support_btn_text && $support_btn_url ) : ?>
-                        <a href="<?php echo esc_url($support_btn_url); ?>" class="faq-support-button faq-support-button-secondary">
-                            <?php echo esc_html($support_btn_text); ?>
+                            <?php echo esc_html($support_email_text ?: $support_email); ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
                         </a>
                     <?php endif; ?>
                 </div>
             </div>
 
-            <div class="faq-support-brand" aria-hidden="true">
-                <span class="faq-support-brand-mark">A</span>
-                <span>Armodafinil Direct</span>
-            </div>
         </section>
     </div>
 </div>
 
 <style>
+@font-face {
+    font-family: 'FAQ Roboto';
+    src: url('<?php echo esc_url(get_template_directory_uri() . '/assets/fonts/roboto-regular.ttf'); ?>') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'FAQ Roboto';
+    src: url('<?php echo esc_url(get_template_directory_uri() . '/assets/fonts/roboto-semibold.ttf'); ?>') format('truetype');
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+}
 .faq-support-shell {
-    width: min(1120px, calc(100vw - 32px));
+    width: min(1200px, calc(100vw - 32px));
     margin-left: 50%;
     transform: translateX(-50%);
 }
 .faq-support-banner {
-    --faq-navy: #061b33;
     position: relative;
-    min-height: 330px;
-    overflow: hidden;
-    border-radius: 24px;
-    isolation: isolate;
-    background-color: var(--faq-navy);
-    background-image: linear-gradient(90deg, rgba(6, 27, 51, .99) 0%, rgba(6, 27, 51, .98) 40%, rgba(6, 27, 51, .76) 58%, rgba(6, 27, 51, .1) 100%), var(--faq-support-image);
-    background-repeat: no-repeat;
-    background-size: cover, cover;
-    background-position: center, 70% center;
-    box-shadow: 0 24px 60px rgba(6, 27, 51, .16);
-}
-.faq-support-banner::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border: 1px solid rgba(45, 212, 191, .28);
-    border-radius: inherit;
-    pointer-events: none;
+    aspect-ratio: 3 / 1;
+    background: var(--faq-support-image) center / 100% 100% no-repeat;
+    container-type: inline-size;
+    font-family: 'FAQ Roboto', sans-serif;
 }
 .faq-support-content {
-    width: min(620px, 62%);
-    padding: 66px 56px;
+    position: absolute;
+    left: 5.083333%;
+    top: 27.5%;
+    width: 56.333333%;
     color: #fff;
 }
 .faq-support-content h2 {
     margin: 0;
     color: #fff;
     font-family: inherit;
-    font-size: clamp(1.75rem, 3vw, 2.55rem);
-    font-weight: 750;
-    line-height: 1.08;
-    letter-spacing: -.025em;
+    font-size: 4.166667cqw;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
 }
 .faq-support-content p {
-    max-width: 560px;
-    margin: 16px 0 0;
-    color: rgba(255, 255, 255, .79);
-    font-size: 1rem;
-    line-height: 1.65;
+    margin: 1.333333cqw 0 0;
+    color: #9ecee8;
+    font-size: 1.666667cqw;
+    font-weight: 400;
+    line-height: 1;
 }
 .faq-support-actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 28px;
+    gap: .833333cqw;
+    margin-top: 2.75cqw;
 }
 .faq-support-button {
     display: inline-flex;
-    min-height: 44px;
+    height: 3.333333cqw;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    padding: 0 18px;
+    gap: .5cqw;
     border: 1px solid transparent;
-    border-radius: 999px;
-    font-size: .84rem;
-    font-weight: 700;
-    line-height: 1;
+    border-radius: 1.25cqw;
+    font-size: 1.333333cqw;
+    font-weight: 600;
+    line-height: 1.125;
     text-decoration: none;
-    transition: transform .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
 }
-.faq-support-button:hover {
-    transform: translateY(-2px);
+.faq-support-button img {
+    width: 1.25cqw;
+    height: 1.333333cqw;
+    object-fit: contain;
+}
+.faq-support-button svg {
+    width: 1.333333cqw;
+    height: 1.333333cqw;
+    flex-shrink: 0;
 }
 .faq-support-button-primary {
+    width: 17.5cqw;
     background: #fff;
-    color: #075e57;
-}
-.faq-support-button-primary:hover {
-    background: #e6fffb;
-    color: #064e49;
+    color: #1e1e1e;
 }
 .faq-support-button-secondary {
-    border-color: rgba(94, 234, 212, .65);
-    background: rgba(13, 148, 136, .2);
+    width: 14cqw;
+    border-color: rgba(19, 191, 177, .9843);
     color: #fff;
 }
-.faq-support-button-secondary:hover {
-    border-color: #5eead4;
-    background: rgba(13, 148, 136, .38);
-    color: #fff;
-}
-.faq-support-brand {
-    position: absolute;
-    top: 28px;
-    right: 30px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 11px 7px 8px;
-    border: 1px solid rgba(255, 255, 255, .38);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, .88);
-    color: #075e57;
-    font-size: .72rem;
-    font-weight: 700;
-    box-shadow: 0 8px 28px rgba(6, 27, 51, .18);
-    backdrop-filter: blur(8px);
-}
-.faq-support-brand-mark {
-    display: grid;
-    width: 21px;
-    height: 21px;
-    place-items: center;
-    border-radius: 50%;
-    background: #0d9488;
-    color: #fff;
-    font-family: Georgia, serif;
-    font-size: .8rem;
-}
-.faq-support-orbit {
-    position: absolute;
-    z-index: -1;
-    border: 1px solid rgba(45, 212, 191, .2);
-    border-radius: 50%;
-    pointer-events: none;
-}
-.faq-support-orbit-one {
-    width: 250px;
-    height: 250px;
-    left: 31%;
-    top: -95px;
-}
-.faq-support-orbit-two {
-    width: 130px;
-    height: 130px;
-    left: 43%;
-    bottom: -72px;
-}
+.faq-support-button-primary:hover { background: #e6fffb; color: #1e1e1e; }
+.faq-support-button-secondary:hover { background: rgba(19,191,177,.15); color: #fff; }
+.faq-support-button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 @media (max-width: 767px) {
-    .faq-support-shell {
-        width: calc(100vw - 24px);
-    }
     .faq-support-banner {
-        min-height: 420px;
-        background-image: linear-gradient(180deg, rgba(6, 27, 51, .97) 0%, rgba(6, 27, 51, .91) 57%, rgba(6, 27, 51, .45) 100%), var(--faq-support-image);
-        background-position: center, 72% center;
+        aspect-ratio: auto;
+        background-color: #003349;
+        background-image: none;
+        border-radius: 18px;
+        overflow: hidden;
+    }
+    .faq-support-banner::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0;
+        height: 200px;
+        background-image: linear-gradient(to bottom, #003349 0%, transparent 35%), var(--faq-support-image);
+        background-size: 100% 100%, auto 280px;
+        background-position: center, right -18px top -34px;
+        background-repeat: no-repeat;
+        pointer-events: none;
     }
     .faq-support-content {
-        width: 100%;
-        padding: 52px 26px 180px;
-        text-align: left;
-    }
-    .faq-support-actions {
-        align-items: stretch;
-        flex-direction: column;
-    }
-    .faq-support-button {
-        width: 100%;
-    }
-    .faq-support-brand {
+        position: relative;
+        left: auto;
         top: auto;
-        right: 18px;
-        bottom: 18px;
+        width: auto;
+        padding: 28px 22px 224px;
     }
-}
-@media (prefers-reduced-motion: reduce) {
-    .faq-support-button {
-        transition: none;
-    }
+    .faq-support-content h2 { font-size: 28px; line-height: 1.08; }
+    .faq-support-content p { margin-top: 14px; font-size: 15px; line-height: 1.4; }
+    .faq-support-actions { gap: 10px; margin-top: 20px; flex-direction: column; }
+    .faq-support-button { min-height: 46px; height: auto; padding: 12px 13px; border-radius: 15px; font-size: 14px; gap: 6px; width: 100%; overflow-wrap: anywhere; }
+    .faq-support-button svg { width: 14px; height: 14px; }
+    .faq-support-button img { width: 15px; height: 16px; }
 }
 </style>
 

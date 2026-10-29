@@ -1370,6 +1370,13 @@
                             "append": ""
                         },
                         {
+                            "key": "field_faq_support_email_text",
+                            "label": "Email Button Text",
+                            "name": "support_email_text",
+                            "type": "text",
+                            "default_value": "Email Support"
+                        },
+                        {
                             "key": "field_faq_support_btn_text",
                             "label": "Contact Button Text",
                             "name": "support_btn_text",
