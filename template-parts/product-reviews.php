@@ -204,7 +204,7 @@ foreach($counts as $star => $count) {
         <?php endif; ?>
 
         <!-- Form -->
-        <div class="max-w-[336px] mx-auto bg-white rounded-[16px] border border-slate-200 p-4 md:p-4 mt-8 shadow-sm relative overflow-hidden">
+        <div id="review-form-box" class="mx-auto bg-white rounded-[16px] border border-slate-200 p-4 md:p-4 mt-8 shadow-sm relative overflow-hidden">
             <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
                 <div class="w-10 h-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -277,6 +277,10 @@ foreach($counts as $star => $count) {
 <style>
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+#review-form-box { width: 50%; min-width: 320px; margin-left: auto; margin-right: auto; padding: 16px; }
+#review-form-box form > * + * { margin-top: 10px; }
+#review-form-box input[type="text"], #review-form-box input[type="email"], #review-form-box textarea { padding: 8px 12px; }
+@media (max-width: 767px) { #review-form-box { width: 100%; min-width: 0; } }
 </style>
 
 <script>
