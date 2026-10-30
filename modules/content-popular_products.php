@@ -18,9 +18,14 @@ $products = get_sub_field('products');
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 flex-wrap">
             <div>
-                <?php if ( ! empty($top_content) ) : ?>
-                <div class="mb-3 text-ink-600 leading-relaxed text-sm sm:text-base prose prose-sm max-w-none [&>p]:mb-1 [&>p:last-child]:mb-0">
-                    <?php echo wp_kses_post($top_content); ?>
+                <?php if ( ! empty($top_content) ) : 
+                    $capsule_text = trim(strip_tags($top_content, '<strong><em><span><b><i>'));
+                ?>
+                <div class="mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold tracking-wide bg-brand-50 text-brand-700 border border-brand-200/80 shadow-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 shrink-0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span><?php echo wp_kses_post($capsule_text); ?></span>
+                    </span>
                 </div>
                 <?php endif; ?>
                 <h2 class="text-3xl md:text-4xl font-serif font-semibold text-ink-900"><?php echo esc_html($title); ?></h2>
