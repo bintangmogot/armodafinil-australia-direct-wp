@@ -277,7 +277,7 @@ foreach($counts as $star => $count) {
 <style>
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-#review-form-box { width: 50%; min-width: 320px; margin-left: auto; margin-right: auto; padding: 16px; }
+#review-form-box { width: 50%; min-width: 320px; margin-left: auto; margin-right: auto; padding: 16px; border-radius: 20px; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08); }
 #review-form-box form > * + * { margin-top: 10px; }
 #review-form-box input[type="text"], #review-form-box input[type="email"], #review-form-box textarea { padding: 8px 12px; }
 @media (max-width: 767px) { #review-form-box { width: 100%; min-width: 0; } }
