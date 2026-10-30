@@ -204,8 +204,8 @@ foreach($counts as $star => $count) {
         <?php endif; ?>
 
         <!-- Form -->
-        <div class="max-w-2xl mx-auto bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 mt-8 shadow-sm relative overflow-hidden">
-            <div class="flex items-center gap-3 mb-5 pb-5 border-b border-slate-100">
+        <div class="max-w-[336px] mx-auto bg-white rounded-[16px] border border-slate-200 p-4 md:p-4 mt-8 shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
                 <div class="w-10 h-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 </div>
@@ -214,7 +214,7 @@ foreach($counts as $star => $count) {
                 </div>
             </div>
 
-            <form id="product-review-form" class="space-y-4">
+            <form id="product-review-form" class="space-y-2.5">
                 <input type="hidden" name="action" value="submit_product_review">
                 <input type="hidden" name="product_id" value="<?php echo esc_attr($product_id); ?>">
                 <?php wp_nonce_field('submit_review_nonce', 'review_nonce'); ?>
@@ -229,24 +229,24 @@ foreach($counts as $star => $count) {
                     <input type="hidden" name="rating" id="rating-input" value="0" required>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 gap-2">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Name</label>
-                        <input type="text" name="reviewer_name" required placeholder="John D." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
+                        <input type="text" name="reviewer_name" required placeholder="John D." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email</label>
-                        <input type="email" name="reviewer_email" required placeholder="john@example.com" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
+                        <input type="email" name="reviewer_email" required placeholder="john@example.com" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Title</label>
-                        <input type="text" name="review_title" required placeholder="Great product!" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
+                        <input type="text" name="review_title" required placeholder="Great product!" class="w-full bg-white border border-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">Your Review</label>
-                    <textarea name="review_content" required rows="4" placeholder="Share your experience..." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400 resize-none"></textarea>
+                    <textarea name="review_content" required rows="2" placeholder="Share your experience..." class="w-full bg-white border border-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-slate-400 resize-none"></textarea>
                 </div>
 
                 <div>
@@ -254,12 +254,12 @@ foreach($counts as $star => $count) {
                     <input type="file" name="review_image" accept="image/*" class="w-full bg-white border border-slate-200 text-xs rounded-lg px-3 py-2 text-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
                 </div>
 
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                <div class="flex flex-col items-stretch justify-between gap-2 pt-1">
                     <div class="text-[10px] text-slate-400 w-full sm:w-auto text-left">
                         Protected by reCAPTCHA. Google <a href="#" class="hover:underline">Privacy Policy</a> & <a href="#" class="hover:underline">Terms</a> apply.
                     </div>
                     <div class="flex flex-col items-end w-full sm:w-auto">
-                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-8 py-3.5 rounded-lg transition-colors focus:ring-4 focus:ring-brand-600/20">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-6 py-2.5 rounded-lg transition-colors focus:ring-4 focus:ring-brand-600/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                             Submit Review
                         </button>
