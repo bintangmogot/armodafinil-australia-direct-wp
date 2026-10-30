@@ -186,7 +186,7 @@ if ( !empty( $raw_categories ) ) {
 .faq-support-banner {
     position: relative;
     aspect-ratio: 3 / 1;
-    background: var(--faq-support-image) center / 100% 100% no-repeat;
+    background: #082846 var(--faq-support-image) center / 100% 100% no-repeat;
     container-type: inline-size;
     font-family: 'FAQ Roboto', sans-serif;
 }
