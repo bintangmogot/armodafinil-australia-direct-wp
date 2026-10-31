@@ -193,7 +193,7 @@ if ( !empty( $raw_categories ) ) {
 .faq-support-content h2 {
     margin: 0;
     color: #fff;
-    font-family: inherit;
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
     font-size: 4.166667cqw;
     font-weight: 600;
     line-height: 1;
