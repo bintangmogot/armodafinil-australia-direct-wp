@@ -181,7 +181,7 @@ if ( !empty( $raw_categories ) ) {
     aspect-ratio: 3 / 1;
     background: #082846 var(--faq-support-image) center / 100% 100% no-repeat;
     container-type: inline-size;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: inherit;
 }
 .faq-support-content {
     position: absolute;
