@@ -18,7 +18,14 @@ $support_subtitle = get_sub_field('support_subtitle');
 $support_email    = get_sub_field('support_email');
 $support_email_text = get_sub_field('support_email_text');
 $support_btn_text = get_sub_field('support_btn_text');
-$support_btn_url  = get_sub_field('support_btn_url');
+$support_btn_url  = trim((string) get_sub_field('support_btn_url'));
+
+// ACF stores this as plain text so editors can use either an internal path or
+// a WhatsApp deep link. Add the scheme when a WhatsApp host is pasted without
+// it; otherwise the browser treats `wa.me/...` as a path under the current slug.
+if ( $support_btn_url && preg_match('/^(?:www\.)?(?:wa\.me|api\.whatsapp\.com|whatsapp\.com)(?:[\/?#]|$)/i', $support_btn_url) ) {
+    $support_btn_url = 'https://' . ltrim($support_btn_url, '/');
+}
 
 $support_image_url = get_template_directory_uri() . '/assets/images/faq-support-banner.png';
 
@@ -164,20 +171,6 @@ if ( !empty( $raw_categories ) ) {
 </div>
 
 <style>
-@font-face {
-    font-family: 'FAQ Roboto';
-    src: url('<?php echo esc_url(get_template_directory_uri() . '/assets/fonts/roboto-regular.ttf'); ?>') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'FAQ Roboto';
-    src: url('<?php echo esc_url(get_template_directory_uri() . '/assets/fonts/roboto-semibold.ttf'); ?>') format('truetype');
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-}
 .faq-support-shell {
     width: min(1200px, calc(100vw - 32px));
     margin-left: 50%;
@@ -188,7 +181,7 @@ if ( !empty( $raw_categories ) ) {
     aspect-ratio: 3 / 1;
     background: #082846 var(--faq-support-image) center / 100% 100% no-repeat;
     container-type: inline-size;
-    font-family: 'FAQ Roboto', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 .faq-support-content {
     position: absolute;

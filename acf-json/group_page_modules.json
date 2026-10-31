@@ -1398,11 +1398,11 @@
                         },
                         {
                             "key": "field_faq_support_btn_url",
-                            "label": "Contact Button URL",
+                            "label": "Contact / WhatsApp URL",
                             "name": "support_btn_url",
                             "aria-label": "",
                             "type": "text",
-                            "instructions": "",
+                            "instructions": "Use /contact for an internal page, or paste a full WhatsApp link such as https:\/\/wa.me\/61400000000.",
                             "required": false,
                             "conditional_logic": false,
                             "wrapper": {

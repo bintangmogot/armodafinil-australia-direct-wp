@@ -497,7 +497,7 @@ acf_add_local_field_group(array(
 				array('key' => 'field_faq_support_email', 'label' => 'Support Email', 'name' => 'support_email', 'type' => 'email', 'default_value' => 'support@armodafinilaustralia.com.au'),
 				array('key' => 'field_faq_support_email_text', 'label' => 'Email Button Text', 'name' => 'support_email_text', 'type' => 'text', 'default_value' => 'Email Support'),
 				array('key' => 'field_faq_support_btn_text', 'label' => 'Contact Button Text', 'name' => 'support_btn_text', 'type' => 'text', 'default_value' => 'Contact us'),
-				array('key' => 'field_faq_support_btn_url', 'label' => 'Contact Button URL', 'name' => 'support_btn_url', 'type' => 'text', 'default_value' => '/contact'),
+				array('key' => 'field_faq_support_btn_url', 'label' => 'Contact / WhatsApp URL', 'name' => 'support_btn_url', 'type' => 'text', 'instructions' => 'Use /contact for an internal page, or paste a full WhatsApp link such as https://wa.me/61400000000.', 'default_value' => '/contact'),
 			),
 		),
 		'layout_faq_simple' => array(
