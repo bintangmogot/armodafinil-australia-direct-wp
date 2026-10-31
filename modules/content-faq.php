@@ -204,7 +204,7 @@ if ( !empty( $raw_categories ) ) {
     color: #9ecee8;
     font-size: 1.666667cqw;
     font-weight: 400;
-    line-height: 1;
+    line-height: 1.2;
 }
 .faq-support-actions {
     display: flex;
