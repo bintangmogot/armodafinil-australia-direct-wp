@@ -163,23 +163,27 @@ class Armodafinil_Desktop_Nav_Walker extends Walker_Nav_Menu {
 
     public function start_lvl(&$output, $depth = 0, $args = null) {
         if ($depth === 0) {
-            // Dynamic settings from ACF options with clean botanical defaults
-            $title = get_field('nav_dropdown_title', 'option') ?: 'Genuine Armodafinil Catalogue';
-            $badge = get_field('nav_dropdown_badge', 'option') ?: 'AU Express 7-10 Days';
+            // Header strip texts come from Theme Settings. Leave both empty to hide the strip.
+            $title = get_field('nav_dropdown_title', 'option');
+            $badge = get_field('nav_dropdown_badge', 'option');
 
             $output .= '<div class="sub-menu-dropdown-wrapper absolute top-full left-0 right-auto pt-2 w-[580px] max-w-[92vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto filter drop-shadow-xl">';
             $output .= '<div class="rounded-2xl border border-ink-200/90 bg-white shadow-2xl overflow-hidden">';
 
-            // Dropdown Header Strip: Botanical Deep Teal
-            $output .= '<div class="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-700 px-4 py-2.5 flex items-center justify-between border-b border-brand-700/40 text-white">';
-            $output .= '<div class="flex items-center gap-2">';
-            $output .= '<span class="flex h-5 w-5 items-center justify-center rounded-md bg-white/15 text-brand-100 text-xs font-bold leading-none">★</span>';
-            $output .= '<span class="text-xs font-bold uppercase tracking-wider text-white">' . esc_html($title) . '</span>';
-            $output .= '</div>';
-            if (!empty($badge)) {
-                $output .= '<span class="text-[11px] font-semibold text-brand-100 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">' . esc_html($badge) . '</span>';
+            // Dropdown Header Strip: Botanical Deep Teal (only when it has content)
+            if (!empty($title) || !empty($badge)) {
+                $output .= '<div class="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-700 px-4 py-2.5 flex items-center justify-between border-b border-brand-700/40 text-white">';
+                if (!empty($title)) {
+                    $output .= '<div class="flex items-center gap-2">';
+                    $output .= '<span class="flex h-5 w-5 items-center justify-center rounded-md bg-white/15 text-brand-100 text-xs font-bold leading-none">★</span>';
+                    $output .= '<span class="text-xs font-bold uppercase tracking-wider text-white">' . esc_html($title) . '</span>';
+                    $output .= '</div>';
+                }
+                if (!empty($badge)) {
+                    $output .= '<span class="text-[11px] font-semibold text-brand-100 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">' . esc_html($badge) . '</span>';
+                }
+                $output .= '</div>';
             }
-            $output .= '</div>';
 
             // 2-Column Product Grid
             $output .= '<ul class="sub-menu grid grid-cols-2 gap-2.5 p-3.5 bg-ink-50/50">';
