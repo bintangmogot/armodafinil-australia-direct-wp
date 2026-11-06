@@ -2,10 +2,11 @@
 /**
  * Why Choose Module Template
  * 
- * Data provided by ACF Sub Fields: title, features
+ * Data provided by ACF Sub Fields: title, intro, features
  */
 
 $title = get_sub_field('title') ?: 'Why high-achievers choose us';
+$intro = get_sub_field('intro');
 $features = get_sub_field('features');
 
 // Fallback dummy data if none exist
@@ -36,7 +37,10 @@ if ( empty( $features ) ) {
 <section class="py-16 md:py-20 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl md:text-4xl font-serif font-semibold text-ink-900 text-center"><?php echo esc_html($title); ?></h2>
-        
+        <?php if ( ! empty( $intro ) ) : ?>
+            <p class="mt-4 max-w-3xl mx-auto text-center text-base md:text-lg text-ink-700 leading-relaxed"><?php echo wp_kses_post( $intro ); ?></p>
+        <?php endif; ?>
+
         <div class="mt-10 grid md:grid-cols-3 gap-5">
             <?php foreach ( $features as $f ) : ?>
             <div class="bg-white border border-ink-200 rounded-2xl p-7 hover-lift text-center shadow-sm">

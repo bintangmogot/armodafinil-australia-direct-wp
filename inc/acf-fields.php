@@ -364,6 +364,15 @@ acf_add_local_field_group(array(
 							'type' => 'text',
 						),
 						array(
+							'key' => 'field_why_intro',
+							'label' => 'Intro Text',
+							'name' => 'intro',
+							'type' => 'textarea',
+							'rows' => 3,
+							'new_lines' => 'br',
+							'instructions' => 'Optional copy shown under the title. Leave empty to hide it.',
+						),
+						array(
 							'key' => 'field_why_features',
 							'label' => 'Features',
 							'name' => 'features',
