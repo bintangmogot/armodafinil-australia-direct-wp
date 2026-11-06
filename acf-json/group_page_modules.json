@@ -665,6 +665,26 @@
                             "append": ""
                         },
                         {
+                            "key": "field_why_intro",
+                            "label": "Intro Text",
+                            "name": "intro",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "Optional copy shown under the title. Leave empty to hide it.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "rows": 3,
+                            "placeholder": "",
+                            "new_lines": "br"
+                        },
+                        {
                             "key": "field_why_features",
                             "label": "Features",
                             "name": "features",
