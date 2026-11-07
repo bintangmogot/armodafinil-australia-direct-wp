@@ -27,21 +27,35 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( $order->has_status( 'failed' ) ) : ?>
 
-			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed p-4 mb-6 rounded-xl bg-red-50 text-red-900 border border-red-200"><?php echo esc_html( aad_option_text( 'ty_failed_message' ) ); ?></p>
+			<?php
+			$aad_failed_msg  = aad_option_text( 'ty_failed_message' );
+			$aad_failed_pay  = aad_option_text( 'ty_failed_pay_label' );
+			$aad_failed_acct = is_user_logged_in() ? aad_option_text( 'ty_failed_account_label' ) : '';
+			?>
+			<?php if ( $aad_failed_msg !== '' ) : ?>
+			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed p-4 mb-6 rounded-xl bg-red-50 text-red-900 border border-red-200"><?php echo esc_html( $aad_failed_msg ); ?></p>
+			<?php endif; ?>
 
+			<?php if ( $aad_failed_pay !== '' || $aad_failed_acct !== '' ) : ?>
 			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed-actions flex gap-3">
-				<a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( aad_option_text( 'ty_failed_pay_label' ) ); ?></a>
-				<?php if ( is_user_logged_in() ) : ?>
-					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors"><?php echo esc_html( aad_option_text( 'ty_failed_account_label' ) ); ?></a>
+				<?php if ( $aad_failed_pay !== '' ) : ?>
+				<a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( $aad_failed_pay ); ?></a>
+				<?php endif; ?>
+				<?php if ( $aad_failed_acct !== '' ) : ?>
+					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors"><?php echo esc_html( $aad_failed_acct ); ?></a>
 				<?php endif; ?>
 			</p>
+			<?php endif; ?>
 
 		<?php else : ?>
 
             <?php
             $aad_first_name = $order->get_billing_first_name();
             $aad_customer   = $aad_first_name ? $aad_first_name : aad_option_text( 'ty_confirmed_name_fallback' );
-            $aad_email_note = aad_option_text( 'ty_confirmed_email_note' );
+            $aad_intro_html = aad_ty_format( aad_option_text( 'ty_confirmed_intro' ), array( 'name' => $aad_customer ) );
+            $aad_note_html  = $order->get_billing_email() ? aad_ty_format( aad_option_text( 'ty_confirmed_email_note' ), array( 'email' => $order->get_billing_email() ) ) : '';
+            $aad_has_intro  = trim( wp_strip_all_tags( $aad_intro_html ) ) !== '';
+            $aad_has_note   = trim( wp_strip_all_tags( $aad_note_html ) ) !== '';
             $aad_order_lbl  = aad_option_text( 'ty_order_id_label' );
             $aad_heading    = aad_option_text( 'ty_confirmed_heading' );
             $aad_next_head  = aad_option_text( 'ty_next_heading' );
@@ -55,12 +69,21 @@ defined( 'ABSPATH' ) || exit;
             } else {
                 $aad_step1_text = 'ty_step1_text_other';
             }
-            $aad_steps = array(
+            $aad_step_fields = array(
                 array( 'ty_step1_label', $aad_step1_text ),
                 array( 'ty_step2_label', 'ty_step2_text' ),
                 array( 'ty_step3_label', 'ty_step3_text' ),
                 array( 'ty_step4_label', 'ty_step4_text' ),
             );
+            // Only steps that have a label or a text are listed, numbered in order.
+            $aad_steps = array();
+            foreach ( $aad_step_fields as $aad_step_field ) {
+                $aad_step_label = aad_option_text( $aad_step_field[0] );
+                $aad_step_text  = aad_option_text( $aad_step_field[1] );
+                if ( $aad_step_label !== '' || $aad_step_text !== '' ) {
+                    $aad_steps[] = array( $aad_step_label, $aad_step_text );
+                }
+            }
             $aad_continue_label = aad_option_text( 'ty_continue_label' );
             $aad_home_label     = aad_option_text( 'ty_home_label' );
             $aad_continue_icon  = aad_checkout_icon( 'ty_continue_icon', 16, '2.5' );
@@ -82,41 +105,36 @@ defined( 'ABSPATH' ) || exit;
                     <?php if ( $aad_heading !== '' ) : ?>
                     <h2 class="relative z-10 font-serif text-3xl font-semibold text-ink-900"><?php echo esc_html( $aad_heading ); ?></h2>
                     <?php endif; ?>
+                    <?php if ( $aad_has_intro || $aad_has_note ) : ?>
                     <p class="relative z-10 mt-3 text-ink-700 max-w-lg mx-auto leading-relaxed">
-                        <?php echo aad_ty_format( aad_option_text( 'ty_confirmed_intro' ), array( 'name' => $aad_customer ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
-                        <?php if ( $order->get_billing_email() && $aad_email_note !== '' ) : ?>
-                            <?php echo aad_ty_format( $aad_email_note, array( 'email' => $order->get_billing_email() ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
-                        <?php endif; ?>
+                        <?php if ( $aad_has_intro ) { echo $aad_intro_html; } // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
+                        <?php if ( $aad_has_note ) { echo $aad_note_html; } // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
                     </p>
+                    <?php endif; ?>
                     <div class="relative z-10 mt-6 inline-flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-800 rounded-full px-5 py-2 font-mono text-sm font-semibold tracking-wide">
                         <?php echo esc_html( trim( $aad_order_lbl . ' ' . $order->get_order_number() ) ); ?>
                     </div>
                 </section>
 
                 <!-- What happens next -->
+                <?php if ( $aad_steps ) : ?>
                 <section class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8">
                     <?php if ( $aad_next_head !== '' ) : ?>
                     <h3 class="font-serif text-xl font-semibold text-ink-900 mb-6"><?php echo esc_html( $aad_next_head ); ?></h3>
                     <?php endif; ?>
                     <ol class="space-y-5 text-sm text-ink-700">
                         <?php foreach ( $aad_steps as $aad_index => $aad_step ) : ?>
-                            <?php
-                            $aad_step_label = aad_option_text( $aad_step[0] );
-                            $aad_step_text  = aad_option_text( $aad_step[1] );
-                            if ( $aad_step_label === '' && $aad_step_text === '' ) {
-                                continue;
-                            }
-                            ?>
                         <li class="flex gap-4">
                             <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0"><?php echo (int) ( $aad_index + 1 ); ?></span>
                             <span class="leading-relaxed">
-                                <?php if ( $aad_step_label !== '' ) : ?><b class="text-ink-900"><?php echo esc_html( $aad_step_label ); ?></b><?php endif; ?>
-                                <?php echo esc_html( $aad_step_text ); ?>
+                                <?php if ( $aad_step[0] !== '' ) : ?><b class="text-ink-900"><?php echo esc_html( $aad_step[0] ); ?></b><?php endif; ?>
+                                <?php echo esc_html( $aad_step[1] ); ?>
                             </span>
                         </li>
                         <?php endforeach; ?>
                     </ol>
                 </section>
+                <?php endif; ?>
 
                 <!-- Payment Details (BACS, Crypto, etc) -->
                 <div class="woocommerce-thankyou-hooks space-y-6">
@@ -125,6 +143,7 @@ defined( 'ABSPATH' ) || exit;
                 </div>
 
                 <!-- Action Buttons -->
+                <?php if ( $aad_continue_label !== '' || $aad_home_label !== '' ) : ?>
                 <div class="flex flex-wrap gap-3 justify-center pt-4">
                     <?php if ( $aad_continue_label !== '' ) : ?>
                     <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
@@ -139,6 +158,7 @@ defined( 'ABSPATH' ) || exit;
                     </a>
                     <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </div>
 
 		<?php endif; ?>
@@ -146,11 +166,24 @@ defined( 'ABSPATH' ) || exit;
 	<?php else : ?>
 
         <!-- Fallback if no order found -->
+        <?php
+        $aad_nf_heading = aad_option_text( 'ty_notfound_heading' );
+        $aad_nf_message = aad_option_text( 'ty_notfound_message' );
+        $aad_nf_button  = aad_option_text( 'ty_continue_label' );
+        ?>
+        <?php if ( $aad_nf_heading !== '' || $aad_nf_message !== '' || $aad_nf_button !== '' ) : ?>
         <div class="bg-white border border-ink-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
-            <h2 class="font-serif text-3xl font-semibold text-ink-900 mb-4"><?php echo esc_html( aad_option_text( 'ty_notfound_heading' ) ); ?></h2>
-            <p class="text-ink-700 mb-8"><?php echo esc_html( aad_option_text( 'ty_notfound_message' ) ); ?></p>
-            <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( aad_option_text( 'ty_continue_label' ) ); ?></a>
+            <?php if ( $aad_nf_heading !== '' ) : ?>
+            <h2 class="font-serif text-3xl font-semibold text-ink-900 mb-4"><?php echo esc_html( $aad_nf_heading ); ?></h2>
+            <?php endif; ?>
+            <?php if ( $aad_nf_message !== '' ) : ?>
+            <p class="text-ink-700 mb-8"><?php echo esc_html( $aad_nf_message ); ?></p>
+            <?php endif; ?>
+            <?php if ( $aad_nf_button !== '' ) : ?>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( $aad_nf_button ); ?></a>
+            <?php endif; ?>
         </div>
+        <?php endif; ?>
 
 	<?php endif; ?>
 

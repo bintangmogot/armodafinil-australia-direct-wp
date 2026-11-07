@@ -43,14 +43,16 @@ function aad_checkout_icon( $option, $size = 16, $stroke = '2' ) {
 
 /**
  * Escape a Theme Settings text and replace its {placeholders} with bold, escaped values.
- * Returns safe HTML.
+ * A blank value leaves no empty tag behind. Returns safe HTML, trimmed; the caller checks
+ * whether anything visible is left (a text that is blank after replacement must be hidden).
  */
 function aad_ty_format( $text, $values = array() ) {
 	$html = esc_html( (string) $text );
 	foreach ( $values as $key => $value ) {
-		$html = str_replace( '{' . $key . '}', '<b>' . esc_html( (string) $value ) . '</b>', $html );
+		$value = trim( (string) $value );
+		$html  = str_replace( '{' . $key . '}', $value === '' ? '' : '<b>' . esc_html( $value ) . '</b>', $html );
 	}
-	return $html;
+	return trim( $html );
 }
 
 /**
@@ -166,6 +168,7 @@ function aad_render_bacs_thankyou() {
 		array( 'payid', 'bank_label_payid', $bank['payid'] ),
 	);
 
+	// A row with no value is dropped; a blank label is dropped but the value stays.
 	$list = '';
 	foreach ( $rows as $row ) {
 		if ( $row[2] === '' ) {
@@ -174,15 +177,18 @@ function aad_render_bacs_thankyou() {
 		$label = aad_option_text( $row[1] );
 		$list .= '<li class="' . esc_attr( $row[0] ) . '">' . ( $label !== '' ? esc_html( $label ) . ': ' : '' ) . '<strong>' . wp_kses_post( wptexturize( $row[2] ) ) . '</strong></li>' . PHP_EOL;
 	}
-	if ( $list === '' ) {
-		return;
-	}
 
 	$html = '';
 	if ( $bank['name'] !== '' ) {
 		$html .= '<h3 class="wc-bacs-bank-details-account-name">' . wp_kses_post( $bank['name'] ) . ':</h3>' . PHP_EOL;
 	}
-	$html .= '<ul class="wc-bacs-bank-details order_details bacs_details">' . PHP_EOL . $list . '</ul>';
+	if ( $list !== '' ) {
+		$html .= '<ul class="wc-bacs-bank-details order_details bacs_details">' . PHP_EOL . $list . '</ul>';
+	}
+	// Nothing to show (no account holder and no rows): the whole block, heading included, vanishes.
+	if ( $html === '' ) {
+		return;
+	}
 
 	$heading = aad_option_text( 'bank_card_heading' );
 	echo '<section class="woocommerce-bacs-bank-details">';
