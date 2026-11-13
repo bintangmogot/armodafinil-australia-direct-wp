@@ -394,18 +394,6 @@ foreach ( $attributes as $attribute ) {
               $usage_title = get_field('usage_note_title', get_the_ID()) ?: (get_field('usage_note_title', 'option') ?: 'Important Usage Note');
               $usage_text = get_field('usage_note_text', get_the_ID()) ?: get_field('usage_note_text', 'option');
               $info_text = get_field('informational_warning_text', get_the_ID()) ?: get_field('informational_warning_text', 'option');
-                $doctor_id = get_field('medical_reviewer_post', get_the_ID());
-                if ($doctor_id) {
-                    $rev_name = get_the_title($doctor_id);
-                    $rev_url = get_permalink($doctor_id);
-                    $rev_title = get_field('medical_title', $doctor_id) ?: 'Physician';
-                } else {
-                    $rev_name = '';
-                    $rev_url = '';
-                    $rev_title = '';
-                }
-                $last_updated = get_the_modified_date('F Y');
-              
               if ($usage_text) {
                   $bold_title = '<strong class="font-bold text-ink-900">' . esc_html(get_the_title()) . '</strong>';
                   $usage_text = preg_replace('/<(strong|b)>\s*\{product_name\}\s*<\/\1>/i', '{product_name}', $usage_text);
@@ -413,7 +401,7 @@ foreach ( $attributes as $attribute ) {
               }
               
               // Only render the wrapper if AT LEAST ONE piece of content exists
-              if (!empty($usage_text) || !empty($info_text) || !empty($rev_name)):
+              if (!empty($usage_text) || !empty($info_text)):
               ?>
               <div class="bg-white"><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                   
@@ -442,16 +430,6 @@ foreach ( $attributes as $attribute ) {
                   </div>
                   <?php endif; ?>
   
-                  <?php if (!empty($rev_name)): ?>
-                  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[13px] text-ink-500 gap-4 w-full mt-2">
-                      <div>
-                          Medically reviewed by: <a href="<?php echo esc_url($rev_url ? $rev_url : '#'); ?>" class="font-bold text-teal-700 hover:text-teal-800 hover:underline"><?php echo esc_html($rev_name); ?></a> <?php if($rev_title) echo '(' . esc_html($rev_title) . ')'; ?>
-                      </div>
-                      <div>
-                          Last updated: <?php echo esc_html($last_updated); ?>
-                      </div>
-                  </div>
-                  <?php endif; ?>
               </div>
               </div>
               <?php endif; ?>

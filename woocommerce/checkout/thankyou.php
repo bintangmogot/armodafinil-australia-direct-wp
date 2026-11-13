@@ -2,6 +2,11 @@
 /**
  * Thankyou page
  *
+ * All visible text, labels and icons are editable in WP admin:
+ * Theme Settings > Checkout & Emails (read with aad_option_text() and aad_checkout_icon()).
+ * Bank transfer details and the payment instructions are printed by aad_render_bacs_thankyou()
+ * (inc/checkout-page.php) on the woocommerce_thankyou_bacs hook below.
+ *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
  * @version 8.1.0
@@ -22,16 +27,69 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( $order->has_status( 'failed' ) ) : ?>
 
-			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed p-4 mb-6 rounded-xl bg-red-50 text-red-900 border border-red-200"><?php esc_html_e( 'Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce' ); ?></p>
+			<?php
+			$aad_failed_msg  = aad_option_text( 'ty_failed_message' );
+			$aad_failed_pay  = aad_option_text( 'ty_failed_pay_label' );
+			$aad_failed_acct = is_user_logged_in() ? aad_option_text( 'ty_failed_account_label' ) : '';
+			?>
+			<?php if ( $aad_failed_msg !== '' ) : ?>
+			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed p-4 mb-6 rounded-xl bg-red-50 text-red-900 border border-red-200"><?php echo esc_html( $aad_failed_msg ); ?></p>
+			<?php endif; ?>
 
+			<?php if ( $aad_failed_pay !== '' || $aad_failed_acct !== '' ) : ?>
 			<p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed-actions flex gap-3">
-				<a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php esc_html_e( 'Pay', 'woocommerce' ); ?></a>
-				<?php if ( is_user_logged_in() ) : ?>
-					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors"><?php esc_html_e( 'My account', 'woocommerce' ); ?></a>
+				<?php if ( $aad_failed_pay !== '' ) : ?>
+				<a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( $aad_failed_pay ); ?></a>
+				<?php endif; ?>
+				<?php if ( $aad_failed_acct !== '' ) : ?>
+					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors"><?php echo esc_html( $aad_failed_acct ); ?></a>
 				<?php endif; ?>
 			</p>
+			<?php endif; ?>
 
 		<?php else : ?>
+
+            <?php
+            $aad_first_name = $order->get_billing_first_name();
+            $aad_customer   = $aad_first_name ? $aad_first_name : aad_option_text( 'ty_confirmed_name_fallback' );
+            $aad_intro_html = aad_ty_format( aad_option_text( 'ty_confirmed_intro' ), array( 'name' => $aad_customer ) );
+            $aad_note_html  = $order->get_billing_email() ? aad_ty_format( aad_option_text( 'ty_confirmed_email_note' ), array( 'email' => $order->get_billing_email() ) ) : '';
+            $aad_has_intro  = trim( wp_strip_all_tags( $aad_intro_html ) ) !== '';
+            $aad_has_note   = trim( wp_strip_all_tags( $aad_note_html ) ) !== '';
+            $aad_order_lbl  = aad_option_text( 'ty_order_id_label' );
+            $aad_heading    = aad_option_text( 'ty_confirmed_heading' );
+            $aad_next_head  = aad_option_text( 'ty_next_heading' );
+
+            // Step 1 depends on how the customer pays; steps 2 to 4 are fixed.
+            $aad_method = (string) $order->get_payment_method();
+            if ( $aad_method === 'bacs' ) {
+                $aad_step1_text = 'ty_step1_text_bacs';
+            } elseif ( $aad_method === 'crypto' || strpos( $aad_method, 'bitcoin' ) !== false ) {
+                $aad_step1_text = 'ty_step1_text_crypto';
+            } else {
+                $aad_step1_text = 'ty_step1_text_other';
+            }
+            $aad_step_fields = array(
+                array( 'ty_step1_label', $aad_step1_text ),
+                array( 'ty_step2_label', 'ty_step2_text' ),
+                array( 'ty_step3_label', 'ty_step3_text' ),
+                array( 'ty_step4_label', 'ty_step4_text' ),
+            );
+            // Only steps that have a label or a text are listed, numbered in order.
+            $aad_steps = array();
+            foreach ( $aad_step_fields as $aad_step_field ) {
+                $aad_step_label = aad_option_text( $aad_step_field[0] );
+                $aad_step_text  = aad_option_text( $aad_step_field[1] );
+                if ( $aad_step_label !== '' || $aad_step_text !== '' ) {
+                    $aad_steps[] = array( $aad_step_label, $aad_step_text );
+                }
+            }
+            $aad_continue_label = aad_option_text( 'ty_continue_label' );
+            $aad_home_label     = aad_option_text( 'ty_home_label' );
+            $aad_continue_icon  = aad_checkout_icon( 'ty_continue_icon', 16, '2.5' );
+            $aad_home_icon      = aad_checkout_icon( 'ty_home_icon', 16, '2' );
+            $aad_confirm_icon   = aad_checkout_icon( 'ty_confirmed_icon', 32, '2.5' );
+            ?>
 
             <div class="space-y-6 lg:space-y-8">
                 <!-- Order Confirmed Card -->
@@ -39,55 +97,44 @@ defined( 'ABSPATH' ) || exit;
                     <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-50 rounded-full blur-2xl opacity-60"></div>
                     <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-brand-50 rounded-full blur-2xl opacity-60"></div>
 
+                    <?php if ( $aad_confirm_icon !== '' ) : ?>
                     <div class="relative z-10 w-16 h-16 rounded-full bg-brand-100 text-brand-700 grid place-items-center mx-auto mb-5 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path style="fill:none !important;" d="m9 11 3 3L22 4"/></svg>
+                        <?php echo $aad_confirm_icon; // phpcs:ignore WordPress.Security.EscapeOutput -- bundled SVG markup ?>
                     </div>
-                    <h2 class="relative z-10 font-serif text-3xl font-semibold text-ink-900">Order confirmed</h2>
+                    <?php endif; ?>
+                    <?php if ( $aad_heading !== '' ) : ?>
+                    <h2 class="relative z-10 font-serif text-3xl font-semibold text-ink-900"><?php echo esc_html( $aad_heading ); ?></h2>
+                    <?php endif; ?>
+                    <?php if ( $aad_has_intro || $aad_has_note ) : ?>
                     <p class="relative z-10 mt-3 text-ink-700 max-w-lg mx-auto leading-relaxed">
-                        Thanks <b><?php echo esc_html( $order->get_billing_first_name() ? $order->get_billing_first_name() : 'friend' ); ?></b> - your order has been received. 
-                        <?php if ( $order->get_billing_email() ) : ?>
-                            A confirmation email is on its way to <b><?php echo esc_html( $order->get_billing_email() ); ?></b>.
-                        <?php endif; ?>
+                        <?php if ( $aad_has_intro ) { echo $aad_intro_html; } // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
+                        <?php if ( $aad_has_note ) { echo $aad_note_html; } // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside aad_ty_format ?>
                     </p>
+                    <?php endif; ?>
                     <div class="relative z-10 mt-6 inline-flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-800 rounded-full px-5 py-2 font-mono text-sm font-semibold tracking-wide">
-                        Order ID: <?php echo $order->get_order_number(); ?>
+                        <?php echo esc_html( trim( $aad_order_lbl . ' ' . $order->get_order_number() ) ); ?>
                     </div>
                 </section>
 
                 <!-- What happens next -->
+                <?php if ( $aad_steps ) : ?>
                 <section class="bg-white border border-ink-200 rounded-2xl p-6 md:p-8">
-                    <h3 class="font-serif text-xl font-semibold text-ink-900 mb-6">What happens next?</h3>
+                    <?php if ( $aad_next_head !== '' ) : ?>
+                    <h3 class="font-serif text-xl font-semibold text-ink-900 mb-6"><?php echo esc_html( $aad_next_head ); ?></h3>
+                    <?php endif; ?>
                     <ol class="space-y-5 text-sm text-ink-700">
+                        <?php foreach ( $aad_steps as $aad_index => $aad_step ) : ?>
                         <li class="flex gap-4">
-                            <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">1</span>
+                            <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0"><?php echo (int) ( $aad_index + 1 ); ?></span>
                             <span class="leading-relaxed">
-                                <b class="text-ink-900">Payment.</b> 
-                                <?php 
-                                $payment_method = $order->get_payment_method();
-                                if ( $payment_method === 'bacs' ) {
-                                    echo 'You will receive our bank details below (and by email). Please transfer the funds within 24 hours.';
-                                } elseif ( $payment_method === 'crypto' || strpos($payment_method, 'bitcoin') !== false ) {
-                                    echo 'A wallet address for your chosen currency is provided. Please complete the transfer.';
-                                } else {
-                                    echo 'Your payment is being processed now - no further action needed.';
-                                }
-                                ?>
+                                <?php if ( $aad_step[0] !== '' ) : ?><b class="text-ink-900"><?php echo esc_html( $aad_step[0] ); ?></b><?php endif; ?>
+                                <?php echo esc_html( $aad_step[1] ); ?>
                             </span>
                         </li>
-                        <li class="flex gap-4">
-                            <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">2</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Dispatch.</b> Your parcel leaves our facility within 24-48 business hours after funds clear.</span>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">3</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Tracking.</b> Same-day tracking is emailed to you as soon as your parcel is scanned by the courier.</span>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="w-6 h-6 grid place-items-center rounded-full bg-ink-100 text-ink-600 text-xs font-bold shrink-0">4</span>
-                            <span class="leading-relaxed"><b class="text-ink-900">Delivery.</b> Most Australian addresses receive the parcel within 7-10 business days, dispatched in neutral outer packaging.</span>
-                        </li>
+                        <?php endforeach; ?>
                     </ol>
                 </section>
+                <?php endif; ?>
 
                 <!-- Payment Details (BACS, Crypto, etc) -->
                 <div class="woocommerce-thankyou-hooks space-y-6">
@@ -96,16 +143,22 @@ defined( 'ABSPATH' ) || exit;
                 </div>
 
                 <!-- Action Buttons -->
+                <?php if ( $aad_continue_label !== '' || $aad_home_label !== '' ) : ?>
                 <div class="flex flex-wrap gap-3 justify-center pt-4">
+                    <?php if ( $aad_continue_label !== '' ) : ?>
                     <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">
-                        Continue shopping 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="M5 12h14"/><path style="fill:none !important;" d="m12 5 7 7-7 7"/></svg>
+                        <?php echo esc_html( $aad_continue_label ); ?>
+                        <?php echo $aad_continue_icon; // phpcs:ignore WordPress.Security.EscapeOutput -- bundled SVG markup ?>
                     </a>
+                    <?php endif; ?>
+                    <?php if ( $aad_home_label !== '' ) : ?>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-ink-200 hover:border-brand-600 text-ink-900 font-semibold transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!fill-none"><path style="fill:none !important;" d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline style="fill:none !important;" points="9 22 9 12 15 12 15 22"/></svg>
-                        Back to home
+                        <?php echo $aad_home_icon; // phpcs:ignore WordPress.Security.EscapeOutput -- bundled SVG markup ?>
+                        <?php echo esc_html( $aad_home_label ); ?>
                     </a>
+                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </div>
 
 		<?php endif; ?>
@@ -113,11 +166,24 @@ defined( 'ABSPATH' ) || exit;
 	<?php else : ?>
 
         <!-- Fallback if no order found -->
+        <?php
+        $aad_nf_heading = aad_option_text( 'ty_notfound_heading' );
+        $aad_nf_message = aad_option_text( 'ty_notfound_message' );
+        $aad_nf_button  = aad_option_text( 'ty_continue_label' );
+        ?>
+        <?php if ( $aad_nf_heading !== '' || $aad_nf_message !== '' || $aad_nf_button !== '' ) : ?>
         <div class="bg-white border border-ink-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
-            <h2 class="font-serif text-3xl font-semibold text-ink-900 mb-4"><?php esc_html_e( 'Order received', 'woocommerce' ); ?></h2>
-            <p class="text-ink-700 mb-8"><?php esc_html_e( 'Thank you. Your order has been received.', 'woocommerce' ); ?></p>
-            <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors">Continue shopping</a>
+            <?php if ( $aad_nf_heading !== '' ) : ?>
+            <h2 class="font-serif text-3xl font-semibold text-ink-900 mb-4"><?php echo esc_html( $aad_nf_heading ); ?></h2>
+            <?php endif; ?>
+            <?php if ( $aad_nf_message !== '' ) : ?>
+            <p class="text-ink-700 mb-8"><?php echo esc_html( $aad_nf_message ); ?></p>
+            <?php endif; ?>
+            <?php if ( $aad_nf_button !== '' ) : ?>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors"><?php echo esc_html( $aad_nf_button ); ?></a>
+            <?php endif; ?>
         </div>
+        <?php endif; ?>
 
 	<?php endif; ?>
 
