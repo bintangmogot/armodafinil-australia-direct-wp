@@ -19,6 +19,24 @@ function aad_register_medical_reviewer_cpt() {
     ));
 }
 
+// Retire the Dr. Jesse Morton profile without breaking existing links.
+// The path check also covers the profile after its post status is changed to
+// draft, when WordPress no longer resolves it as a singular post.
+add_action('template_redirect', function() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    $request_path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+    $is_jesse_morton_path = (bool) preg_match('#^medical-team/(?:dr-)?jesse-morton/?$#i', $request_path);
+    $is_jesse_morton_post = is_singular('medical_reviewer') && strcasecmp(get_the_title(), 'Dr. Jesse Morton') === 0;
+
+    if ( $is_jesse_morton_path || $is_jesse_morton_post ) {
+        wp_safe_redirect(home_url('/about/'), 301);
+        exit;
+    }
+});
+
 // 2. Add the ACF Field for linking a reviewer to a product and theme settings
 add_action('acf/init', 'aad_register_medical_reviewer_fields');
 function aad_register_medical_reviewer_fields() {
